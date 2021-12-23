@@ -45,17 +45,14 @@ plot(ppms.graph)
 Use this graph to  compute the communities
 
 ```{r}
-cluster_louvain(ppms.graph,weights=ppms.ew)
-communites=cluster_louvain(ppms.graph,weights=E(ppms.graph)$weight)
+communites=cluster_louvain(ppms.graph)
 sizes(communites)
 plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edges.color=NA)
 
 sizes(communites$membership)
 ```
 
-We have 4 communities less than the one detected in the original paper (different PCA/louvain implementation?)
-
-Countain the number of node for each cluster in both cases we can nonetheless do a pretty clear corresopndance regarding the main clusters:
+Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, wiht 6 communities.
 
 ```{r}
 knitr::kable(table(datappm$Chemical.cluster))
@@ -79,4 +76,5 @@ sum(datappm$Chemical.cluster==9 & communites$membership ==2)
 plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edges.color=NA)
 plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster],edges.color=NA)
 ```
+
 
