@@ -1,0 +1,82 @@
+# R-version of Community structure of copper supply networks in the prehistoric Balkans: An independent evaluation of the archaeological record from the 7th to the 4th millennium BC
+
+Code Jelena other comnunity bipartite between metal mix and artefact
+4thousand years
+20000-30000
+
+Get the data 
+
+```{r}
+datappm=read.csv("Table S1.csv")
+ppms=datappm[,15:21]
+plot(ppms,pch=20)
+knitr::kable(cor(ppms))
+```
+
+Log transform
+
+```{r}
+ppms=as.data.frame(apply(ppms,2,log))
+plot(ppms,pch=20,col=c(1,2,3,4))
+knitr::kable(cor(ppms))
+```
+
+Compute PCA scores:
+
+```{r}
+ppms.pca=prcomp(ppms)
+ppms.dist=dist(ppms.pca$x)
+ppms.clust=hclust(ppms.dist)
+ppms.kclust=cutree(ppms.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
+
+plot(ppms.pca$x[,1:2],col=datappm$Chemical.cluster+1)
+points(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  )
+```
+We know transform the result of the PCA as a graph:
+
+```{r}
+
+library(igraph)
+ppms.ew=1/(as.matrix(ppms.dist)^2)
+ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+plot(ppms.graph)
+```
+
+Use this graph to  compute the communities
+
+```{r}
+cluster_louvain(ppms.graph,weights=ppms.ew)
+communites=cluster_louvain(ppms.graph,weights=E(ppms.graph)$weight)
+sizes(communites)
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edges.color=NA)
+
+sizes(communites$membership)
+```
+
+We have 4 communities less than the one detected in the original paper (different PCA/louvain implementation?)
+
+Countain the number of node for each cluster in both cases we can nonetheless do a pretty clear corresopndance regarding the main clusters:
+
+```{r}
+knitr::kable(table(datappm$Chemical.cluster))
+knitr::kable(sizes(communites))
+
+sum(datappm$Chemical.cluster==0 & communites$membership ==4)
+sum(datappm$Chemical.cluster==1 & communites$membership ==5)
+sum(datappm$Chemical.cluster==2 & communites$membership ==1)
+sum(datappm$Chemical.cluster==4 & communites$membership ==3)
+sum(datappm$Chemical.cluster==5 & communites$membership ==6)
+sum(datappm$Chemical.cluster==9 & communites$membership ==2)
+
+
+# jelena 4 is  R louvain 3
+# jelena 2 is  R louvain 1
+# jelena 9 is  R louvain 2
+```
+
+
+```{r,out.width="50%"}
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edges.color=NA)
+plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster],edges.color=NA)
+```
+
