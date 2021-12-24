@@ -1,0 +1,97 @@
+```{r}
+fun_range <- function(x,n=100) {                              # Create user-defined function
+  (x - min(x)) / (max(x) - min(x)) * 100
+}
+```
+
+```{r}
+install.packages("ggtern")
+library(ggtern)
+pryce=read.csv("data/SEALIP_BROGLASEA data_Pryce.csv")
+geom <- density <- tern(data=pryce,aes())
+ pryce[,12:42]=apply(pryce[,12:42],2,function(i){i[i=="tr"]=0;as.numeric(i)})
+pca=princomp(pryce[,12:42])
+pca=PCA(pryce[,12:42])
+cluster=hclust(dist(pca$ind$coord))
+nc=length(unique(pryce$Region))
+#nc=10
+cl=cutree(cluster,nc)
+plot(pca$ind$coord,col=rainbow(nc)[cl],pch=20)
+pryce$Easting...Longitude= as.numeric(gsub("°","",pryce$Easting...Longitude))
+pryce$Northing.Latitude= as.numeric(gsub("°","",pryce$Northing.Latitude))
+plot(pryce$Easting...Longitude,pryce$Northing.Latitude,col=cl,pch=20)
+text(pryce$Easting...Longitude,pryce$Northing.Latitude,pryce$Region,col=cl,pch=20)
+```
+
+```{r}
+install.packages("ggtern")
+library(ggtern)
+pryce=read.csv("data/Lead isotope data_PRYCE.csv")
+pryce[,11:15]=apply(pryce[,11:15],2,as.numeric)
+pryce=pryce[!is.na(pryce[,11]),]
+pryce[,13:15]=apply(pryce[,13:15],1,function(i)i/sum(i))
+only=pryce[,c(13:15)]
+colnames(only)=c("208Pb","207Pb","206Pb")
+#only=t(apply(only,1,function(i)i/sum(i)))
+onlys=as.data.frame(apply(only,2,fun_range,n=50))
+only=as.data.frame(only)
+par(xpd=T)
+ggtern(onlys ,aes(A,B,C))+theme_bw()+ geom_point(color=as.numeric(as.factor(pryce$Region)))+geom_mask()
+legend("topright",legend=unique(as.factor(pryce$Region)),col=unique(as.numeric(as.factor(pryce$Region))))
+ggtern(only ,aes(A,B,C))+
+geom_density_tern(aes(fill=as.numeric(as.factor(pryce$Region))),bins=10) + geom_point(color=as.numeric(as.factor(pryce$Region)))
+
+ggtern(onlys ,aes(A,B,C,color=pryce$Region)) +
+  theme_bw() + geom_mask() +
+  geom_point()
+
+
+
+  scale_T_continuous(limits=c(0.2,0.3),
+                     breaks=seq(0,1,by=0.01))+
+                     #labels=paste0("B",LETTERS[1:11])) + 
+  scale_L_continuous(limits=c(0.5,0.6),
+                     breaks=seq(0,1,by=0.01))+
+                     #labels=paste0("A",LETTERS[1:11])) + 
+  scale_R_continuous(limits=c(0.2,0.3),
+                     breaks=seq(0,1,by=0.01))
+                     #labels=paste0("C",LETTERS[1:11]))
+
+ggtern(only ,aes(A,B,C))+geom_point(color=as.numeric(as.factor(pryce$Region)))+
+  scale_T_continuous(limits=c(0.18,0.25),
+                     breaks=seq(0,1,by=0.01))+
+                     #labels=paste0("B",LETTERS[1:11])) + 
+  scale_L_continuous(limits=c(0.54,0.6),
+                     breaks=seq(0,1,by=0.01))+
+                     #labels=paste0("A",LETTERS[1:11])) + 
+  scale_R_continuous(limits=c(0.20,0.27),
+                     breaks=seq(0,1,by=0.01))
+ limit_tern(1.0,0.5,0.5)
+tern_limits(.25,.8,.40)
+geom_density_tern(aes(fill=..level..),bins=5) +
+ geom_point()
+plot(pryce[,11:12],col=as.factor(pryce$Region),pch=20)
+plot3D(pryce[,11],pryce[,12],pryce[,15])
+
+Ternary::TernaryPlot(xlim=c(-0.032,-0.01),ylim=c(.455,.465),padding=0,isometric=F)
+
+
+
+data('Feldspar')
+ggtern(Feldspar,aes(Ab,An,Or)) + 
+ geom_density_tern(aes(color=..level..),bins=20) +
+ geom_point()
+
+df = data.frame(x = runif(50)*1000,
+                y = runif(50)*1000,
+                z = runif(50)*1000,
+                Group = as.factor(round(runif(50,1,2))))
+ggtern(data=df,aes(x,y,z),color=Group)
+ggtern() + 
+  geom_point(data = df, aes(x/10, y/10, z/10, color = Group)) + 
+  labs(x="X", y="Y", z="Z", title="Title") +
+  scale_T_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2)) +
+  scale_L_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2)) +
+  scale_R_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2))
+```
+
