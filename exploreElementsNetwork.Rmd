@@ -47,7 +47,7 @@ plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
 
 Check the correlations between ppms when log transformed
 
-```{r}
+```{r,results="asis"}
 knitr::kable(cor(ppms))
 ```
 
