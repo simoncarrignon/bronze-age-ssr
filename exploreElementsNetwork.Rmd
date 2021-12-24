@@ -1,5 +1,5 @@
 ---
-title: ""
+title: "BROGLESEA"
 author: "SC"
 date: "12/2021"
 output: 
@@ -14,7 +14,9 @@ output:
 # R-version of Community structure of copper supply networks in the prehistoric Balkans: An independent evaluation of the archaeological record from the 7th to the 4th millennium BC
 
 
-## Get Data
+## Artefact Network
+
+### Get Data
 
 ```{r,initialisation}
 knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
@@ -38,7 +40,7 @@ Check the correaltion between the elements' ppm
 knitr::kable(cor(ppms))
 ```
 
-## Log transform
+### Log transform
 
 ```{r}
 ppms=as.data.frame(apply(ppms,2,log))
@@ -51,7 +53,7 @@ Check the correlations between ppms when log transformed
 knitr::kable(cor(ppms))
 ```
 
-## PCA 
+### PCA 
 
 Compute PCA scores:
 
@@ -107,7 +109,7 @@ sum(datappm$Chemical.cluster==9 & communites$membership ==2)
 ```{r,out.width="50%"}
 par(mar=c(0,0,0,0))
 plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edge.color=NA,layout=layout,vertex.label=NA,vertex.size=8)
-plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster],edge.color=NA,layout=layout,vertex.label=NA,vertex.size=8)
+plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster+1],edge.color=NA,layout=layout,vertex.label=NA,vertex.size=8)
 ```
 
 
@@ -119,4 +121,5 @@ level2=lapply(communites, function(g)cluster_louvain(induced.subgraph(ppms.graph
 
 ```
 
+## Sites Network
 
