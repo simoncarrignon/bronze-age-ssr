@@ -1,4 +1,24 @@
+---
+title: ""
+author: "SC"
+date: "12/2021"
+output: 
+    html_document:
+        code_folding: show
+        section_numbers: true
+        toc: true
+        toc_depth: 3
+        toc_float: true
+---
+
 # R-version of Community structure of copper supply networks in the prehistoric Balkans: An independent evaluation of the archaeological record from the 7th to the 4th millennium BC
+
+
+## Get Data
+
+```{r,initialisation}
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+```
 
 Code Jelena other comnunity bipartite between metal mix and artefact
 4thousand years
@@ -9,17 +29,29 @@ Get the data
 ```{r}
 datappm=read.csv("Table S1.csv")
 ppms=datappm[,15:21]
-plot(ppms,pch=20)
+plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
+```
+
+Check the correaltion between the elements' ppm
+
+```{r,results="asis"}
 knitr::kable(cor(ppms))
 ```
 
-Log transform
+## Log transform
 
 ```{r}
 ppms=as.data.frame(apply(ppms,2,log))
-plot(ppms,pch=20,col=c(1,2,3,4))
+plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
+```
+
+Check the correlations between ppms when log transformed
+
+```{r}
 knitr::kable(cor(ppms))
 ```
+
+## PCA 
 
 Compute PCA scores:
 
@@ -39,20 +71,20 @@ We know transform the result of the PCA as a graph:
 library(igraph)
 ppms.ew=1/(as.matrix(ppms.dist)^2)
 ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
-plot(ppms.graph)
+layout=layout_nicely(ppms.graph)
+plot(ppms.graph,layout=layout)
 ```
 
 Use this graph to  compute the communities
 
 ```{r}
 communites=cluster_louvain(ppms.graph)
-sizes(communites)
-plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edges.color=NA)
+knitr::kable(sizes(communites))
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edge.color="white",layout=layout)
 
-sizes(communites$membership)
 ```
 
-Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, wiht 6 communities.
+Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, with 6 communities. Not sure how to go 
 
 ```{r}
 knitr::kable(table(datappm$Chemical.cluster))
@@ -73,8 +105,18 @@ sum(datappm$Chemical.cluster==9 & communites$membership ==2)
 
 
 ```{r,out.width="50%"}
-plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edges.color=NA)
-plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster],edges.color=NA)
+par(mar=c(0,0,0,0))
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edge.color=NA,layout=layout,vertex.label=NA,vertex.size=8)
+plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster],edge.color=NA,layout=layout,vertex.label=NA,vertex.size=8)
+```
+
+
+```{r}
+
+level2=lapply(communites, function(g)cluster_louvain(induced.subgraph(ppms.graph,g)))
+
+
+
 ```
 
 
