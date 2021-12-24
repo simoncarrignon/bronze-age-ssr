@@ -1,9 +1,9 @@
 ---
-title: "BROGLESEA"
+title: "Network Analysis for Ancient Metallurgy and Beyond: Statistical synthesis of contextual, typological, technological and geochemical data"
 author: "SC"
 date: "12/2021"
 output: 
-    html_document:
+    bookdown::html_document2:
         code_folding: show
         section_numbers: true
         toc: true
@@ -29,7 +29,9 @@ Code Jelena other comnunity bipartite between metal mix and artefact
 Get the data 
 
 ```{r}
+#epsilon=0.0005
 datappm=read.csv("Table S1.csv")
+#datappm[datappm==0.0001]=epsilon
 ppms=datappm[,15:21]
 plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
 ```
@@ -66,60 +68,359 @@ ppms.kclust=cutree(ppms.clust,k=10) #playing comparing community cluster vs simp
 plot(ppms.pca$x[,1:2],col=datappm$Chemical.cluster+1)
 points(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  )
 ```
-We know transform the result of the PCA as a graph:
+
+We now transform the result of the PCA as a graph, we compute edge weights as 
+$$ \sqrt{\sum\frac{1}{d^2}} $$
 
 ```{r}
 
 library(igraph)
 ppms.ew=1/(as.matrix(ppms.dist)^2)
 ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
-layout=layout_nicely(ppms.graph)
-plot(ppms.graph,layout=layout)
+V(ppms.graph)$label=as.character(datappm$Site)
+V(ppms.graph)$label.cex=.4
+V(ppms.graph)$size=8
+V(ppms.graph)$frame.color="black"
+V(ppms.graph)$frame.width=.5
+V(ppms.graph)$label.color="black"
+E(ppms.graph)$color=NA
+ppms.graph=set_graph_attr(ppms.graph,"layout",layout_nicely(ppms.graph))
+plot(ppms.graph)
 ```
 
 Use this graph to  compute the communities
 
-```{r}
-communites=cluster_louvain(ppms.graph)
-knitr::kable(sizes(communites))
-plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edge.color="white",layout=layout)
+```{r louvain,results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
+par(mar=c(0,0,0,0))
+ppms.louvain=cluster_louvain(ppms.graph)
+knitr::kable(sizes(ppms.louvain))
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership])
 
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership],vertex.label=paste(datappm$Site,datappm$relative.period,sep="-"))
 ```
 
 Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, with 6 communities. Not sure how to go 
 
-```{r}
+```{r,results="hold",out.width="10%",fig.show="hold"}
+options(width=50)
 knitr::kable(table(datappm$Chemical.cluster))
-knitr::kable(sizes(communites))
-
-sum(datappm$Chemical.cluster==0 & communites$membership ==4)
-sum(datappm$Chemical.cluster==1 & communites$membership ==5)
-sum(datappm$Chemical.cluster==2 & communites$membership ==1)
-sum(datappm$Chemical.cluster==4 & communites$membership ==3)
-sum(datappm$Chemical.cluster==5 & communites$membership ==6)
-sum(datappm$Chemical.cluster==9 & communites$membership ==2)
+knitr::kable(sizes(ppms.louvain))
+```
 
 
+```{r,results="asis"}
 # jelena 4 is  R louvain 3
 # jelena 2 is  R louvain 1
 # jelena 9 is  R louvain 2
+
+sum(datappm$Chemical.cluster==0 & ppms.louvain$membership ==4)
+sum(datappm$Chemical.cluster==1 & ppms.louvain$membership ==5)
+sum(datappm$Chemical.cluster==2 & ppms.louvain$membership ==1)
+sum(datappm$Chemical.cluster==4 & ppms.louvain$membership ==3)
+sum(datappm$Chemical.cluster==5 & ppms.louvain$membership ==6)
+sum(datappm$Chemical.cluster==9 & ppms.louvain$membership ==2)
 ```
 
 
-```{r,out.width="50%"}
+Visual comparisaion of the communities, it's clearly the same.
+
+
+```{r compareOldNewResults,out.width="50%",fig.cap="Communities detected through louvain algorithm. Left: R `cluster_louvain` result. Right: Original paper results (level2 louvain results)."}
 par(mar=c(0,0,0,0))
-plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[communites$membership],edge.color=NA,layout=layout,vertex.label=NA,vertex.size=8)
-plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster+1],edge.color=NA,layout=layout,vertex.label=NA,vertex.size=8)
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership])
+plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster+1])
 ```
 
 
-```{r}
+Try to  detect communities within communities? (level 2 louvain?)
+```{r,eval=F}
+level2=lapply(ppms.louvain, function(g)cluster_louvain(induced.subgraph(ppms.graph,g)))
+```
+(doubt it's that)
 
-level2=lapply(communites, function(g)cluster_louvain(induced.subgraph(ppms.graph,g)))
-
-
-
+```{r out.width="50%",fig.cap="latlon"}
+latitude=as.numeric(gsub("[' \\\"N]","",gsub("Â°",".",gsub("\\.","",datappm$Geo.Latitude))))
+longitude=as.numeric(gsub("[' \\\"E]","",gsub("Â°",".",gsub("\\.","",datappm$Geo.Longitude))))
+plot(longitude ,latitude,bg=rainbow(6,alpha=.6)[ppms.louvain$membership],pch=21,cex=1.2)
+text(longitude ,latitude,datappm$Site,cex=.7)
+plot(longitude ,latitude,bg=rainbow(10,alpha=.6)[datappm$Chemical.cluster],pch=21,cex=1.2)
+text(longitude ,latitude,datappm$Site,cex=.7)
 ```
 
 ## Sites Network
+
+Count how many artefacts from each community sites share. We will use a simple match function (total number of similar communities):
+
+```{r}
+simpmatch  <-  function(i,j){
+    length(na.omit(match(i,j)))
+}
+```
+
+
+
+
+```{r}
+joined=cbind(datappm,louvain=ppms.louvain$membership)
+sites=unique(datappm$Site)
+
+system.time({
+matdim1=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$Site == s1],joined$louvain[ joined$Site == s2])))
+})
+
+system.time({
+matdim2=matrix(NA,nrow=80,ncol=80)
+for(s1 in 1:length(sites)){
+    for(s2 in 1:length(sites)){
+        c1=joined$louvain[ joined$Site == sites[s1]]
+        c2=joined$louvain[ joined$Site == sites[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
+}
+})
+sum(matdim2-matdim1)
+
+sites.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+plot(sites.graph)
+
+```
+
+Compute communities of sites:
+
+```{r}
+sites.communities=cluster_louvain(sites.graph)
+plot(sites.graph,vertex.color=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership])
+```
+
+### Site-period
+
+```{r}
+siteperiod=paste(datappm$Site,datappm$absolute.period)
+joined=cbind(joined,siteperiod)
+
+sites=unique(joined$siteperiod)
+matSP=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$siteperiod == s1],joined$louvain[ joined$siteperiod == s2])))
+
+sites.graph=graph.adjacency(matSP, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$frame.color="black"
+V(sites.graph)$frame.width=.5
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+plot(sites.graph)
+```
+
+
+# New dataset
+
+
+## Artefact Network
+
+### Get Data
+
+
+```{r}
+#epsilon=0.0005
+datappm=read.csv("Table S1.csvdeTable S1.csv")
+#datappm[datappm==0.0001]=epsilon
+ppms=datappm[,15:21]
+plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
+```
+
+Check the correaltion between the elements' ppm
+
+```{r,results="asis"}
+knitr::kable(cor(ppms))
+```
+
+### Log transform
+
+```{r}
+ppms=as.data.frame(apply(ppms,2,log))
+plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
+```
+
+Check the correlations between ppms when log transformed
+
+```{r,results="asis"}
+knitr::kable(cor(ppms))
+```
+
+### PCA 
+
+Compute PCA scores:
+
+```{r}
+ppms.pca=prcomp(ppms)
+ppms.dist=dist(ppms.pca$x)
+ppms.clust=hclust(ppms.dist)
+ppms.kclust=cutree(ppms.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
+
+plot(ppms.pca$x[,1:2],col=datappm$Chemical.cluster+1)
+points(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  )
+```
+
+We now transform the result of the PCA as a graph, we compute edge weights as 
+$$ \sqrt{\sum\frac{1}{d^2}} $$
+
+```{r}
+
+library(igraph)
+ppms.ew=1/(as.matrix(ppms.dist)^2)
+ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(ppms.graph)$label=as.character(datappm$Site)
+V(ppms.graph)$label.cex=.4
+V(ppms.graph)$size=8
+V(ppms.graph)$frame.color="black"
+V(ppms.graph)$frame.width=.5
+V(ppms.graph)$label.color="black"
+E(ppms.graph)$color=NA
+ppms.graph=set_graph_attr(ppms.graph,"layout",layout_nicely(ppms.graph))
+plot(ppms.graph)
+#
+#
+#   symbols(x=coords[,1], y=coords[,2], bg="red", fg="black",
+#            circles=vertex.size, lwd=vertex.frame.width, add=TRUE, inches=FALSE)
+```
+
+Use this graph to  compute the communities
+
+```{r louvain,results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
+par(mar=c(0,0,0,0))
+ppms.louvain=cluster_louvain(ppms.graph)
+knitr::kable(sizes(ppms.louvain))
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership])
+
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership],vertex.label=paste(datappm$Site,datappm$relative.period,sep="-"))
+```
+
+Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, with 6 communities. Not sure how to go 
+
+```{r,results="hold",out.width="10%",fig.show="hold"}
+options(width=50)
+knitr::kable(table(datappm$Chemical.cluster))
+knitr::kable(sizes(ppms.louvain))
+```
+
+
+```{r,results="asis"}
+# jelena 4 is  R louvain 3
+# jelena 2 is  R louvain 1
+# jelena 9 is  R louvain 2
+
+sum(datappm$Chemical.cluster==0 & ppms.louvain$membership ==4)
+sum(datappm$Chemical.cluster==1 & ppms.louvain$membership ==5)
+sum(datappm$Chemical.cluster==2 & ppms.louvain$membership ==1)
+sum(datappm$Chemical.cluster==4 & ppms.louvain$membership ==3)
+sum(datappm$Chemical.cluster==5 & ppms.louvain$membership ==6)
+sum(datappm$Chemical.cluster==9 & ppms.louvain$membership ==2)
+```
+
+
+Visual comparisaion of the communities, it's clearly the same.
+
+
+```{r compareOldNewResults,out.width="50%",fig.cap="Communities detected through louvain algorithm. Left: R `cluster_louvain` result. Right: Original paper results (level2 louvain results)."}
+par(mar=c(0,0,0,0))
+plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership])
+plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster+1])
+```
+
+
+Try to  detect communities within communities? (level 2 louvain?)
+```{r,eval=F}
+level2=lapply(ppms.louvain, function(g)cluster_louvain(induced.subgraph(ppms.graph,g)))
+```
+(doubt it's that)
+
+```{r out.width="50%",fig.cap="latlon"}
+latitude=as.numeric(gsub("[' \\\"N]","",gsub("Â°",".",gsub("\\.","",datappm$Geo.Latitude))))
+longitude=as.numeric(gsub("[' \\\"E]","",gsub("Â°",".",gsub("\\.","",datappm$Geo.Longitude))))
+plot(longitude ,latitude,bg=rainbow(6,alpha=.6)[ppms.louvain$membership],pch=21,cex=1.2)
+text(longitude ,latitude,datappm$Site,cex=.7)
+plot(longitude ,latitude,bg=rainbow(10,alpha=.6)[datappm$Chemical.cluster],pch=21,cex=1.2)
+text(longitude ,latitude,datappm$Site,cex=.7)
+```
+
+## Sites Network
+
+Count how many artefacts from each community sites share. We will use a simple match function (total number of similar communities):
+
+```{r}
+simpmatch  <-  function(i,j){
+    length(na.omit(match(i,j)))
+}
+```
+
+
+
+
+```{r}
+joined=cbind(datappm,louvain=ppms.louvain$membership)
+sites=unique(datappm$Site)
+
+system.time({
+matdim1=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$Site == s1],joined$louvain[ joined$Site == s2])))
+})
+
+system.time({
+matdim2=matrix(NA,nrow=80,ncol=80)
+for(s1 in 1:length(sites)){
+    for(s2 in 1:length(sites)){
+        c1=joined$louvain[ joined$Site == sites[s1]]
+        c2=joined$louvain[ joined$Site == sites[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
+}
+})
+sum(matdim2-matdim1)
+
+sites.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+plot(sites.graph)
+
+```
+
+Compute communities of sites:
+
+```{r}
+sites.communities=cluster_louvain(sites.graph)
+plot(sites.graph,vertex.color=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership])
+```
+
+### Site-period
+
+```{r}
+siteperiod=paste(datappm$Site,datappm$absolute.period)
+joined=cbind(joined,siteperiod)
+
+sites=unique(joined$siteperiod)
+matSP=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$siteperiod == s1],joined$louvain[ joined$siteperiod == s2])))
+
+sites.graph=graph.adjacency(matSP, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$frame.color="black"
+V(sites.graph)$frame.width=.5
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+plot(sites.graph)
+```
+
 
