@@ -7,25 +7,6 @@ fun_range <- function(x,n=100) {                              # Create user-defi
 ```{r}
 install.packages("ggtern")
 library(ggtern)
-pryce=read.csv("data/SEALIP_BROGLASEA data_Pryce.csv")
-geom <- density <- tern(data=pryce,aes())
- pryce[,12:42]=apply(pryce[,12:42],2,function(i){i[i=="tr"]=0;as.numeric(i)})
-pca=princomp(pryce[,12:42])
-pca=PCA(pryce[,12:42])
-cluster=hclust(dist(pca$ind$coord))
-nc=length(unique(pryce$Region))
-#nc=10
-cl=cutree(cluster,nc)
-plot(pca$ind$coord,col=rainbow(nc)[cl],pch=20)
-pryce$Easting...Longitude= as.numeric(gsub("°","",pryce$Easting...Longitude))
-pryce$Northing.Latitude= as.numeric(gsub("°","",pryce$Northing.Latitude))
-plot(pryce$Easting...Longitude,pryce$Northing.Latitude,col=cl,pch=20)
-text(pryce$Easting...Longitude,pryce$Northing.Latitude,pryce$Region,col=cl,pch=20)
-```
-
-```{r}
-install.packages("ggtern")
-library(ggtern)
 pryce=read.csv("data/Lead isotope data_PRYCE.csv")
 pryce[,11:15]=apply(pryce[,11:15],2,as.numeric)
 pryce=pryce[!is.na(pryce[,11]),]
@@ -40,6 +21,15 @@ ggtern(onlys ,aes(A,B,C))+theme_bw()+ geom_point(color=as.numeric(as.factor(pryc
 legend("topright",legend=unique(as.factor(pryce$Region)),col=unique(as.numeric(as.factor(pryce$Region))))
 ggtern(only ,aes(A,B,C))+
 geom_density_tern(aes(fill=as.numeric(as.factor(pryce$Region))),bins=10) + geom_point(color=as.numeric(as.factor(pryce$Region)))
+
+
+
+```
+
+
+Try ternary plots:
+
+```{r}
 
 ggtern(onlys ,aes(A,B,C,color=pryce$Region)) +
   theme_bw() + geom_mask() +
