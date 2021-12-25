@@ -292,14 +292,14 @@ $$ \sqrt{\sum\frac{1}{d^2}} $$
 library(igraph)
 ppms.ew=1/(exp(as.matrix(ppms.dist)))
 ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
-V(ppms.graph)$label=as.character(datappm$Site)
+V(ppms.graph)$label=as.character(datappm$Country)
 V(ppms.graph)$label.cex=.4
 V(ppms.graph)$size=8
 V(ppms.graph)$frame.color="black"
 V(ppms.graph)$frame.width=.5
-V(ppms.graph)$label.color="black"
+V(ppms.graph)$label.color=adjustcolor("black",.6)
 E(ppms.graph)$color=NA
-ppms.graph=set_graph_attr(ppms.graph,"layout",layout_nicely(ppms.graph))
+ppms.graph=set_graph_attr(ppms.graph,"layout",layout_with_fr(ppms.graph))
 plot(ppms.graph)
 #
 #
@@ -309,27 +309,40 @@ plot(ppms.graph)
 
 Use this graph to  compute the communities
 
-```{r louvain.new,results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
+```{r louvain.new, results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
 par(mar=c(0,0,0,0))
 ppms.louvain=cluster_louvain(ppms.graph)
 knitr::kable(sizes(ppms.louvain))
 ncommu=length(sizes(ppms.louvain))
 plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership])
 
-plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],vertex.label=paste(datappm$Site,datappm$relative.period,sep="-"))
+plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],vertex.label=NA)
+
 ```
 
-Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, with 6 communities. Not sure how to go 
 
+Check if the communities correspond to some specific countries:
 
-
-
-Try to  detect communities within communities? (level 2 louvain?)
-```{r,eval=F}
-level2=lapply(ppms.louvain, function(g)cluster_louvain(induced.subgraph(ppms.graph,g)))
+```{r}
+count=table(cbind.data.frame(Country=V(ppms.graph)$label,community=ppms.louvain$membership))
+knitr::kable(count)
 ```
-(doubt it's that)
+
+
 
 ```{r out.width="50%",fig.cap="latlon"}
 plot(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],pch=21)
 ```
+
+Avec les shapefiles:
+
+```{r}
+plot(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],pch=21)
+library(rgdal)
+country=c("BGD","CHN","IDN","IND","KHM","LAO","MMR","NPL","PHL","THA","VNM")
+for( m in country){
+    tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") )
+    plot(tmpm,add=T)
+}
+```
+
