@@ -20,7 +20,7 @@ output:
 
 
 ```{r,initialisation}
-knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
 ```
 
 Code Jelena other comnunity bipartite between metal mix and artefact
@@ -267,7 +267,7 @@ knitr::kable(cor(ppms))
 
 Compute PCA scores:
 
-```{r}
+```{r pcafig,fig.cap="cluster using directly the PCA result"}
 # remove eelement poorly detected
 ppms=ppms[,apply(ppms,2,function(i)sum(i==log(epsilon)))<(.4*nrow(ppms))]
 
@@ -289,7 +289,6 @@ $$ \sqrt{\sum\frac{1}{d^2}} $$
 
 ```{r}
 
-library(igraph)
 ppms.ew=1/(exp(as.matrix(ppms.dist)))
 ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
 V(ppms.graph)$label=as.character(datappm$Country)
@@ -301,10 +300,6 @@ V(ppms.graph)$label.color=adjustcolor("black",.6)
 E(ppms.graph)$color=NA
 ppms.graph=set_graph_attr(ppms.graph,"layout",layout_with_fr(ppms.graph))
 plot(ppms.graph)
-#
-#
-#   symbols(x=coords[,1], y=coords[,2], bg="red", fg="black",
-#            circles=vertex.size, lwd=vertex.frame.width, add=TRUE, inches=FALSE)
 ```
 
 Use this graph to  compute the communities
@@ -323,26 +318,67 @@ plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],v
 
 Check if the communities correspond to some specific countries:
 
-```{r}
+```{r,results="asis"}
 count=table(cbind.data.frame(Country=V(ppms.graph)$label,community=ppms.louvain$membership))
 knitr::kable(count)
 ```
 
 
-
-```{r out.width="50%",fig.cap="latlon"}
-plot(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],pch=21)
-```
+### Geographical representation
 
 Avec les shapefiles:
 
-```{r}
-plot(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],pch=21)
+```{r out.width="100%",fig.cap="latlon"}
+par(mar=c(0,0,0,0))
 library(rgdal)
 country=c("BGD","CHN","IDN","IND","KHM","LAO","MMR","NPL","PHL","THA","VNM")
-for( m in country){
-    tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") )
-    plot(tmpm,add=T)
+#for( m in country){
+#    tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") )
+#    plot(tmpm,add=T,lwd=.1)
+#}
+allshapefiles=lapply(country,function(m) tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") ))
+seashapefile=do.call("rbind",allshapefiles)
+plot(seashapefile,lwd=0.1)
+points(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],pch=21,ann=F,axes=F)
+```
+
+## Site Network
+
+```{r}
+joined=cbind(datappm,louvain=ppms.louvain$membership)
+regions=unique(datappm$Region)
+
+system.time({
+matdim1=sapply(regions,function(s1) sapply(regions,function(s2) simpmatch(joined$louvain[ joined$Region == s1],joined$louvain[ joined$Region == s2])))
+})
+
+system.time({
+matdim2=matrix(NA,nrow=80,ncol=80)
+for(s1 in 1:length(regions)){
+    for(s2 in 1:length(regions)){
+        c1=joined$louvain[ joined$Region == regions[s1]]
+        c2=joined$louvain[ joined$Region == regions[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
 }
+})
+sum(matdim2-matdim1)
+
+regions.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(regions.graph)$label=as.character(regions)
+V(regions.graph)$label.cex=.7
+V(regions.graph)$size=8
+V(regions.graph)$label.color="black"
+E(regions.graph)$color=NA
+regions.graph=set_graph_attr(regions.graph,"layout",layout_nicely(regions.graph))
+plot(regions.graph)
+
+```
+
+Compute communities of regions:
+
+```{r}
+regions.communities=cluster_louvain(regions.graph)
+plot(regions.graph,vertex.color=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
 ```
 
