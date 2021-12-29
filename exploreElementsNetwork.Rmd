@@ -20,7 +20,7 @@ output:
 
 
 ```{r,initialisation}
-knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
 ```
 
 Code Jelena other comnunity bipartite between metal mix and artefact
@@ -32,7 +32,7 @@ Get the data
 ```{r}
 epsilon=0.0001
 datappm=read.csv("Table S1.csv")
-#datappm[datappm==0.0001]=epsilon
+datappm[datappm==0.0001]=epsilon
 ppms=datappm[,15:21]
 plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
 ```
@@ -94,10 +94,11 @@ Use this graph to  compute the communities
 ```{r louvain,results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
 par(mar=c(0,0,0,0))
 ppms.louvain=cluster_louvain(ppms.graph)
+ppms.louvain=multilevel.community(ppms.graph,resolution=1)
 knitr::kable(sizes(ppms.louvain))
-plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership])
+plot(ppms.graph,vertex.color=rainbow(length(ppms.louvain),alpha=.6)[ppms.louvain$membership])
 
-plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership],vertex.label=paste(datappm$Site,datappm$relative.period,sep="-"))
+plot(ppms.graph,vertex.color=rainbow(length(ppms.louvain),alpha=.6)[ppms.louvain$membership],vertex.label=paste(datappm$Site,datappm$relative.period,sep="-"))
 ```
 
 Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, with 6 communities. Not sure how to go 
@@ -154,6 +155,11 @@ Count how many artefacts from each community sites share. We will use a simple m
 
 ```{r}
 simpmatch  <-  function(i,j){
+    if(length(i)>length(j)){
+        tmp=i
+        i=j
+        j=tmp
+    }
     length(na.omit(match(i,j)))
 }
 ```
@@ -197,11 +203,14 @@ Compute communities of sites:
 ```{r}
 sites.communities=cluster_louvain(sites.graph)
 plot(sites.graph,vertex.color=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership])
+plot(longitude ,latitude,bg=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership],pch=21,cex=1.2)
+text(longitude ,latitude,joined$siteperiod,cex=.7)
 ```
 
 ### Site-period
 
 ```{r}
+par(mar=c(0,0,0,0))
 siteperiod=paste(datappm$Site,datappm$absolute.period)
 joined=cbind(joined,siteperiod)
 
@@ -217,7 +226,11 @@ V(sites.graph)$frame.width=.5
 V(sites.graph)$label.color="black"
 E(sites.graph)$color=NA
 sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
-plot(sites.graph)
+sites.communities=cluster_louvain(sites.graph)
+plot(sites.graph,vertex.color=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership])
+
+plot(longitude ,latitude,bg=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership],pch=21,cex=1.2)
+text(longitude ,latitude,joined$siteperiod,cex=.7)
 ```
 
 
@@ -267,21 +280,51 @@ knitr::kable(cor(ppms))
 
 Compute PCA scores:
 
-```{r pcafig,fig.cap="cluster using directly the PCA result"}
+```{r pcafig,fig.cap="cluster using directly the PCA result",out.width="50%"}
 # remove eelement poorly detected
-ppms=ppms[,apply(ppms,2,function(i)sum(i==log(epsilon)))<(.4*nrow(ppms))]
+#ppms=ppms[,apply(ppms,2,function(i)sum(i==log(epsilon)))<(.4*nrow(ppms))]
 
 ppms.pca=prcomp(ppms)
 ppms.dist=dist(ppms.pca$x)
 ppms.clust=hclust(ppms.dist)
 ppms.kclust=cutree(ppms.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
 plot(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  )
+plot(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  ,main="PCA")
+plot(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  ,main="PCA")
 text(ppms.pca$x[,1],ppms.pca$x[,2],datappm$Region,cex=.5)
+
+```
+
+```{r tsneafig,fig.cap="cluster using Tsne decomposition",out.width="50%",fig.show="hold"}
+
+library(Rtsne)
+ppms.tsne=Rtsne(ppms,pca=F)
+ppms.dist=dist(ppms.tsne$Y)
+ppms.clust=hclust(ppms.dist, method = "ward.D")
+ppms.kclust=cutree(ppms.clust,k=13) #playing comparing community cluster vs simple hierarchical clustering
+plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,xlab="PC1",ylab="PC2")
+plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
+
+plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,main="tSNE")
+text(ppms.tsne$Y[,1],ppms.tsne$Y[,2],datappm$Region,cex=.5)
+```
+
+```{r geoTsne,fig.cap="show cluster geographically"}
+par(mar=rep(0,4))
+library(rgdal)
+country=c("BGD","CHN","IDN","IND","KHM","LAO","MMR","NPL","PHL","THA","VNM")
+#for( m in country){
+#    tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") )
+#    plot(tmpm,add=T,lwd=.1)
+#}
+allshapefiles=lapply(country,function(m) tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") ))
+seashapefile=do.call("rbind",allshapefiles)
+plot(seashapefile,lwd=0.1)
 
 datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
 datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
 
-plot(datappm$Easting...Longitude,datappm$Northing.Latitude,col=ppms.kclust,pch=20  )
+points(datappm$Easting...Longitude,datappm$Northing.Latitude,col=rainbow(10,alpha=.5)[ppms.kclust],pch=2,cex=.8)
 ```
 
 We now transform the result of the PCA as a graph, we compute edge weights as 
@@ -346,6 +389,7 @@ points(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,a
 
 ```{r}
 joined=cbind(datappm,louvain=ppms.louvain$membership)
+datappm=datappm[datappm$Region!="-",]
 regions=unique(datappm$Region)
 
 system.time({
@@ -353,7 +397,7 @@ matdim1=sapply(regions,function(s1) sapply(regions,function(s2) simpmatch(joined
 })
 
 system.time({
-matdim2=matrix(NA,nrow=80,ncol=80)
+matdim2=matrix(NA,nrow=length(regions),ncol=length(regions))
 for(s1 in 1:length(regions)){
     for(s2 in 1:length(regions)){
         c1=joined$louvain[ joined$Region == regions[s1]]
@@ -371,14 +415,15 @@ V(regions.graph)$size=8
 V(regions.graph)$label.color="black"
 E(regions.graph)$color=NA
 regions.graph=set_graph_attr(regions.graph,"layout",layout_nicely(regions.graph))
-plot(regions.graph)
 
 ```
 
 Compute communities of regions:
 
-```{r}
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
 regions.communities=cluster_louvain(regions.graph)
 plot(regions.graph,vertex.color=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
+plot(datappm$Easting...Longitude,datappm$Northing.Latitude ,pch=21,bg=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
 ```
 
