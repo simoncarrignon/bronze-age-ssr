@@ -10,6 +10,24 @@ library(ggtern)
 pryce=read.csv("data/Lead isotope data_PRYCE.csv")
 pryce[,11:15]=apply(pryce[,11:15],2,as.numeric)
 pryce=pryce[!is.na(pryce[,11]),]
+pryce.pca=prcomp(pryce[,11:15])
+pryce.dist=dist(pryce.pca$x)
+pryce.clust=hclust(pryce.dist)
+pryce.kclust=cutree(pryce.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
+plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+
+pryce$Easting...Longitude= as.numeric(gsub("°","",pryce$Easting...Longitude))
+pryce$Northing.Latitude= as.numeric(gsub("°","",pryce$Northing.Latitude))
+plot(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+
+
+```
+
+
+Try ternary plots:
+
+```{r}
+
 pryce[,13:15]=apply(pryce[,13:15],1,function(i)i/sum(i))
 only=pryce[,c(13:15)]
 colnames(only)=c("208Pb","207Pb","206Pb")
@@ -22,14 +40,6 @@ legend("topright",legend=unique(as.factor(pryce$Region)),col=unique(as.numeric(a
 ggtern(only ,aes(A,B,C))+
 geom_density_tern(aes(fill=as.numeric(as.factor(pryce$Region))),bins=10) + geom_point(color=as.numeric(as.factor(pryce$Region)))
 
-
-
-```
-
-
-Try ternary plots:
-
-```{r}
 
 ggtern(onlys ,aes(A,B,C,color=pryce$Region)) +
   theme_bw() + geom_mask() +
