@@ -19,9 +19,13 @@ fun_range <- function(x,n=100) {                              # Create user-defi
 }
 ```
 Get all shapefiles
-```{r}
+```{r,eval=F}
 allshapefiles=lapply(country,function(m) tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") ))
 seashapefile=do.call("rbind",allshapefiles)
+```
+
+```{r}
+seashapefile=writeOGR(dsn="Cartes/",layer="allsea")
 ```
 
 ```{r,out.width="50%"}
