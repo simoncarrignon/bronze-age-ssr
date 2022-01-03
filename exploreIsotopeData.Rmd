@@ -17,6 +17,14 @@ output:
 fun_range <- function(x,n=100) {                              # Create user-defined function
   (x - min(x)) / (max(x) - min(x)) * 100
 }
+simpmatch  <-  function(i,j){
+    if(length(i)>length(j)){
+        tmp=i
+        i=j
+        j=tmp
+    }
+    length(na.omit(match(i,j)))
+}
 ```
 Get all shapefiles
 ```{r,eval=F}
@@ -25,7 +33,8 @@ seashapefile=do.call("rbind",allshapefiles)
 ```
 
 ```{r}
-seashapefile=writeOGR(dsn="Cartes/",layer="allsea")
+library(rgdal)
+seashapefile=readOGR(dsn="Cartes/",layer="allsea")
 ```
 
 ```{r,out.width="50%"}
@@ -50,25 +59,27 @@ plot(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alph
 
 Tsnea and networks:
 ```{r}
+nk=6
 
 library(Rtsne)
 isotopes.tsne=Rtsne(isotopes,pca=F)
 isotopes.dist=dist(isotopes.tsne$Y)
 isotopes.clust=hclust(isotopes.dist, method = "ward.D")
-isotopes.kclust=cutree(isotopes.clust,k=13) #playing comparing community cluster vs simple hierarchical clustering
-plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(13)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2")
-plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(13)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
+isotopes.kclust=cutree(isotopes.clust,k=nk) #playing comparing community cluster vs simple hierarchical clustering
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2")
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
 
-plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(13)[isotopes.kclust],pch=20,main="tSNE")
-text(ppms.tsne$Y[,1],ppms.tsne$Y[,2],datappm$Region,cex=.5)
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,main="tSNE")
+text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce$Sites,cex=.5)
 ```
 
 netowrsk
-```{r}
 
-isotopes.ew=1/(as.matrix(isotopes.dist)^2)
+```{r}
+library(igraph)
+isotopes.ew=1/(exp(as.matrix(isotopes.dist)))
 isotopes.graph=graph.adjacency(isotopes.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
-V(isotopes.graph)$label=as.character(datappm$Country)
+V(isotopes.graph)$label=as.character(pryce$Site)
 V(isotopes.graph)$label.cex=.4
 V(isotopes.graph)$size=8
 V(isotopes.graph)$frame.color="black"
@@ -79,42 +90,112 @@ isotopes.graph=set_graph_attr(isotopes.graph,"layout",layout_with_fr(isotopes.gr
 plot(isotopes.graph)
 ```
 
+```{r louvain,results="hold",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%",fig.show="hold"}
+par(mar=c(0,0,0,0))
+isotopes.louvain=cluster_louvain(isotopes.graph)
+#while(length(table(isotopes.louvain$memberships[1,]))!=10)isotopes.louvain=cluster_louvain(isotopes.graph)
+#isotopes.louvain=multilevel.community(isotopes.graph)
+counts=as.data.frame(sort(table(isotopes.louvain$membership)))
+colnames(counts)=c("community","size")
+knitr::kable(counts)
+plot(isotopes.graph,vertex.color=rainbow(length(isotopes.louvain),alpha=.6)[isotopes.louvain$membership])
+
+plot(isotopes.graph,vertex.color=rainbow(length(isotopes.louvain),alpha=.6)[isotopes.louvain$membership],vertex.label=paste(pryce$Site,pryce$relative.period,sep="-"))
+
+plot(seashapefile,lwd=0.1)
+points(pryce$Easting...Longitude,pryce$Northing.Latitude ,pch=21,bg=rainbow(length(isotopes.louvain),alpha=.6)[isotopes.louvain$membership])
+```
+
+## Site Network
+
+```{r}
+joined=cbind(pryce,louvain=isotopes.louvain$membership)
+sites=unique(joined$Site)
+
+system.time({
+matdim1=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$Site == s1],joined$louvain[ joined$Site == s2])))
+})
+
+system.time({
+matdim2=matrix(NA,nrow=length(sites),ncol=length(sites))
+for(s1 in 1:length(sites)){
+    for(s2 in 1:length(sites)){
+        c1=joined$louvain[ joined$Site == sites[s1]]
+        c2=joined$louvain[ joined$Site == sites[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
+}
+})
+sum(matdim2-matdim1)
+
+sites.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+
+```
+
+visualise  communities of sites
+
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+sites.communities=cluster_louvain(sites.graph)
+comus=sites.communities$memberships[1,]
+
+plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
+plot(seashapefile,lwd=0.1)
+points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+
+comus=sites.communities$memberships[2,]
+
+plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
+plot(seashapefile,lwd=0.1)
+points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+
+```
 
 Try ternary plots:
 
 ```{r}
 #install.packages("ggtern")
-devtools::install_git('https://bitbucket.org/nicholasehamilton/ggtern')
+#devtools::install_git('https://bitbucket.org/nicholasehamilton/ggtern')
 library(ggtern)
 
 pryce[,13:15]=apply(pryce[,13:15],1,function(i)i/sum(i))
 only=pryce[,c(13:15)]
 colnames(only)=c("208Pb","207Pb","206Pb")
+colnames(only)=c("A","B","C")
 #only=t(apply(only,1,function(i)i/sum(i)))
 onlys=as.data.frame(apply(only,2,fun_range,n=50))
 only=as.data.frame(only)
 par(xpd=T)
 ggtern(onlys ,aes(A,B,C))+theme_bw()+ geom_point(color=as.numeric(as.factor(pryce$Region)))+geom_mask()
-legend("topright",legend=unique(as.factor(pryce$Region)),col=unique(as.numeric(as.factor(pryce$Region))))
 ggtern(only ,aes(A,B,C))+
 geom_density_tern(aes(fill=as.numeric(as.factor(pryce$Region))),bins=10) + geom_point(color=as.numeric(as.factor(pryce$Region)))
 
+#legend("topright",legend=unique(as.factor(pryce$Region)),col=unique(as.numeric(as.factor(pryce$Region))))
 
 ggtern(onlys ,aes(A,B,C,color=pryce$Region)) +
   theme_bw() + geom_mask() +
   geom_point()
 
 
+```
 
-  scale_T_continuous(limits=c(0.2,0.3),
-                     breaks=seq(0,1,by=0.01))+
-                     #labels=paste0("B",LETTERS[1:11])) + 
-  scale_L_continuous(limits=c(0.5,0.6),
-                     breaks=seq(0,1,by=0.01))+
-                     #labels=paste0("A",LETTERS[1:11])) + 
-  scale_R_continuous(limits=c(0.2,0.3),
-                     breaks=seq(0,1,by=0.01))
-                     #labels=paste0("C",LETTERS[1:11]))
+```{r,eval=F}
+
+#  scale_T_continuous(limits=c(0.2,0.3),
+#                     breaks=seq(0,1,by=0.01))+
+#                     #labels=paste0("B",LETTERS[1:11])) + 
+#  scale_L_continuous(limits=c(0.5,0.6),
+#                     breaks=seq(0,1,by=0.01))+
+#                     #labels=paste0("A",LETTERS[1:11])) + 
+#  scale_R_continuous(limits=c(0.2,0.3),
+#                     breaks=seq(0,1,by=0.01))
+#                     #labels=paste0("C",LETTERS[1:11]))
 
 ggtern(only ,aes(A,B,C))+geom_point(color=as.numeric(as.factor(pryce$Region)))+
   scale_T_continuous(limits=c(0.18,0.25),
