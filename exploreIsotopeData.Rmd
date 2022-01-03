@@ -1,20 +1,41 @@
+---
+title: "isotope data"
+author: "SC"
+date: "`r Sys.time()`"
+output: 
+    bookdown::html_document2:
+        code_folding: show
+        section_numbers: true
+        toc: true
+        toc_depth: 3
+        toc_float: true
+---
+
+# Isotope data
+
 ```{r}
 fun_range <- function(x,n=100) {                              # Create user-defined function
   (x - min(x)) / (max(x) - min(x)) * 100
 }
 ```
-
+Get all shapefiles
 ```{r}
-install.packages("ggtern")
-library(ggtern)
+allshapefiles=lapply(country,function(m) tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") ))
+seashapefile=do.call("rbind",allshapefiles)
+```
+
+```{r,out.width="50%"}
 pryce=read.csv("data/Lead isotope data_PRYCE.csv")
 pryce[,11:15]=apply(pryce[,11:15],2,as.numeric)
 pryce=pryce[!is.na(pryce[,11]),]
+isotopes=pryce[,11:15]
 pryce.pca=prcomp(pryce[,11:15])
 pryce.dist=dist(pryce.pca$x)
 pryce.clust=hclust(pryce.dist)
 pryce.kclust=cutree(pryce.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
 plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+text(pryce.pca$x[,1],pryce.pca$x[,2],pryce$Region,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
 
 pryce$Easting...Longitude= as.numeric(gsub("°","",pryce$Easting...Longitude))
 pryce$Northing.Latitude= as.numeric(gsub("°","",pryce$Northing.Latitude))
@@ -23,10 +44,44 @@ plot(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alph
 
 ```
 
+Tsnea and networks:
+```{r}
+
+library(Rtsne)
+isotopes.tsne=Rtsne(isotopes,pca=F)
+isotopes.dist=dist(isotopes.tsne$Y)
+isotopes.clust=hclust(isotopes.dist, method = "ward.D")
+isotopes.kclust=cutree(isotopes.clust,k=13) #playing comparing community cluster vs simple hierarchical clustering
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(13)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2")
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(13)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
+
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(13)[isotopes.kclust],pch=20,main="tSNE")
+text(ppms.tsne$Y[,1],ppms.tsne$Y[,2],datappm$Region,cex=.5)
+```
+
+netowrsk
+```{r}
+
+isotopes.ew=1/(as.matrix(isotopes.dist)^2)
+isotopes.graph=graph.adjacency(isotopes.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(isotopes.graph)$label=as.character(datappm$Country)
+V(isotopes.graph)$label.cex=.4
+V(isotopes.graph)$size=8
+V(isotopes.graph)$frame.color="black"
+V(isotopes.graph)$frame.width=.5
+V(isotopes.graph)$label.color=adjustcolor("black",.6)
+E(isotopes.graph)$color=NA
+isotopes.graph=set_graph_attr(isotopes.graph,"layout",layout_with_fr(isotopes.graph))
+plot(isotopes.graph)
+```
+
 
 Try ternary plots:
 
 ```{r}
+#install.packages("ggtern")
+devtools::install_git('https://bitbucket.org/nicholasehamilton/ggtern')
+library(ggtern)
 
 pryce[,13:15]=apply(pryce[,13:15],1,function(i)i/sum(i))
 only=pryce[,c(13:15)]
