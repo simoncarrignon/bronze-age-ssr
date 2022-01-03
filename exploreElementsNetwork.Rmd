@@ -20,7 +20,7 @@ output:
 
 
 ```{r,initialisation}
-knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
 ```
 
 Code Jelena other comnunity bipartite between metal mix and artefact
@@ -56,22 +56,27 @@ Check the correlations between ppms when log transformed
 knitr::kable(cor(ppms))
 ```
 
-### PCA 
+### PCA -dimenstion reduction
 
 Compute PCA scores:
 
 ```{r}
 ppms.pca=prcomp(ppms)
 ppms.dist=dist(ppms.pca$x)
-ppms.clust=hclust(ppms.dist)
+ppms.clust=hclust(ppms.dist,method="ward.D")
 ppms.kclust=cutree(ppms.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
 
-plot(ppms.pca$x[,1:2],col=datappm$Chemical.cluster+1)
-points(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  )
+plot(ppms.pca$x[,1:2],col=rainbow(10)[datappm$Chemical.cluster+1])
+points(ppms.pca$x[,1:2],col=rainbow(10)[ppms.kclust],pch=20  )
+#legend("topright",legend=paste0("Cluster #",1:10),pch=1,col=rainbow(10),title="original clusters")
+#legend("bottomright",legend=paste0("Cluster #",1:10),pch=20,col=rainbow(10),title="hclust clusters")
 ```
 
 We now transform the result of the PCA as a graph, we compute edge weights as 
 $$ \sqrt{\sum\frac{1}{d^2}} $$
+
+
+### Network reconstruction
 
 ```{r}
 
@@ -94,23 +99,38 @@ Use this graph to  compute the communities
 ```{r louvain,results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
 par(mar=c(0,0,0,0))
 ppms.louvain=cluster_louvain(ppms.graph)
-ppms.louvain=multilevel.community(ppms.graph,resolution=1)
-knitr::kable(sizes(ppms.louvain))
+#ppms.louvain=multilevel.community(ppms.graph)
+counts=as.data.frame(sort(table(ppms.louvain$membership)))
+colnames(counts)=c("community","size")
+knitr::kable(counts)
 plot(ppms.graph,vertex.color=rainbow(length(ppms.louvain),alpha=.6)[ppms.louvain$membership])
 
 plot(ppms.graph,vertex.color=rainbow(length(ppms.louvain),alpha=.6)[ppms.louvain$membership],vertex.label=paste(datappm$Site,datappm$relative.period,sep="-"))
 ```
 
-Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, with 6 communities. Not sure how to go 
+Looks like the `cluster_louvain` function return only the "first level" mentionned in the original paper, with 6 communities. Other level are given in `$memberships` but they don't exactly match original results
 
-```{r,results="hold",out.width="10%",fig.show="hold"}
+```{r ,results="asis",fig.cap="visualisation of the network with louvain communities of the second level. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
+par(mar=c(0,0,0,0))
+
+nc=length(unique(ppms.louvain$memberships[1,]))
+plot(ppms.graph,vertex.color=rainbow(nc,alpha=.6)[ppms.louvain$memberships[1,]])
+
+plot(ppms.graph,vertex.color=rainbow(length(ppms.louvain),alpha=.6)[ppms.louvain$memberships[1,]],vertex.label=paste(datappm$Site,datappm$relative.period,sep="-"))
+```
+Lets compare the communites found
+
+```{r,results="asis",out.width="10%",fig.show="hold"}
 options(width=50)
-knitr::kable(table(datappm$Chemical.cluster))
-knitr::kable(sizes(ppms.louvain))
+counts1=as.data.frame(sort(table(ppms.louvain$memberships[1,]),decreasing=T))
+counts2=as.data.frame(sort(table(ppms.louvain$memberships[2,]),decreasing=T))
+orig=as.data.frame(sort(table(datappm$Chemical.cluster),decreasing=T))
+colnames(orig)=colnames(counts1)=colnames(counts2)=c("community","size")
+knitr::kable(list(counts1,counts2,orig))
 ```
 
 
-```{r,results="asis"}
+```{r,results="hold"}
 # jelena 4 is  R louvain 3
 # jelena 2 is  R louvain 1
 # jelena 9 is  R louvain 2
@@ -133,12 +153,14 @@ plot(ppms.graph,vertex.color=rainbow(6,alpha=.6)[ppms.louvain$membership])
 plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster+1])
 ```
 
-
-Try to  detect communities within communities? (level 2 louvain?)
-```{r,eval=F}
-level2=lapply(ppms.louvain, function(g)cluster_louvain(induced.subgraph(ppms.graph,g)))
+```{r compareOldNewResultsLvl2,out.width="50%",fig.cap="Communities detected through louvain algorithm. Left: R `cluster_louvain` result. Right: Original paper results (level2 louvain results)."}
+par(mar=c(0,0,0,0))
+plot(ppms.graph,vertex.color=rainbow(nrow(counts1),alpha=.6)[ppms.louvain$memberships[2,]])
+plot(ppms.graph,vertex.color=rainbow(10,alpha=.6)[datappm$Chemical.cluster+1])
 ```
-(doubt it's that)
+
+Rough geo illustration
+
 
 ```{r out.width="50%",fig.cap="latlon"}
 latitude=as.numeric(gsub("[' \\\"N]","",gsub("Â°",".",gsub("\\.","",datappm$Geo.Latitude))))
@@ -276,7 +298,7 @@ Check the correlations between ppms when log transformed
 knitr::kable(cor(ppms))
 ```
 
-### PCA 
+### PCA - dimeension reduction
 
 Compute PCA scores:
 
@@ -294,16 +316,17 @@ plot(ppms.pca$x[,1:2],col=ppms.kclust,pch=20  ,main="PCA")
 text(ppms.pca$x[,1],ppms.pca$x[,2],datappm$Region,cex=.5)
 
 ```
+Using tSNEA to reduce dimensionality:
 
 ```{r tsneafig,fig.cap="cluster using Tsne decomposition",out.width="50%",fig.show="hold"}
 
 library(Rtsne)
 ppms.tsne=Rtsne(ppms,pca=F)
-ppms.dist=dist(ppms.tsne$Y)
-ppms.clust=hclust(ppms.dist, method = "ward.D")
-ppms.kclust=cutree(ppms.clust,k=13) #playing comparing community cluster vs simple hierarchical clustering
-plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,xlab="PC1",ylab="PC2")
-plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
+ppms.dist.tsnea=dist(ppms.tsne$Y)
+ppms.clust.tsnea=hclust(ppms.dist.tsnea, method = "ward.D")
+ppms.kclust.tsnea=cutree(ppms.clust.tsnea,k=13) #playing comparing community cluster vs simple hierarchical clustering
+plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust.tsnea],pch=20,xlab="PC1",ylab="PC2")
+plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust.tsnea],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
 
 plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,main="tSNE")
 text(ppms.tsne$Y[,1],ppms.tsne$Y[,2],datappm$Region,cex=.5)
