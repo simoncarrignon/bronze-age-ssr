@@ -202,7 +202,7 @@ simpmatch  <-  function(i,j){
 
 ```{r}
 joined=cbind(datappm,louvain=ppms.louvain$membership)
-sites=unique(datappm$Site)
+sites=unique(joined$Site)
 
 system.time({
 matdim1=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$Site == s1],joined$louvain[ joined$Site == s2])))
@@ -345,11 +345,11 @@ Using tSNEA to reduce dimensionality:
 
 library(Rtsne)
 ppms.tsne=Rtsne(ppms,pca=F)
-ppms.dist.tsnea=dist(ppms.tsne$Y)
-ppms.clust.tsnea=hclust(ppms.dist.tsnea, method = "ward.D")
-ppms.kclust.tsnea=cutree(ppms.clust.tsnea,k=13) #playing comparing community cluster vs simple hierarchical clustering
-plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust.tsnea],pch=20,xlab="PC1",ylab="PC2")
-plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust.tsnea],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
+ppms.dist=dist(ppms.tsne$Y)
+ppms.clust=hclust(ppms.dist, method = "ward.D")
+ppms.kclust=cutree(ppms.clust,k=13) #playing comparing community cluster vs simple hierarchical clustering
+plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,xlab="PC1",ylab="PC2")
+plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
 
 plot(ppms.tsne$Y[,1],ppms.tsne$Y[,2],col=rainbow(13)[ppms.kclust],pch=20,main="tSNE")
 text(ppms.tsne$Y[,1],ppms.tsne$Y[,2],datappm$Region,cex=.5)
@@ -398,9 +398,10 @@ par(mar=c(0,0,0,0))
 ppms.louvain=cluster_louvain(ppms.graph)
 knitr::kable(sizes(ppms.louvain))
 ncommu=length(sizes(ppms.louvain))
-plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership])
 
 plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],vertex.label=NA)
+
+plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership])
 
 ```
 
@@ -432,6 +433,57 @@ points(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,a
 ```
 
 ## Site Network
+
+```{r}
+joined=cbind(datappm,louvain=ppms.louvain$membership)
+sites=unique(joined$Site)
+
+system.time({
+matdim1=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$Site == s1],joined$louvain[ joined$Site == s2])))
+})
+
+system.time({
+matdim2=matrix(NA,nrow=length(sites),ncol=length(sites))
+for(s1 in 1:length(sites)){
+    for(s2 in 1:length(sites)){
+        c1=joined$louvain[ joined$Site == sites[s1]]
+        c2=joined$louvain[ joined$Site == sites[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
+}
+})
+sum(matdim2-matdim1)
+
+sites.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+
+```
+
+visualise  communities of sites
+
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+sites.communities=cluster_louvain(sites.graph)
+comus=sites.communities$memberships[1,]
+
+plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
+#plot(seashapefile,lwd=0.1)
+#points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+
+comus=sites.communities$memberships[2,]
+
+plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
+#plot(seashapefile,lwd=0.1)
+#points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+
+```
+
+Try with  communities of regions:
 
 ```{r}
 joined=cbind(datappm,louvain=ppms.louvain$membership)
@@ -470,6 +522,6 @@ Compute communities of regions:
 par(mar=c(0,0,0,0))
 regions.communities=cluster_louvain(regions.graph)
 plot(regions.graph,vertex.color=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
-plot(datappm$Easting...Longitude,datappm$Northing.Latitude ,pch=21,bg=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
+#plot(datappm$Easting...Longitude,datappm$Northing.Latitude ,pch=21,bg=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
 ```
 
