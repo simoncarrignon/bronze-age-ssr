@@ -20,7 +20,7 @@ output:
 
 
 ```{r,initialisation}
-knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
 ```
 
 Code Jelena other comnunity bipartite between metal mix and artefact
@@ -96,9 +96,10 @@ plot(ppms.graph)
 
 Use this graph to  compute the communities
 
-```{r louvain,results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
+```{r louvain,results="hold",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
 par(mar=c(0,0,0,0))
 ppms.louvain=cluster_louvain(ppms.graph)
+while(length(table(ppms.louvain$memberships[1,]))!=10)ppms.louvain=cluster_louvain(ppms.graph)
 #ppms.louvain=multilevel.community(ppms.graph)
 counts=as.data.frame(sort(table(ppms.louvain$membership)))
 colnames(counts)=c("community","size")
@@ -120,13 +121,23 @@ plot(ppms.graph,vertex.color=rainbow(length(ppms.louvain),alpha=.6)[ppms.louvain
 ```
 Lets compare the communites found
 
-```{r,results="asis",out.width="10%",fig.show="hold"}
+```{r,results="asis",out.width="10%",fig.show="hold",fig.pos="top"}
 options(width=50)
 counts1=as.data.frame(sort(table(ppms.louvain$memberships[1,]),decreasing=T))
 counts2=as.data.frame(sort(table(ppms.louvain$memberships[2,]),decreasing=T))
 orig=as.data.frame(sort(table(datappm$Chemical.cluster),decreasing=T))
 colnames(orig)=colnames(counts1)=colnames(counts2)=c("community","size")
-knitr::kable(list(counts1,counts2,orig))
+allcounts=list(counts1,counts2,orig)
+mxrow=max(sapply(allcounts,nrow))
+addrow <- function(tbl,newmax){
+    if(nrow(tbl)<newmax)
+        tbl[(nrow(tbl)+1):newmax,]=NA;
+    tbl
+}
+allcounts=lapply(allcounts,addrow,newmax=mxrow)
+
+knitr::kables(lapply(allcounts,knitr::kable))
+#knitr::kables(lapply(lapply(list(counts1,counts2,orig),knitr::kable),kableExtra::kable_styling))
 ```
 
 
@@ -233,7 +244,7 @@ text(longitude ,latitude,joined$siteperiod,cex=.7)
 
 ```{r}
 par(mar=c(0,0,0,0))
-siteperiod=paste(datappm$Site,datappm$absolute.period)
+siteperiod=paste0(datappm$Site,datappm$absolute.period)
 joined=cbind(joined,siteperiod)
 
 sites=unique(joined$siteperiod)
@@ -253,6 +264,18 @@ plot(sites.graph,vertex.color=rainbow(length(sites.communities),alpha=.6)[sites.
 
 plot(longitude ,latitude,bg=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership],pch=21,cex=1.2)
 text(longitude ,latitude,joined$siteperiod,cex=.7)
+```
+
+Compare the communities found with original results:
+,
+
+```{r,results="asis"}
+orig=read.csv("Table S2.csv")
+orig$Modularity.No.=orig$Modularity.No.+1
+newds=cbind.data.frame(Label=V(sites.graph)$label,newcommunities=sites.communities$membership)
+merged=merge(orig[,c("Label","Modularity.No.")],newds )
+kbl=knitr::kable(merged)
+kableExtra::row_spec(kbl,which(merged[,2]!=merged[,3]) , background = "red")
 ```
 
 
