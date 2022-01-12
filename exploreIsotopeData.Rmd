@@ -38,7 +38,7 @@ seashapefile=readOGR(dsn="Cartes/",layer="allsea")
 ```
 
 ```{r,out.width="50%"}
-pryce=read.csv("data/Lead isotope data_PRYCE.csv")
+pryce=read.csv("data/DATA isotopie_Pryce_V2.csv")
 pryce[,11:15]=apply(pryce[,11:15],2,as.numeric)
 pryce=pryce[!is.na(pryce[,11]),]
 isotopes=pryce[,11:15]
@@ -50,16 +50,34 @@ plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
 plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
 text(pryce.pca$x[,1],pryce.pca$x[,2],pryce$Region,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
 
+
+plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+text(pryce.pca$x[,1],pryce.pca$x[,2],pryce$Site,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
+
 pryce$Easting...Longitude= as.numeric(gsub("°","",pryce$Easting...Longitude))
 pryce$Northing.Latitude= as.numeric(gsub("°","",pryce$Northing.Latitude))
 plot(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
 
+plot(pryce[,15:14],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+text(pryce[,15],pryce[,14],pryce$Site,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
+
+ttt=dist(isotopes)
+ttt=as.matrix(ttt)
+dupli=which(apply(ttt,2,function(i)any(sum(i==0)>1)))
+
+isotopes=isotopes[-as.numeric(dupli),]
+pryce=pryce[-dupli,]
 
 ```
 
 Tsnea and networks:
-```{r}
+```{r,fig.height=20,fig.width=20}
 nk=6
+
+code=strsplit(pryce[,1],"/")
+code=sapply(code,function(s)paste0(s[3:4],collapse="/"))
+
 
 library(Rtsne)
 isotopes.tsne=Rtsne(isotopes,pca=F)
@@ -70,7 +88,8 @@ plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pc
 plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
 
 plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,main="tSNE")
-text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce$Sites,cex=.5)
+#text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce$Site,cex=.5)
+text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],code,cex=.5)
 ```
 
 netowrsk
@@ -90,7 +109,7 @@ isotopes.graph=set_graph_attr(isotopes.graph,"layout",layout_with_fr(isotopes.gr
 plot(isotopes.graph)
 ```
 
-```{r louvain,results="hold",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%",fig.show="hold"}
+```{r louvain,results="hold",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%",fig.show="hold",eval=F}
 par(mar=c(0,0,0,0))
 isotopes.louvain=cluster_louvain(isotopes.graph)
 #while(length(table(isotopes.louvain$memberships[1,]))!=10)isotopes.louvain=cluster_louvain(isotopes.graph)
@@ -108,7 +127,7 @@ points(pryce$Easting...Longitude,pryce$Northing.Latitude ,pch=21,bg=rainbow(leng
 
 ## Site Network
 
-```{r}
+```{r,eval=F}
 joined=cbind(pryce,louvain=isotopes.louvain$membership)
 sites=unique(joined$Site)
 
@@ -159,7 +178,7 @@ points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(le
 
 Try ternary plots:
 
-```{r}
+```{r,eval=F}
 #install.packages("ggtern")
 #devtools::install_git('https://bitbucket.org/nicholasehamilton/ggtern')
 library(ggtern)
