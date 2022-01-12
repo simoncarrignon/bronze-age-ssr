@@ -7,8 +7,7 @@ output:
         code_folding: show
         section_numbers: true
         toc: true
-        toc_depth: 3
-        toc_float: true
+
 ---
 
 # R-version of Community structure of copper supply networks in the prehistoric Balkans: An independent evaluation of the archaeological record from the 7th to the 4th millennium BC
@@ -33,20 +32,20 @@ Get the data
 epsilon=0.0001
 datappm=read.csv("Table S1.csv")
 datappm[datappm==0.0001]=epsilon
-ppms=datappm[,15:21]
+ppms=datappm[,15:21]  #select only a subset of the elements
 plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
 ```
 
 Check the correaltion between the elements' ppm
 
 ```{r,results="asis"}
-knitr::kable(cor(ppms))
+knitr::kable(cor(ppms)) #this is to show correlation between elements
 ```
 
 ### Log transform
 
 ```{r}
-ppms=as.data.frame(apply(ppms,2,log))
+ppms=as.data.frame(apply(ppms,2,log)) #take the log of the elements trace
 plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
 ```
 
@@ -61,13 +60,14 @@ knitr::kable(cor(ppms))
 Compute PCA scores:
 
 ```{r}
-ppms.pca=prcomp(ppms)
-ppms.dist=dist(ppms.pca$x)
-ppms.clust=hclust(ppms.dist,method="ward.D")
+ppms.pca=prcomp(ppms) #compute the PCA
+ppms.dist=dist(ppms.pca$x) #compute distance between PCA scores
+ppms.clust=hclust(ppms.dist,method="ward.D") #generate hierarchical cluster given the distances
 ppms.kclust=cutree(ppms.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
 
-plot(ppms.pca$x[,1:2],col=rainbow(10)[datappm$Chemical.cluster+1])
-points(ppms.pca$x[,1:2],col=rainbow(10)[ppms.kclust],pch=20  )
+plot(ppms.pca$x[,1:2],col=rainbow(10)[datappm$Chemical.cluster+1]) #plot the pca score and colors given the cluster found in the original paper
+points(ppms.pca$x[,1:2],col=rainbow(10)[ppms.kclust],pch=20  )#plot the pca score and colors given hierarchical clustering 
+
 #legend("topright",legend=paste0("Cluster #",1:10),pch=1,col=rainbow(10),title="original clusters")
 #legend("bottomright",legend=paste0("Cluster #",1:10),pch=20,col=rainbow(10),title="hclust clusters")
 ```
@@ -81,8 +81,11 @@ $$ \sqrt{\sum\frac{1}{d^2}} $$
 ```{r}
 
 library(igraph)
-ppms.ew=1/(as.matrix(ppms.dist)^2)
-ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+ppms.ew=1/(as.matrix(ppms.dist)^2) #Generate edges given the distance computed via the PCA scores
+ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE) #generate a graph
+
+
+## the lines below are used to set graphical option
 V(ppms.graph)$label=as.character(datappm$Site)
 V(ppms.graph)$label.cex=.4
 V(ppms.graph)$size=8
@@ -90,8 +93,10 @@ V(ppms.graph)$frame.color="black"
 V(ppms.graph)$frame.width=.5
 V(ppms.graph)$label.color="black"
 E(ppms.graph)$color=NA
-ppms.graph=set_graph_attr(ppms.graph,"layout",layout_nicely(ppms.graph))
-plot(ppms.graph)
+####################################
+
+ppms.graph=set_graph_attr(ppms.graph,"layout",layout_nicely(ppms.graph)) #generate a layout to position the node 
+plot(ppms.graph) #plot the graph
 ```
 
 Use this graph to  compute the communities
@@ -99,7 +104,8 @@ Use this graph to  compute the communities
 ```{r louvain,results="hold",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
 par(mar=c(0,0,0,0))
 ppms.louvain=cluster_louvain(ppms.graph)
-while(length(table(ppms.louvain$memberships[1,]))!=10)ppms.louvain=cluster_louvain(ppms.graph)
+#weirdly now louvain community structues gives only one set of 10 clusters
+#while(length(table(ppms.louvain$memberships[1,]))!=10){ppms.louvain=cluster_louvain(ppms.graph);print(length(table(ppms.louvain$memberships[1,])))}
 #ppms.louvain=multilevel.community(ppms.graph)
 counts=as.data.frame(sort(table(ppms.louvain$membership)))
 colnames(counts)=c("community","size")
@@ -288,13 +294,18 @@ kableExtra::row_spec(kbl,which(merged[,2]!=merged[,3]) , background = "red")
 
 
 ```{r}
-listelements=gsub("\\..*","",colnames(ppms))
 datappm=read.csv("data/SEALIP_BROGLASEA data_Pryce.csv")
+
+# set an arbitrary epsilon value and replace "tr"s and "0"s with it
+epsilon=0.0001
 datappm[,12:42]=apply(datappm[,12:42],2,function(i){i[i=="tr"]=epsilon;as.numeric(i)})
 datappm[,12:42]=apply(datappm[,12:42],2,function(i){i[i==0]=epsilon;as.numeric(i)})
+
+
 ppms=datappm[,12:42]
-#ppms=datappm[,listelements]
-ppms=ppms[,-7]
+listelements=c("Sb","Sn","Ag","Mo","Bi","Pb","Se","As","Au","Zn","Cu","Ni","Co")
+ppms=datappm[,listelements]
+#ppms=ppms[,-7]
 artnull=which(apply(ppms,1,sd)==0)
 artnull=c(222,289,296,299,531,172,181,531)
 datappm=datappm[-artnull,]
