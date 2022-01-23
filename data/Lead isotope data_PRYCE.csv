@@ -1,188 +1,645 @@
-LABEL analytical,local/regional cultural attribution (can vary a lot!),Absolute period,Site,Easting - Longitude,Northing-Latitude,Type of site/context,Region,Country,Artefact type,208Pb/206Pb,207Pb/206Pb,208Pb/204Pb,207Pb/204Pb,206Pb/204Pb
-SEALIP/TH/BC/1,Early Bronze Age,1100-900 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base socketed spearhead with bent tip,2.1077,0.85685,38.681,15.725,18.352
-SEALIP/TH/BC/2,Early Bronze Age,1100-800 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base O-section undecorated bracelet,2.0964,0.84794,38.739,15.669,18.479
-SEALIP/TH/BC/3,Early Bronze Age,1100-800 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base O-section undecorated bracelet,2.0963,0.84788,38.742,15.67,18.481
-SEALIP/TH/BC/4,Later Bronze Age,800-500 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base O-section undecorated bracelet,2.1076,0.85678,38.67,15.72,18.348
-SEALIP/TH/BC/5,Later Bronze Age,800-500 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base tanged arrow head,2.0872,0.8431,38.768,15.66,18.574
-SEALIP/TH/BC/6,Later Bronze Age,800-500 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base deep D-section undecorated bracelet,2.1049,0.85542,38.669,15.715,18.371
-SEALIP/TH/BC/7,Early Iron Age,500-200 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base dual phase fragment,2.1072,0.86165,38.509,15.747,18.275
-SEALIP/TH/BC/8,Early Iron Age,500-200 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base dual phase fragment,,,,,
-SEALIP/TH/BC/9,Early Iron Age,500-200 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base T-section undecorated bracelet,2.107,0.86174,38.514,15.752,18.279
-SEALIP/TH/BC/10,Early Iron Age,500-200 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base O-section decorated (slashes) bracelet,2.1051,0.85084,38.94,15.739,18.498
-SEALIP/TH/BC/11,Early Iron Age,500-200 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base crucible prill,2.115,0.85744,38.812,15.735,18.351
-SEALIP/TH/BC/12,Early Bronze Age,500-200 BC,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base crucible prill,2.1137,0.85695,38.782,15.723,18.348
-SEALIP/TH/BC/13,Late Iron Age,200 BC - AD 300,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base crucible prill,2.0911,0.8358,39.438,15.763,18.86
-SEALIP/TH/BC/14,Late Iron Age,200 BC - AD 300,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base crucible prill,2.0905,0.83451,39.519,15.776,18.904
-SEALIP/TH/BC/15,Late Iron Age,200 BC - AD 300,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base wire,2.1197,0.85568,38.829,15.674,18.318
-SEALIP/TH/BC/16,Late Iron Age,200 BC - AD 300,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,"copper-base knob-shaped fragment, possibly bowl base",2.1051,0.85105,38.923,15.736,18.49
-SEALIP/TH/BC/17,Late Iron Age,200 BC - AD 300,Ban Chiang,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Thailand,copper-base unknown flat fragment,2.1073,0.85443,38.873,15.762,18.447
-SEALIP/TH/DK/1,Late Iron Age,200 BC - AD 300,Don Klang,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Thailand,copper-base bangle,2.1155,0.85602,38.741,15.676,18.447
-SEALIP/TH/DK/2,Late Iron Age,200 BC - AD 300,Don Klang,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Thailand,copper-base wire,2.1116,0.85483,38.82,15.715,18.384
-SEALIP/TH/DK/3,Late Iron Age,200 BC - AD 300,Don Klang,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Thailand,copper base flat fragment,2.111,0.8545,38.769,15.693,18.365
-SEALIP/TH/BDTP/1,Early Iron Age,400 - 300 BC,Ban Don Tha Phet,99.670869,14.195100,cemetery,,Thailand,"copper-base bowl, straight-sided with four concentric ridges",2.1037,0.859,38.573,15.751,18.336
-SEALIP/TH/BDTP/2,Early Iron Age,400 - 300 BC,Ban Don Tha Phet,99.670869,14.195100,cemetery,,Thailand,copper-base bowl,2.1058,0.86157,38.492,15.749,18.279
-SEALIP/TH/BDTP/3,Early Iron Age,400 - 300 BC,Ban Don Tha Phet,99.670869,14.195100,cemetery,,Thailand,copper-base bowl base with knob,2.0241,0.81148,39.446,15.814,19.488
-SEALIP/TH/BDTP/4,Early Iron Age,400 - 300 BC,Ban Don Tha Phet,99.670869,14.195100,cemetery,,Thailand,copper-base bowl with knob,2.1083,0.8629,38.491,15.754,18.257
-SEALIP/TH/BDTP/5,Early Iron Age,400 - 300 BC,Ban Don Tha Phet,99.670869,14.195100,cemetery,,Thailand,copper-base bowl,2.0887,0.85649,38.491,15.783,18.428
-SEALIP/TH/BDTP/6,Early Iron Age,400 - 300 BC,Ban Don Tha Phet,99.670869,14.195100,cemetery,,Thailand,copper-base hollow O-section bracelet,2.1078,0.86192,38.52,15.752,18.275
-SEALIP/TH/BNW/1,Early Bronze Age (BA1),1050 BCE - 1000 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.0928,0.85154,38.311,15.588,18.306
-SEALIP/TH/BNW/2,Early Bronze Age (BA1),1050 BCE - 1000 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.1001,0.85835,38.052,15.552,18.119
-SEALIP/TH/BNW/3,Early Bronze Age (BA1),1050 BCE - 1000 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.1,0.85844,38.044,15.551,18.116
-SEALIP/TH/BNW/4,Early Bronze Age (BA2),1000 BCE - 900 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.0644,0.83667,38.631,15.657,18.713
-SEALIP/TH/BNW/5,Early Bronze Age (BA2),1000 BCE - 900 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.1069,0.86247,37.941,15.531,18.008
-SEALIP/TH/BNW/6,Early Bronze Age (BA2),1000 BCE - 900 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.0397,0.82074,39.07,15.721,19.155
-SEALIP/TH/BNW/7,Early Bronze Age (BA2),1000 BCE - 900 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu chisel,2.1073,0.86334,37.885,15.521,17.978
-SEALIP/TH/BNW/8,Early Bronze Age (BA2),1000 BCE - 900 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.1074,0.86301,37.914,15.526,17.991
-SEALIP/TH/BNW/9,Mid Bronze Age (BA3),900 BCE - 800 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu axe,2.095,0.8443,38.969,15.705,18.601
-SEALIP/TH/BNW/10,Mid Bronze Age (BA4),800 BCE - 700 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu arrowhead,2.0904,0.83879,39.17,15.717,18.738
-SEALIP/TH/BNW/11,Early Iron Age (IA1),420 BCE - 200 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Pb'd Br cordiform artefact,2.1077,0.8629,38.47,15.75,18.252
-SEALIP/TH/BNW/12,Early Iron Age (IA1),420 BCE - 200 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Pb frag,2.1082,0.863,38.483,15.753,18.254
-SEALIP/TH/BNW/13,Early Iron Age (IA1),420 BCE - 200 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Pb cordiform artefact,2.108,0.86288,38.477,15.75,18.253
-SEALIP/TH/BNW/14,Early Iron Age (IA1),420 BCE - 200 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu bangle,2.0773,0.83261,39.107,15.675,18.826
-SEALIP/TH/BNW/15,Early Iron Age (IA1),420 BCE - 200 BCE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Br bangle,2.1074,0.85732,38.702,15.745,18.365
-SEALIP/TH/BNW/16,Mid Iron Age (IA2),200 BCE - 200 CE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Br bracelet,2.109,0.85397,38.795,15.709,18.395
-SEALIP/TH/BNW/17,Late Iron Age (IA3),200 - 400 CE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Br bracelet,2.1115,0.8562,38.765,15.719,18.359
-SEALIP/TH/BNW/18,Late Iron Age (IA3),200 - 400 CE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Br bangle,2.1112,0.85606,38.764,15.718,18.361
-SEALIP/TH/BNW/19,Late Iron Age (IA3),200 - 400 CE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Cu spiral ornament,2.1094,0.8596,38.636,15.744,18.316
-SEALIP/TH/BNW/20,Late Iron Age (IA4),300 - 500 CE,Ban Non Wat,102.276277°,15.267438°,cemetery,,Thailand,Pb'd br bowl/cup,2.1072,0.85745,38.673,15.737,18.353
-SEALIP/VN/CT/1,Bắc thuộc,100 BCE – 100 CE,Cam Thuy,105.468319°,20.210976°,,,Vietnam,small bowl with raised and incised knob,2.1165,0.85342,38.901,15.686,18.38
-SEALIP/VN/CT/2,Bắc thuộc,100 BCE – 100 CE,Cam Thuy,105.468319°,20.210976°,,,Vietnam,"large bowl with single incised interior rim, slightly raised knob and triple incised exterior rim",2.1094,0.85062,38.891,15.683,18.437
-SEALIP/VN/CT/3,Bắc thuộc,100 BCE – 100 CE,Cam Thuy,105.468319°,20.210976°,,,Vietnam,medium bowl with double incised interior rim and no exterior incision,2.1119,0.85217,38.927,15.707,18.432
-SEALIP/VN/CT/4,Bắc thuộc,100 BCE – 100 CE,Cam Thuy,105.468319°,20.210976°,,,Vietnam,large bowl with triple exterior incision,2.1117,0.85153,38.902,15.687,18.422
-SEALIP/VN/CT/5,Bắc thuộc,100 BCE – 100 CE,Cam Thuy,105.468319°,20.210976°,,,Vietnam,"large bowl with single incised interior rim, slightly raised knob and triple incised exterior rim",2.1086,0.84928,38.992,15.705,18.492
-SEALIP/VN/DT/1,Bắc thuộc,c. 2000 BP,Đào Thịnh,104.787222°, 21.798611°,cemetery,,Vietnam,large adze,2.0964,0.84743,38.859,15.708,18.536
-SEALIP/VN/DT/2,Bắc thuộc,c. 2000 BP,Đào Thịnh,104.787222°, 21.798611°,cemetery,,Vietnam,forged socketed cutting tool,2.087,0.84353,38.666,15.628,18.527
-SEALIP/VN/DT/3,Bắc thuộc,c. 2000 BP,Đào Thịnh,104.787222°, 21.798611°,cemetery,,Vietnam,cast socket adze,2.0986,0.8474,38.977,15.739,18.573
-SEALIP/VN/DT/4,Bắc thuộc,c. 2000 BP,Đào Thịnh,104.787222°, 21.798611°,cemetery,,Vietnam,"square socket adze, flared blade",2.0542,0.8299,38.738,15.65,18.858
-SEALIP/VN/DT/5,Bắc thuộc,c. 2000 BP,Đào Thịnh,104.787222°, 21.798611°,cemetery,,Vietnam,Dongson drum,2.094,0.84415,38.883,15.675,18.569
-SEALIP/VN/DH/1,Western Han,206 BC - AD 9,Doc Hong,105.685539°,21.135396°,Western Han tomb near modern bronze casting village,,Vietnam,incised plate/dish (dia),2.1143,0.85276,38.901,15.69,18.399
-SEALIP/VN/DH/2,Western Han,206 BC - AD 9,Doc Hong,105.685539°,21.135396°,Western Han tomb near modern bronze casting village,,Vietnam,drinking vessel (nhi boi),2.1097,0.85243,38.793,15.674,18.388
-SEALIP/VN/DH/3,Western Han,206 BC - AD 9,Doc Hong,105.685539°,21.135396°,Western Han tomb near modern bronze casting village,,Vietnam,Dragon-headed spoon (dia),2.1126,0.85455,38.741,15.671,18.338
-SEALIP/VN/DX/1,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,small socketed implement Pb,2.1064,0.8491,38.935,15.695,18.484
-SEALIP/VN/DX/2,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,chopped decorated Pb,2.1144,0.85226,38.926,15.69,18.41
-SEALIP/VN/DX/3,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,socketed projectile,2.1245,0.8613,38.668,15.677,18.201
-SEALIP/VN/DX/4,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,socketed projectile,2.1101,0.8535,38.876,15.725,18.424
-SEALIP/VN/DX/5,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,socketed projectile Pb,2.1169,0.85251,38.97,15.694,18.409
-SEALIP/VN/DX/6,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,small socketed implement,2.1166,0.85559,38.852,15.705,18.356
-SEALIP/VN/DX/7,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,small socketed implement,2.1308,0.86149,38.727,15.658,18.175
-SEALIP/VN/DX/8,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,bracelet,2.1005,0.84828,38.962,15.735,18.549
-SEALIP/VN/DX/9,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,ring,2.1052,0.85473,38.771,15.742,18.417
-SEALIP/VN/DX/10,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,Dongson drum,2.1137,0.85102,38.685,15.575,18.302
-SEALIP/VN/DX/11,Late Đông Sơn/Western Han,200 - 50 BC,Đọng Xá,106.396422°,20.564421°,cemetery,,Vietnam,socket,2.1117,0.855,38.824,15.719,18.385
-SEALIP/IN/GZ/1,,,Gazole,88.192384°,25.210859°,,West Bengal. Maldar district,India,hi-Sn bronze,2.0925,0.84769,38.596,15.636,18.445
-SEALIP/VN/GP/1,Bắc thuộc,c. 2000 BP,Gioi Phien,104.889247°,21.692131°,,,Vietnam,adze with flared curved blade,2.1035,0.84934,38.873,15.696,18.48
-SEALIP/VN/HM/1,,500 - 100 BC,Hop Minh,104.862975°,21.685803°,,,Vietnam,socketed cutting tool,2.1099,0.85043,38.82,15.647,18.399
-SEALIP/TH/KSK/1,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Br bracelet,2.0812,0.83433,39.333,15.768,18.899
-SEALIP/TH/KSK/2,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Br bowl,2.0705,0.84593,38.656,15.794,18.67
-SEALIP/TH/KSK/3,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Br bowl,2.0596,0.82548,39.419,15.799,19.139
-SEALIP/TH/KSK/4,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Br bowl,2.0063,0.7695,41.542,15.933,20.706
-SEALIP/TH/KSK/5,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Br ingot,2.0806,0.84115,39.015,15.773,18.752
-SEALIP/TH/KSK/6,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Pb br drum,2.1149,0.85195,38.961,15.695,18.422
-SEALIP/TH/KSK/7,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Pb br mirror,2.16,0.87276,38.485,15.55,17.817
-SEALIP/TH/KSK/8,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Br projectile point,2.1479,0.86899,38.667,15.644,18.002
-SEALIP/TH/KSK/9,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Br bell/vessel frag,2.1034,0.85797,38.595,15.743,18.349
-SEALIP/TH/KSK/10,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Hi-Sn br bowl frag,2.1074,0.87714,37.784,15.726,17.929
-SEALIP/TH/KSK/11,Early-Mid Iron Age,400 BCE - 100 CE,Khao Sam Kaeo,99.184070°,10.525470°,Settlement,,Thailand,Hi-Sn br bowl frag,2.0842,0.85459,38.51,15.79,18.477
-SEALIP/TH/KW/1,Early-Mid Iron Age,400 - 100 BC,Kiri Wangkaran,99.935802°,9.456126°,Ko Samui (stored Chaiya Museum),,Thailand,Dongson drum,2.1133,0.85277,38.95,15.717,18.431
-SEALIP/VN/LV/1,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,Dongson drum,2.1033,0.84802,38.926,15.694,18.507
-SEALIP/VN/LV/2,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,complex vessel with separate handles,2.0988,0.84851,38.815,15.692,18.494
-SEALIP/VN/LV/3,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,dish,2.1184,0.85767,38.765,15.695,18.299
-SEALIP/VN/LV/4,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,situla (big),2.1126,0.85128,38.937,15.69,18.431
-SEALIP/VN/LV/5,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,situla (small),2.1185,0.8548,38.847,15.674,18.337
-SEALIP/VN/LV/6,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,bowl (single incised interior),2.0936,0.84885,38.69,15.687,18.48
-SEALIP/VN/LV/7,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,bowl (triple incised interior),2.1207,0.85527,38.872,15.677,18.33
-SEALIP/VN/LV/8,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,bowl (thick wall),2.1148,0.85224,38.917,15.683,18.402
-SEALIP/VN/LV/9,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,bowl (no incision),2.1151,0.85249,38.931,15.691,18.406
-SEALIP/VN/LV/10,Late Đông Sơn/Western Han,200 – 0 BCE,Làng Vạc,105.428596°,19.316585°,burial,,Vietnam,basin (chau),2.1154,0.85238,38.928,15.685,18.402
-SEALIP/KH/PKM/1,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,Pb strip,2.0916,0.84734,38.734,15.692,18.519
-SEALIP/KH/PKM/2,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.111,0.85739,38.674,15.707,18.32
-SEALIP/KH/PKM/3,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.1159,0.85501,38.867,15.706,18.369
-SEALIP/KH/PKM/4,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.1165,0.85506,38.88,15.707,18.37
-SEALIP/KH/PKM/5,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.1168,0.85473,38.886,15.701,18.37
-SEALIP/KH/PKM/6,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.1159,0.855,38.865,15.705,18.368
-SEALIP/KH/PKM/7,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.1124,0.85301,38.898,15.707,18.414
-SEALIP/KH/PKM/8,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.0622,0.82731,39.301,15.767,19.058
-SEALIP/KH/PKM/9,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br bracelet,2.1145,0.85469,38.852,15.704,18.374
-SEALIP/KH/PKM/10,Chenla,500-700 CE,Prei Khmeng,103.757302°,13.428109°,cemetery,Siem Reap province,Cambodia,br uncertain,2.118,0.85531,38.857,15.692,18.346
-SEALIP/KH/PH/1,Mid Iron Age,150 BC - AD 50,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Drum (Pb-Br),2.1107,0.85059,38.966,15.703,18.461
-SEALIP/KH/PH/2,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Blade (Br),2.1152,0.85825,38.744,15.721,18.317
-SEALIP/KH/PH/3,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Bracelet (Br),2.1083,0.85245,38.898,15.728,18.45
-SEALIP/KH/PH/4,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Bracelet (Br),2.1047,0.85015,38.979,15.745,18.52
-SEALIP/KH/PH/5,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Bracelet (Pb-Br),2.1154,0.85228,38.951,15.693,18.413
-SEALIP/KH/PH/6,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Bracelet (Br),2.0991,0.85061,38.85,15.743,18.508
-SEALIP/KH/PH/7,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Bracelet (Pb-Br),2.1206,0.85481,38.907,15.683,18.347
-SEALIP/KH/PH/8,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Bowl (hi-Sn),2.1513,0.90264,37.293,15.647,17.335
-SEALIP/KH/PH/9,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Drum (Pb-Br),2.1168,0.85262,38.97,15.697,18.41
-SEALIP/KH/PH/10,Mid Iron Age,100 BCE,Prohear,105.522526,11.540274,cemetery,Prey Veng province,Cambodia,Bowl (Pb-Br),2.1637,0.87616,38.386,15.544,17.741
-SEALIP/PNG/SASI/1,Early Metal Age,200 BCE - 200 CE,Sasi,147.310862°,-2.443609°,Raised beach deposit,,Papua New Guinea,br uncertain,2.07,0.83943,38.401,15.572,18.551
-SEALIP/VN/SK/1,Eastern Han,AD 25-220,Song Khoai,106.811938°,20.976858°,02SK-M03,,Vietnam,Eastern Han mirror,2.1231,0.86024,38.736,15.695,18.245
-SEALIP/VN/SK/2,Eastern Han,AD 25-220,Song Khoai,106.811938°,20.976858°,02SK-M03,,Vietnam,gilded Eastern Han mirror,2.0777,0.83378,39.156,15.713,18.846
-SEALIP/VN/TKL/1,,,Thap Khe Lo,,,,,Vietnam,decorated situla,2.1053,0.84915,39.076,15.761,18.561
-SEALIP/VN/YP/1,,,Yen Phu,105.925927°,21.194357°,,,Vietnam,bearded axe,2.0935,0.84421,39.017,15.734,18.637
-SEALIP/TH/KS/2,Early Iron Age,400 - 100 BC,Khao Sek, 99.080257, 9.958980,Settlement,,Thailand,drum,2.1072,0.856,38.693,15.718,18.362
-SEALIP/MY/KGG/1,Iron Age,,Kan Gyi Gon,,,,,,copper-base wire bundle,2.0857,0.83911,38.791,15.606,18.598
-SEALIP/MY/NGO/1,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0863,0.83947,38.791,15.608,18.593
-SEALIP/MY/NGO/2,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0852,0.83886,38.789,15.605,18.602
-SEALIP/MY/NGO/3,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0861,0.83963,38.79,15.613,18.595
-SEALIP/MY/NGO/4,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.085,0.83789,38.991,15.669,18.701
-SEALIP/MY/NGO/5,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0848,0.83882,38.785,15.605,18.604
-SEALIP/MY/NGO/6,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0854,0.83903,38.78,15.603,18.596
-SEALIP/MY/NGO/7,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0845,0.83899,38.765,15.603,18.597
-SEALIP/MY/NGO/8,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0857,0.83918,38.786,15.606,18.596
-SEALIP/MY/NGO/9,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0859,0.84003,38.745,15.604,18.575
-SEALIP/MY/NGO/10,Early Iron Age,500 - 100 BC,Nyaung Gon, 95.059942, 22.411151,cemetery,Mandalay Division,Myanmar,wire bundle,2.0847,0.83891,38.819,15.621,18.621
-SEALIP/MY/OAI1/1,Early Bronze Age,1000 - 800 BC,Oakaie 1,95.049182, 22.390086,cemetery,Sagaing Division,Myanmar,copper-base adze/axe,2.0853,0.84556,38.708,15.696,18.562
-SEALIP/MY/OAI2/1,Early Bronze Age,1000 - 800 BC,Oakaie 2, 95.041954, 22.390500,settlement,Sagaing Division,Myanmar,rod,2.0939,0.85118,38.501,15.651,18.387
-SEALIP/MY/OAI3/1,Early Bronze Age,1000 - 800 BC,Oakaie 3, 95.040290,22.389254,settlement/industry,Sagaing Division,Myanmar,Cu-stained ceramic,2.0627,0.83588,38.683,15.675,18.753
-SEALIP/MY/OAI3/2,Early Bronze Age,1001 - 800 BC,Oakaie 3, 95.040290,22.389254,settlement/industry,Sagaing Division,Myanmar,bracelet frag,2.1074,0.85747,38.614,15.711,18.323
-SEALIP/MY/OAI3/3,Early Bronze Age,1002 - 800 BC,Oakaie 3, 95.040290,22.389254,settlement/industry,Sagaing Division,Myanmar,ring frag,2.1075,0.85724,38.637,15.716,18.333
-SEALIP/MY/OAI3/4,Early Bronze Age,1003 - 800 BC,Oakaie 3, 95.040290,22.389254,settlement/industry,Sagaing Division,Myanmar,bracelet frag,2.1047,0.85643,38.564,15.692,18.323
-SEALIP/MY/OAI3/5,Early Bronze Age,1004 - 800 BC,Oakaie 3, 95.040290,22.389254,settlement/industry,Sagaing Division,Myanmar,bracelet frag,2.1076,0.86352,37.909,15.532,17.987
-SEALIP/MY/OAI3/6,Early Bronze Age,1005 - 800 BC,Oakaie 3, 95.040290,22.389254,settlement/industry,Sagaing Division,Myanmar,ring frag,2.0837,0.84435,38.58,15.633,18.515
-SEALIP/MY/OAI3/7,Early Bronze Age,1006 - 800 BC,Oakaie 3, 95.040290,22.389254,settlement/industry,Sagaing Division,Myanmar,"platy fragment, possibly small cutting tool",2.032,0.81827,39.132,15.758,19.258
-SEALIP/MY/OAI/1,Early-Mid Bronze Age,1000 - 700 BC,"""Oakaie""", 95.051987, 22.403892,Yangon University Museum,Sagaing Division,Myanmar,fragment,2.0641,0.82125,39.564,15.742,19.168
-SEALIP/MY/OAI/2,Early-Mid Bronze Age,1000 - 700 BC,"""Oakaie""", 95.051987, 22.403892,Yangon University Museum,Sagaing Division,Myanmar,ingot' fragment,2.1088,0.85406,38.801,15.714,18.399
-SEALIP/MY/MHT/1,Bronze Age,1000 - 500 BC,Mon Htoo, 95.226852, 22.340746,villagers' collections,Sagaing Division,Myanmar,fragment,2.0958,0.84602,38.905,15.705,18.563
-SEALIP/MY/MHT/2,Bronze Age,1000 - 500 BC,Mon Htoo, 95.226852, 22.340746,villagers' collections,Sagaing Division,Myanmar,platy fragment,2.0812,0.8383,38.962,15.694,18.721
-SEALIP/MY/MHT/3,Bronze Age,1000 - 500 BC,Mon Htoo, 95.226852, 22.340746,villagers' collections,Sagaing Division,Myanmar,ring frag,2.1077,0.85753,38.625,15.715,18.326
-SEALIP/MY/NYG/1,Early Bronze Age,1000 - 800 BC,Nyaung'gan, 95.059942, 22.411151,cemetery,Sagaing Division,Myanmar,arrow/spear head,2.1075,0.86408,37.826,15.509,17.949
-SEALIP/MY/MOH/1,Iron Age,500 - 100 BC,Myin Oo Hle, 95.538034, 21.119677,Yangon University Museum,Mandalay Division,Myanmar,bell fragment,2.066,0.82183,39.625,15.763,19.18
-SEALIP/MY/SP/1,Late Iron Age (Myanmar),AD 0 - 100,Supan,96.114377, 21.156425,U Soe Naing collection,Mandalay Division,Myanmar,hi-Sn bronze bowl fragment,2.105,0.85811,38.628,15.747,18.351
-SEALIP/MY/MT/1,Iron Age,500 - 100 BC,Myinthe, 95.876616, 21.789439,U Soe Naing collection,Mandalay Division,Myanmar,spearhead fragment,2.0846,0.83886,38.774,15.603,18.601
-SEALIP/MY/HTP/1,Iron Age,500 BC - AD 100,Htan Ta Pin, 95.996184, 20.591653,Mandalay museum,Mandalay Division,Myanmar,bronze bowl fragment,2.0828,0.8407,38.949,15.722,18.701
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,
+LABEL analytical,Absolute period,Period (large),Site,Site abreviation,Easting - Longitude,Northing-Latitude,Type of site/context,Region,River basin,Country,Artefact (simplified),208Pb/206Pb,207Pb/206Pb,208Pb/204Pb,207Pb/204Pb,206Pb/204Pb,Corrosion products
+SEALIP/TH/BC/1,1100-900 BC,Bronze Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Spearhead,2.1077,0.85685,38.681,15.725,18.352,Low
+SEALIP/TH/BC/2,1100-800 BC,Bronze Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.0964,0.84794,38.739,15.669,18.479,Low
+SEALIP/TH/BC/3,1100-800 BC,Bronze Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.0963,0.84788,38.742,15.67,18.481,Medium
+SEALIP/TH/BC/4,800-500 BC,Bronze Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.1076,0.85678,38.67,15.72,18.348,Medium
+SEALIP/TH/BC/5,800-500 BC,Bronze Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Arrowhead,2.0872,0.8431,38.768,15.66,18.574,Medium
+SEALIP/TH/BC/6,800-500 BC,Bronze Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,bangle,2.1049,0.85542,38.669,15.715,18.371,High
+SEALIP/TH/BC/7,500-200 BC,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Fragment,2.1072,0.86165,38.509,15.747,18.275,Low
+SEALIP/TH/BC/9,500-200 BC,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.107,0.86174,38.514,15.752,18.279,Low
+SEALIP/TH/BC/10,500-200 BC,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.1051,0.85084,38.94,15.739,18.498,Low
+SEALIP/TH/BC/11,500-200 BC,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Crucible prill,2.115,0.85744,38.812,15.735,18.351,Low
+SEALIP/TH/BC/12,500-200 BC,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Crucible prill,2.1137,0.85695,38.782,15.723,18.348,Low
+SEALIP/TH/BC/13,200 BC - AD 300,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Crucible prill,2.0911,0.8358,39.438,15.763,18.86,Low
+SEALIP/TH/BC/14,200 BC - AD 300,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Crucible prill,2.0905,0.83451,39.519,15.776,18.904,High
+SEALIP/TH/BC/15,200 BC - AD 300,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.1197,0.85568,38.829,15.674,18.318,Low
+SEALIP/TH/BC/16,200 BC - AD 300,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Bowl,2.1051,0.85105,38.923,15.736,18.49,Medium
+SEALIP/TH/BC/17,200 BC - AD 300,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Fragment,2.1073,0.85443,38.873,15.762,18.447,Medium
+SEALIP/TH/DK/1,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.1155,0.85602,38.741,15.676,18.447,Medium
+SEALIP/TH/DK/2,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.1116,0.85483,38.82,15.715,18.384,Medium
+SEALIP/TH/DK/3,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Fragment,2.111,0.8545,38.769,15.693,18.365,Medium
+SEALIP/TH/BDTP/1,400 - 300 BC,Iron Age,Ban Don Tha Phet,BDTP,99.670869,14.195100,cemetery,Kanchanaburi Province,Tha Chin river basin,Thailand,Bowl,2.1037,0.859,38.573,15.751,18.336,Low
+SEALIP/TH/BDTP/2,400 - 300 BC,Iron Age,Ban Don Tha Phet,BDTP,99.670869,14.195100,cemetery,Kanchanaburi Province,Tha Chin river basin,Thailand,Bowl,2.1058,0.86157,38.492,15.749,18.279,Low
+SEALIP/TH/BDTP/3,400 - 300 BC,Iron Age,Ban Don Tha Phet,BDTP,99.670869,14.195100,cemetery,Kanchanaburi Province,Tha Chin river basin,Thailand,Bowl,2.0241,0.81148,39.446,15.814,19.488,Low
+SEALIP/TH/BDTP/4,400 - 300 BC,Iron Age,Ban Don Tha Phet,BDTP,99.670869,14.195100,cemetery,Kanchanaburi Province,Tha Chin river basin,Thailand,Bowl,2.1083,0.8629,38.491,15.754,18.257,Low
+SEALIP/TH/BDTP/5,400 - 300 BC,Iron Age,Ban Don Tha Phet,BDTP,99.670869,14.195100,cemetery,Kanchanaburi Province,Tha Chin river basin,Thailand,Bowl,2.0887,0.85649,38.491,15.783,18.428,Low
+SEALIP/TH/BDTP/6,400 - 300 BC,Iron Age,Ban Don Tha Phet,BDTP,99.670869,14.195100,cemetery,Kanchanaburi Province,Tha Chin river basin,Thailand,Bangle,2.1078,0.86192,38.52,15.752,18.275,Low
+SEALIP/TH/BNW/1,1050 BCE - 1000 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.0928,0.85154,38.311,15.588,18.306,Low
+SEALIP/TH/BNW/2,1050 BCE - 1000 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.1001,0.85835,38.052,15.552,18.119,High
+SEALIP/TH/BNW/3,1050 BCE - 1000 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.1,0.85844,38.044,15.551,18.116,Low
+SEALIP/TH/BNW/4,1000 BCE - 900 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.0644,0.83667,38.631,15.657,18.713,High
+SEALIP/TH/BNW/5,1000 BCE - 900 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.1069,0.86247,37.941,15.531,18.008,Low
+SEALIP/TH/BNW/6,1000 BCE - 900 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.0397,0.82074,39.07,15.721,19.155,Medium
+SEALIP/TH/BNW/7,1000 BCE - 900 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Chisel,2.1073,0.86334,37.885,15.521,17.978,High
+SEALIP/TH/BNW/8,1000 BCE - 900 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.1074,0.86301,37.914,15.526,17.991,High
+SEALIP/TH/BNW/9,900 BCE - 800 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Axe,2.095,0.8443,38.969,15.705,18.601,High
+SEALIP/TH/BNW/10,800 BCE - 700 BCE,Bronze Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Arrowhead,2.0904,0.83879,39.17,15.717,18.738,High
+SEALIP/TH/BNW/11,420 BCE - 200 BCE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Cordiform,2.1077,0.8629,38.47,15.75,18.252,Low
+SEALIP/TH/BNW/12,420 BCE - 200 BCE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Fragment,2.1082,0.863,38.483,15.753,18.254,High
+SEALIP/TH/BNW/13,420 BCE - 200 BCE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Cordiform,2.108,0.86288,38.477,15.75,18.253,High
+SEALIP/TH/BNW/14,420 BCE - 200 BCE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.0773,0.83261,39.107,15.675,18.826,Medium
+SEALIP/TH/BNW/15,420 BCE - 200 BCE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.1074,0.85732,38.702,15.745,18.365,Low
+SEALIP/TH/BNW/16,200 BCE - 200 CE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.109,0.85397,38.795,15.709,18.395,High
+SEALIP/TH/BNW/17,200 - 400 CE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.1115,0.8562,38.765,15.719,18.359,High
+SEALIP/TH/BNW/18,200 - 400 CE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.1112,0.85606,38.764,15.718,18.361,High
+SEALIP/TH/BNW/19,200 - 400 CE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Spiral,2.1094,0.8596,38.636,15.744,18.316,High
+SEALIP/TH/BNW/20,300 - 500 CE,Iron Age,Ban Non Wat,BNW,102.276277,15.267438,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bowl,2.1072,0.85745,38.673,15.737,18.353,Low
+SEALIP/VN/CT/1,100 BCE – 100 CE,Iron Age,Cam Thuy,CT,105.468319,20.210976,,Hanoi capital region,Red river basin,Vietnam,Bowl,2.1165,0.85342,38.901,15.686,18.38,Low
+SEALIP/VN/CT/2,100 BCE – 100 CE,Iron Age,Cam Thuy,CT,105.468319,20.210976,,Hanoi capital region,Red river basin,Vietnam,Bowl,2.1094,0.85062,38.891,15.683,18.437,Low
+SEALIP/VN/CT/3,100 BCE – 100 CE,Iron Age,Cam Thuy,CT,105.468319,20.210976,,Hanoi capital region,Red river basin,Vietnam,Bowl,2.1119,0.85217,38.927,15.707,18.432,Low
+SEALIP/VN/CT/4,100 BCE – 100 CE,Iron Age,Cam Thuy,CT,105.468319,20.210976,,Hanoi capital region,Red river basin,Vietnam,Bowl,2.1117,0.85153,38.902,15.687,18.422,Low
+SEALIP/VN/CT/5,100 BCE – 100 CE,Iron Age,Cam Thuy,DT,105.468319,20.210976,,Hanoi capital region,Red river basin,Vietnam,Bowl,2.1086,0.84928,38.992,15.705,18.492,Low
+SEALIP/VN/DT/1,c. 2000 BP,Iron Age,Đào Thịnh,DT,104.787222, 21.798611,cemetery,Tuyen Quang Province,Red river basin,Vietnam,Adez,2.0964,0.84743,38.859,15.708,18.536,Low
+SEALIP/VN/DT/2,c. 2000 BP,Iron Age,Đào Thịnh,DT,104.787222, 21.798611,cemetery,Tuyen Quang Province,Red river basin,Vietnam,Tool,2.087,0.84353,38.666,15.628,18.527,Low
+SEALIP/VN/DT/3,c. 2000 BP,Iron Age,Đào Thịnh,DT,104.787222, 21.798611,cemetery,Tuyen Quang Province,Red river basin,Vietnam,Adze,2.0986,0.8474,38.977,15.739,18.573,Low
+SEALIP/VN/DT/4,c. 2000 BP,Iron Age,Đào Thịnh,DT,104.787222, 21.798611,cemetery,Tuyen Quang Province,Red river basin,Vietnam,Adze,2.0542,0.8299,38.738,15.65,18.858,Low
+SEALIP/VN/DT/5,c. 2000 BP,Iron Age,Đào Thịnh,DT,104.787222, 21.798611,cemetery,Tuyen Quang Province,Red river basin,Vietnam,Drum,2.094,0.84415,38.883,15.675,18.569,Low
+SEALIP/VN/DH/1,206 BC - AD 9,Iron Age,Doc Hong,DH,105.685539,21.135396,Western Han tomb near modern bronze casting village,Bac Ninh Province,Red river basin,Vietnam,Vessel,2.1143,0.85276,38.901,15.69,18.399,Low
+SEALIP/VN/DH/2,206 BC - AD 9,Iron Age,Doc Hong,DH,105.685539,21.135396,Western Han tomb near modern bronze casting village,Bac Ninh Province,Red river basin,Vietnam,Vessel,2.1097,0.85243,38.793,15.674,18.388,Low
+SEALIP/VN/DH/3,206 BC - AD 9,Iron Age,Doc Hong,DH,105.685539,21.135396,Western Han tomb near modern bronze casting village,Bac Ninh Province,Red river basin,Vietnam,Spoon,2.1126,0.85455,38.741,15.671,18.338,Low
+SEALIP/VN/DX/1,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Implement,2.1064,0.8491,38.935,15.695,18.484,Low
+SEALIP/VN/DX/2,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,chopped decorated Pb,2.1144,0.85226,38.926,15.69,18.41,Low
+SEALIP/VN/DX/3,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Point,2.1245,0.8613,38.668,15.677,18.201,Low
+SEALIP/VN/DX/4,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Point,2.1101,0.8535,38.876,15.725,18.424,Low
+SEALIP/VN/DX/5,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Point,2.1169,0.85251,38.97,15.694,18.409,Low
+SEALIP/VN/DX/6,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Implement,2.1166,0.85559,38.852,15.705,18.356,Low
+SEALIP/VN/DX/7,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Implement,2.1308,0.86149,38.727,15.658,18.175,Low
+SEALIP/VN/DX/8,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Bangle,2.1005,0.84828,38.962,15.735,18.549,Low
+SEALIP/VN/DX/9,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Ring,2.1052,0.85473,38.771,15.742,18.417,Low
+SEALIP/VN/DX/10,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Drum,2.1137,0.85102,38.685,15.575,18.302,Low
+SEALIP/VN/DX/11,200 - 50 BC,Iron Age,Đọng Xá,DX,106.396422,20.564421,cemetery,Hai Phong Province,Red river basin,Vietnam,Socket,2.1117,0.855,38.824,15.719,18.385,Low
+SEALIP/IN/GZ/1,,Historic,Gazole,GZ,88.192384,25.210859,,West Bengal. Maldar district,Indian sub-continent,India,High tin bronze,2.0925,0.84769,38.596,15.636,18.445,Low
+SEALIP/VN/GP/1,c. 2000 BP,Iron Age,Gioi Phien,GP,104.889247,21.692131,,Tuyen Quang Province,Red river basin,Vietnam,Adze,2.1035,0.84934,38.873,15.696,18.48,Low
+SEALIP/VN/HM/1,500 - 100 BC,Iron Age,Hop Minh,HM,104.862975,21.685803,,Tuyen Quang Province,Red river basin,Vietnam,Tool,2.1099,0.85043,38.82,15.647,18.399,Low
+SEALIP/TH/KSK/1,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Bangle,2.0812,0.83433,39.333,15.768,18.899,Low
+SEALIP/TH/KSK/2,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Bowl,2.0705,0.84593,38.656,15.794,18.67,Low
+SEALIP/TH/KSK/3,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Bowl,2.0596,0.82548,39.419,15.799,19.139,Low
+SEALIP/TH/KSK/4,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Bowl,2.0063,0.7695,41.542,15.933,20.706,Low
+SEALIP/TH/KSK/5,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Ingot,2.0806,0.84115,39.015,15.773,18.752,Low
+SEALIP/TH/KSK/6,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Drum,2.1149,0.85195,38.961,15.695,18.422,Low
+SEALIP/TH/KSK/7,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Mirror,2.16,0.87276,38.485,15.55,17.817,Low
+SEALIP/TH/KSK/8,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Point,2.1479,0.86899,38.667,15.644,18.002,Low
+SEALIP/TH/KSK/9,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Vessel,2.1034,0.85797,38.595,15.743,18.349,Low
+SEALIP/TH/KSK/10,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Bowl,2.1074,0.87714,37.784,15.726,17.929,Low
+SEALIP/TH/KSK/11,400 BCE - 100 CE,Iron Age,Khao Sam Kaeo,KSK,99.184070,10.525470,Settlement,Chumpon Province,Maritime,Thailand,Bowl,2.0842,0.85459,38.51,15.79,18.477,Medium
+SEALIP/TH/KW/1,400 - 100 BC,Iron Age,Kiri Wangkaran,KW,99.935802,9.456126,Ko Samui (stored Chaiya Museum),Chumpon Province,Maritime,Thailand,Drum,2.1133,0.85277,38.95,15.717,18.431,Medium
+SEALIP/VN/LV/1,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Drum,2.1033,0.84802,38.926,15.694,18.507,Low
+SEALIP/VN/LV/2,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Vessel,2.0988,0.84851,38.815,15.692,18.494,Medium
+SEALIP/VN/LV/3,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Vessel,2.1184,0.85767,38.765,15.695,18.299,Low
+SEALIP/VN/LV/4,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Situla,2.1126,0.85128,38.937,15.69,18.431,Low
+SEALIP/VN/LV/5,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Situla,2.1185,0.8548,38.847,15.674,18.337,Low
+SEALIP/VN/LV/6,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Bowl,2.0936,0.84885,38.69,15.687,18.48,Low
+SEALIP/VN/LV/7,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Bowl,2.1207,0.85527,38.872,15.677,18.33,Medium
+SEALIP/VN/LV/8,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Bowl,2.1148,0.85224,38.917,15.683,18.402,Low
+SEALIP/VN/LV/9,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Bowl,2.1151,0.85249,38.931,15.691,18.406,Medium
+SEALIP/VN/LV/10,200 – 0 BCE,Iron Age,Làng Vạc,LV,105.428596,19.316585,burial,Than Hoa Province,Red river basin,Vietnam,Vessel,2.1154,0.85238,38.928,15.685,18.402,Medium
+SEALIP/KH/PKM/1,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Strip,2.0916,0.84734,38.734,15.692,18.519,Low
+SEALIP/KH/PKM/2,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.111,0.85739,38.674,15.707,18.32,Low
+SEALIP/KH/PKM/3,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1159,0.85501,38.867,15.706,18.369,Medium
+SEALIP/KH/PKM/4,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1165,0.85506,38.88,15.707,18.37,Low
+SEALIP/KH/PKM/5,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1168,0.85473,38.886,15.701,18.37,Low
+SEALIP/KH/PKM/6,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1159,0.855,38.865,15.705,18.368,Medium
+SEALIP/KH/PKM/7,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1124,0.85301,38.898,15.707,18.414,Medium
+SEALIP/KH/PKM/8,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.0622,0.82731,39.301,15.767,19.058,Low
+SEALIP/KH/PKM/9,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1145,0.85469,38.852,15.704,18.374,Low
+SEALIP/KH/PKM/10,500-700 CE,Historic,Prei Khameng,PKM,103.757302,13.428109,cemetery,Siem Reap province,Mekong river basin,Cambodia,Fragment,2.118,0.85531,38.857,15.692,18.346,Medium
+SEALIP/KH/PH/1,150 BC - AD 50,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Drum,2.1107,0.85059,38.966,15.703,18.461,Low
+SEALIP/KH/PH/2,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Blade,2.1152,0.85825,38.744,15.721,18.317,Low
+SEALIP/KH/PH/3,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Bangle,2.1083,0.85245,38.898,15.728,18.45,Low
+SEALIP/KH/PH/4,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Bangle,2.1047,0.85015,38.979,15.745,18.52,Medium
+SEALIP/KH/PH/5,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Bangle,2.1154,0.85228,38.951,15.693,18.413,Low
+SEALIP/KH/PH/6,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Bangle,2.0991,0.85061,38.85,15.743,18.508,Low
+SEALIP/KH/PH/7,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Bangle,2.1206,0.85481,38.907,15.683,18.347,Low
+SEALIP/KH/PH/8,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Bowl,2.1513,0.90264,37.293,15.647,17.335,Low
+SEALIP/KH/PH/9,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Drum,2.1168,0.85262,38.97,15.697,18.41,Medium
+SEALIP/KH/PH/10,100 BCE,Iron Age,Prohear,PH,105.522526,11.540274,cemetery,Prey Veng province,Mekong river basin,Cambodia,Bowl,2.1637,0.87616,38.386,15.544,17.741,Medium
+SEALIP/PNG/SASI/1,200 BCE - 200 CE,Metal Age,Sasi,SASI,147.310862,-2.443609,Raised beach deposit,Papua New Guinea,Maritime,Papua New Guinea,Fragment,2.07,0.83943,38.401,15.572,18.551,Medium
+SEALIP/VN/SK/1,AD 25-220,Iron Age,Song Khoai,SK,106.811938,20.976858,02SK-M03,Quang Ninh Province,Red river basin,Vietnam,Mirror,2.1231,0.86024,38.736,15.695,18.245,Low 
+SEALIP/VN/SK/2,AD 25-220,Iron Age,Song Khoai,SK,106.811938,20.976858,02SK-M03,Quang Ninh Province,Red river basin,Vietnam,Mirror,2.0777,0.83378,39.156,15.713,18.846,Low
+SEALIP/VN/TKL/1,,,Thap Khe Lo,TKL,,,,,Red river basin,Vietnam,Situla,2.1053,0.84915,39.076,15.761,18.561,Low
+SEALIP/VN/YP/1,,,Yen Phu,YP,105.925927,21.194357,,,Red river basin,Vietnam,Axe,2.0935,0.84421,39.017,15.734,18.637,Low
+SEALIP/ID/BKH/1,mid-late 1st mill. BC,Metal Age,Bankah,BKH,115.163879,8.054862,,Bali,Maritime ,Indonesia,Hook,2.1051,0.85113,38.786,15.682,18.425,Low
+SEALIP/ID/GLM/2,3rd c. BC to mid 1st mill. AD,Metal Age,Gilimanuk,GLM,114.260489,8.102114,,Bali,Maritime ,Indonesia,,2.1191,0.85443,38.886,15.679,18.35,Low
+SEALIP/ID/GLM/3,3rd c. BC to mid 1st mill. AD,Metal Age,Gilimanuk,GLM,114.260489,8.102114,,Bali,Maritime ,Indonesia,Point,2.117,0.85368,38.879,15.678,18.365,High
+SEALIP/ID/GLM/4,3rd c. BC to mid 1st mill. AD,Metal Age,Gilimanuk,GLM,114.260489,8.102114,,Bali,Maritime ,Indonesia,Fragment,2.1155,0.85248,38.933,15.689,18.404,High
+SEALIP/ID/ML/1,mid-late 1st mill. BC,Metal Age,Manikliyu,ML,115.182873,8.140808,,Bali,Maritime ,Indonesia,Spiral,2.1207,0.85507,38.873,15.674,18.331,Low
+SEALIP/ID/ML/2,mid-late 1st mill. BC,Metal Age,Manikliyu,ML,115.182873,8.140808,,Bali,Maritime ,Indonesia,Spiral,2.1161,0.85265,38.944,15.692,18.404,Low
+SEALIP/ID/ML/3,mid-late 1st mill. BC,Metal Age,Manikliyu,ML,115.182873,8.140808,,Bali,Maritime ,Indonesia,Spiral,2.1166,0.85274,38.962,15.697,18.408,Low
+SEALIP/ID/ML/4,mid-late 1st mill. BC,Metal Age,Manikliyu,ML,115.182873,8.140808,,Bali,Maritime ,Indonesia,Drum,2.1153,0.85222,38.959,15.696,18.418,Low
+SEALIP/ID/ML/5,mid-late 1st mill. BC,Metal Age,Manikliyu,ML,115.182873,8.140808,,Bali,Maritime ,Indonesia,Drum,2.1148,0.85201,38.946,15.691,18.416,High
+SEALIP/ID/PCN/1,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Fragment,2.1279,0.8586,38.756,15.638,18.213,High
+SEALIP/ID/PCN/2,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Bangle,2.1176,0.85405,38.873,15.678,18.357,Low
+SEALIP/ID/PCN/3,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Bangle,2.1195,0.85452,38.884,15.677,18.346,Medium
+SEALIP/ID/PCN/4,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Bangle,2.1266,0.85809,38.791,15.652,18.241,Low
+SEALIP/ID/PCN/5,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Fragment,2.1123,0.85144,38.93,15.692,18.43,High
+SEALIP/ID/PCN/7,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Fragment,2.1152,0.85294,38.907,15.689,18.394,High
+SEALIP/ID/PCN/8,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Bangle,2.1162,0.85324,38.894,15.682,18.379,Medium
+SEALIP/ID/PCN/9,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Anklet,2.1192,0.85443,38.853,15.665,18.334,Medium
+SEALIP/ID/PCN/10,2nd-1st c. BC,Metal Age,Pacung,PCN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Implement,2.1142,0.8526,38.912,15.692,18.405,Medium
+SEALIP/ID/PKP/1,mid-late 1st mill. BC,Metal Age,Pankung Paruk,PKP,114.544723,8.113027,,Bali,Maritime ,Indonesia,Wire,2.1144,0.85223,38.906,15.682,18.401,Low
+SEALIP/ID/PKP/2,mid-late 1st mill. BC,Metal Age,Pankung Paruk,PKP,114.544723,8.113027,,Bali,Maritime ,Indonesia,Mirror,1.9237,0.76332,40.03,15.884,20.809,Low
+SEALIP/ID/PKP/3,mid-late 1st mill. BC,Metal Age,Pankung Paruk,PKP,114.544723,8.113027,,Bali,Maritime ,Indonesia,Bowl,2.46265,0.84528,38.36403,15.57832,18.42981,Low
+SEALIP/ID/SBN/1,2nd-1st c. BC,Metal Age,Sembiran,SBN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Point,2.0963,0.84733,38.746,15.661,18.483,High
+SEALIP/ID/SBN/2,2nd-1st c. BC,Metal Age,Sembiran,SBN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Point,2.1267,0.85792,38.819,15.66,18.253,High
+SEALIP/ID/SBN/3,2nd-1st c. BC,Metal Age,Sembiran,SBN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Ring,2.0365,0.82,38.905,15.665,19.104,Low
+SEALIP/ID/SBN/4,2nd-1st c. BC,Metal Age,Sembiran,SBN,115.163879,8.054862,,Bali,Maritime ,Indonesia,Point,2.1135,0.85191,38.937,15.695,18.423,High
+SEALIP/KH/LV/1,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1139,0.85391,38.892,15.71,18.398,High
+SEALIP/KH/LV/2,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1139,0.85393,38.892,15.711,18.398,High
+SEALIP/KH/LV/3,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Earring,2.1127,0.85313,38.886,15.703,18.406,Medium
+SEALIP/KH/LV/4,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Ring,2.115,0.8549,38.848,15.703,18.368,High
+SEALIP/KH/LV/5,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Earring,2.1168,0.85909,38.693,15.703,18.279,Medium
+SEALIP/KH/LV/6,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Earring,2.1109,0.85072,38.965,15.703,18.459,Low
+SEALIP/KH/LV/7,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1157,0.85435,38.901,15.709,18.387,High
+SEALIP/KH/LV/8,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Earring,2.1116,0.85556,38.761,15.705,18.356,Low
+SEALIP/KH/LV/9,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1146,0.8547,38.864,15.709,18.379,High
+SEALIP/KH/LV/10,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1151,0.85436,38.882,15.706,18.383,High
+SEALIP/KH/LV/11,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1159,0.85448,38.882,15.702,18.376,Medium
+SEALIP/KH/LV/12,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1149,0.85428,38.885,15.707,18.386,High
+SEALIP/KH/LV/13,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Ring,2.1084,0.85831,38.651,15.735,18.332,High
+SEALIP/KH/LV/14,100-400 CE ,Iron Age,Lovea,LV,103.42470,13.29044,cemetery,Siem Reap province,Mekong river basin,Cambodia,Bangle,2.1153,0.85437,38.894,15.709,18.387,High
+SEALIP/TH/KS/1,400 - 100 BC,Iron Age,Khao Sek,KS, 99.080257, 9.958980,settlement,Chumpon Province,Maritime,Thailand,Casting spillage,2.1061,0.85318,38.919,15.766,18.479,Medium
+SEALIP/TH/KS/2,400 - 100 BC,Iron Age,Khao Sek,KS, 99.080257, 9.958980,Settlement,Chumpon Province,Maritime,Thailand,Drum,2.1072,0.856,38.693,15.718,18.362,Medium
+SEALIP/TH/KS/3,400 - 100 BC,Iron Age,Khao Sek,KS, 99.080257, 9.958980,settlement,Chumpon Province,Maritime,Thailand,Bowl,2.0879,0.84922,38.438,15.634,18.41,Low
+SEALIP/TH/KS/4,400 - 100 BC,Iron Age,Khao Sek,KS, 99.080257, 9.958980,settlement,Chumpon Province,Maritime,Thailand,Bowl,2.0803,0.8486,38.714,15.792,18.61,Medium
+SEALIP/TH/KS/5,400 - 100 BC,Iron Age,Khao Sek,KS, 99.080257, 9.958980,settlement,Chumpon Province,Maritime,Thailand,Bowl,1.9997,0.80722,39.26,15.848,19.633,Medium
+SEALIP/TH/NSLY/1,,,Tham Than Nam Lot Yai,NSLY, 98.951458, 10.202267,,,Maritime,Thailand,Bangle,2.101,0.85639,38.283,15.605,18.222,
+SEALIP/TH/NSLY/2,,,Tham Than Nam Lot Yai,NSLY, 98.951458, 10.202267,,,Maritime,Thailand,Axe,2.1007,0.8544,38.366,15.604,18.264,
+SEALIP/TH/NSLY/3,,,Tham Than Nam Lot Yai,NSLY, 98.951458, 10.202267,,,Maritime,Thailand,Axe,2.1034,0.85368,38.694,15.705,18.396,
+SEALIP/TH/TS/1,,,Tham Soi,TS,ask Bérénice,,,,Maritime,Thailand,Axe,2.0858,0.84369,38.508,15.576,18.462,
+SEALIP/MY/KGG/1,,Iron Age,Kan Gyi Gon,KGG, 95.434701, 20.569669,,,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0857,0.83911,38.791,15.606,18.598,Low
+SEALIP/MY/NGO/1,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0863,0.83947,38.791,15.608,18.593,Low
+SEALIP/MY/NGO/2,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0852,0.83886,38.789,15.605,18.602,Low
+SEALIP/MY/NGO/3,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0861,0.83963,38.79,15.613,18.595,Low
+SEALIP/MY/NGO/4,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.085,0.83789,38.991,15.669,18.701,Low
+SEALIP/MY/NGO/5,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0848,0.83882,38.785,15.605,18.604,Low
+SEALIP/MY/NGO/6,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0854,0.83903,38.78,15.603,18.596,Low
+SEALIP/MY/NGO/7,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0845,0.83899,38.765,15.603,18.597,Low
+SEALIP/MY/NGO/8,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0857,0.83918,38.786,15.606,18.596,Low
+SEALIP/MY/NGO/9,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0859,0.84003,38.745,15.604,18.575,Low
+SEALIP/MY/NGO/10,500 - 100 BC,Iron Age,Nyaung Gon,NGO, 95.059942, 22.411151,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0847,0.83891,38.819,15.621,18.621,Low
+SEALIP/MY/OAI1/1,1000 - 800 BC,Bronze Age,Oakaie 1,OIA1,95.049182, 22.390086,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Adze,2.0853,0.84556,38.708,15.696,18.562,
+SEALIP/MY/OAI2/1,1000 - 800 BC,Bronze Age,Oakaie 2,OAI2, 95.041954, 22.390500,settlement,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Rod,2.0939,0.85118,38.501,15.651,18.387,Low
+SEALIP/MY/OAI3/1,1000 - 800 BC,Bronze Age,Oakaie 3,OIA3, 95.040290,22.389254,settlement/industry,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ceramic,2.0627,0.83588,38.683,15.675,18.753,
+SEALIP/MY/OAI3/2,1001 - 800 BC,Bronze Age,Oakaie 3,OIA3, 95.040290,22.389254,settlement/industry,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bangle,2.1074,0.85747,38.614,15.711,18.323,High
+SEALIP/MY/OAI3/3,1002 - 800 BC,Bronze Age,Oakaie 3,OIA3, 95.040290,22.389254,settlement/industry,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ring,2.1075,0.85724,38.637,15.716,18.333,High
+SEALIP/MY/OAI3/4,1003 - 800 BC,Bronze Age,Oakaie 3,OIA3, 95.040290,22.389254,settlement/industry,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bangle,2.1047,0.85643,38.564,15.692,18.323,High
+SEALIP/MY/OAI3/5,1004 - 800 BC,Bronze Age,Oakaie 3,OIA3, 95.040290,22.389254,settlement/industry,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bangle,2.1076,0.86352,37.909,15.532,17.987,Low
+SEALIP/MY/OAI3/6,1005 - 800 BC,Bronze Age,Oakaie 3,OIA3, 95.040290,22.389254,settlement/industry,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ring,2.0837,0.84435,38.58,15.633,18.515,Low
+SEALIP/MY/OAI3/7,1006 - 800 BC,Bronze Age,Oakaie 3,OIA3, 95.040290,22.389254,settlement/industry,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Tool,2.032,0.81827,39.132,15.758,19.258,High
+SEALIP/MY/OAI/1,1000 - 700 BC,Bronze Age,"""Oakaie""",OAI, 95.051987, 22.403892,Yangon University Museum,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Fragment,2.0641,0.82125,39.564,15.742,19.168,Low
+SEALIP/MY/OAI/2,1000 - 700 BC,Bronze Age,"""Oakaie""",OAI, 95.051987, 22.403892,Yangon University Museum,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ingot,2.1088,0.85406,38.801,15.714,18.399,Medium
+SEALIP/MY/MHT/1,1000 - 500 BC,Bronze Age,Mon Htoo,MHT, 95.226852, 22.340746,villagers' collections,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Fragment,2.0958,0.84602,38.905,15.705,18.563,Low
+SEALIP/MY/MHT/2,1000 - 500 BC,Bronze Age,Mon Htoo,MHT, 95.226852, 22.340746,villagers' collections,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Fragment,2.0812,0.8383,38.962,15.694,18.721,Low
+SEALIP/MY/MHT/3,1000 - 500 BC,Bronze Age,Mon Htoo,MHT, 95.226852, 22.340746,villagers' collections,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ring,2.1077,0.85753,38.625,15.715,18.326,
+SEALIP/MY/LPDT/1,,Modern,Monywa mine,LPDT, 95.095476, 22.082531,,,Irrawady/Chindwin river basin ,Myanmar,Ingot,2.1632,0.90711,37.006,15.518,17.108,Low
+SEALIP/MY/NYG/1,1000 - 800 BC,Bronze Age,Nyaung'gan,NYG, 95.059942, 22.411151,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Arrowhead,2.1075,0.86408,37.826,15.509,17.949,Medium
+SEALIP/MY/MOH/1,500 - 100 BC,Iron Age,Myin Oo Hle,MOH, 95.538034, 21.119677,Yangon University Museum,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Bell,2.066,0.82183,39.625,15.763,19.18,
+SEALIP/MY/SP/1,AD 0 - 100,Iron Age,Supan,SP,96.114377, 21.156425,U Soe Naing collection,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Bowl,2.105,0.85811,38.628,15.747,18.351,
+SEALIP/MY/MT/1,500 - 100 BC,Iron Age,Myinthe,MT, 95.876616, 21.789439,U Soe Naing collection,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Spearhead,2.0846,0.83886,38.774,15.603,18.601,Medium
+SEALIP/MY/HTP/1,500 BC - AD 100,Iron Age,Htan Ta Pin,HTTP, 95.996184, 20.591653,Mandalay museum,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Bowl,2.0828,0.8407,38.949,15.722,18.701,Low
+SEALIP/TH/NKH/1,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.1061,0.86283,37.895,15.525,17.993,Slag
+SEALIP/TH/NKH/2,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.1082,0.8648,37.798,15.505,17.929,Slag
+SEALIP/TH/NKH/3,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.1037,0.86222,37.864,15.519,17.999,Slag
+SEALIP/TH/NKH/4,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.1014,0.86132,37.853,15.515,18.013,Slag
+SEALIP/TH/NKH/5,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.1049,0.86261,37.878,15.523,17.995,Slag
+SEALIP/TH/NKH/6,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.1066,0.86421,37.786,15.501,17.937,Slag
+SEALIP/TH/NKH/7,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.1068,0.86386,37.815,15.505,17.949,Slag
+SEALIP/TH/NKH/8,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.0681,0.84648,37.97,15.541,18.36,Slag
+SEALIP/TH/NKH/9,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.0708,0.84874,37.925,15.544,18.314,Slag
+SEALIP/TH/NKH/11,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Ingot,2.106,0.86297,37.883,15.523,17.988,Low
+SEALIP/TH/NKH/12,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Ingot,2.0996,0.86066,37.866,15.522,18.035,Low
+SEALIP/TH/NKH/13,300 BCE - 300 CE,Bronze Age/Iron Age,Nil Kham Haeng,NKH,100.653884,14.952780,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Ingot,2.1056,0.8634,37.836,15.514,17.969,Low
+SEALIP/TH/NPW/1,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,1.8921,0.77854,37.999,15.635,20.083,Slag
+SEALIP/TH/NPW/2,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.1036,0.86266,37.846,15.52,17.991,Slag
+SEALIP/TH/NPW/3,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.1067,0.86385,37.832,15.513,17.958,Slag
+SEALIP/TH/NPW/4,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.1059,0.86354,37.814,15.506,17.956,Slag
+SEALIP/TH/NPW/5,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.083,0.85409,37.869,15.527,18.18,Slag
+SEALIP/TH/NPW/6,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.0949,0.85831,37.884,15.522,18.084,Slag
+SEALIP/TH/NPW/7,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.095,0.85848,37.871,15.519,18.077,Slag
+SEALIP/TH/NPW/8,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.092,0.85627,37.951,15.534,18.141,Slag
+SEALIP/TH/NPW/9,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.105,0.86299,37.833,15.511,17.973,Slag
+SEALIP/TH/NPW/10,500-300 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,slag,2.1077,0.86406,37.825,15.506,17.946,Slag
+SEALIP/TH/NPW/11,1300-1000 BCE,Bronze Age,Non Pa Waï,NPW,100.677893,14.970612,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Axe,2.1064,0.86261,38.101,15.603,18.088,Low
+SEALIP/TH/PL/1,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Ore,2.0056,0.8067,38.923,15.656,19.407,Ore
+SEALIP/TH/PL/2,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Ore,1.9534,0.7877,38.916,15.693,19.922,Ore
+SEALIP/TH/PL/3,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Ore,1.9898,0.80853,38.483,15.637,19.34,Ore
+SEALIP/TH/PL/4,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Ore,1.8949,0.77549,38.309,15.678,20.217,Ore
+SEALIP/TH/PL/5,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Ore,2.0917,0.85557,38.186,15.619,18.256,Ore
+SEALIP/TH/PL/6,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Ore,1.9955,0.80163,38.984,15.661,19.536,Ore
+SEALIP/TH/PL/7,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Ore,2.0834,0.84786,38.291,15.583,18.379,Ore
+SEALIP/TH/PL/8,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Slag,1.9526,0.79256,38.587,15.663,19.762,Slag
+SEALIP/TH/PL/9,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Drip,2.0826,0.83043,39.53,15.762,18.981,Low
+SEALIP/TH/PL/10,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Axe,2.0711,0.84066,38.46,15.611,18.57,Low
+SEALIP/TH/PL/11,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Slag,2.0338,0.82485,38.553,15.636,18.956,Slag
+SEALIP/TH/PL/12,1st mill BCE,Bronze Age/Iron Age,Phu Lon,PL,102.140552,18.204171,copper mining/smelting,Nong Khai Province,Chi/Mun river basin,Thailand,Slag,2.1083,0.85778,38.616,15.711,18.316,Slag
+SEALIP/IN/TP/1,200 - 0 BC,Historic,Tilpi,TP,88.561363,22.238035,copper mining/smelting,West Bengal,Indian sub-continent,India,High tin bronze,2.0965,0.86992,37.924,15.736,18.089,Low
+SEALIP/MY/MH/1,500 - 100 BC,Iron Age,Myo Hla,MH,96.266894,19.403929,cemetery,Bago Division,Irrawady/Chindwin river basin ,Myanmar,Vessel,2.0772,0.83489,39.06,15.699,18.804,Low
+SEALIP/MY/YGG/1,500 BC - AD 100,Iron Age,Ywa Gon Gyi,YGG,96.006475,20.963181,cemetery,Mandalay Division,Irrawady/Chindwin river basin ,Myanmar,Fragment,2.0907,0.85028,38.674,15.728,18.498,High
+SEALIP/PH/SVG/1,200 BC - AD 200,Metal Age,Savidug. Batanes,SVG,121.887924,20.310948,Jar burial,,Maritime,Philippines,Casting spillage,2.0926,0.84975,38.594,15.672,18.443,Low
+SEALIP/TH/TC/1,400 - 100 BC,Iron Age,Tham Cheng,TC, 99.214215, 10.237223,,Chumpon Province,Maritime,Thailand,Vessel,2.15194,0.90581,36.81658,15.49713,17.10859,
+SEALIP/TH/TTT/1,400 - 100 BC,Iron Age,Tham Tha Thun,TTT, 98.957409, 10.348570,,Chumpon Province,Maritime,Thailand,Vessel,2.09532,0.85939,37.92037,15.55290,18.09766,
+SEALIP/SL/TSS/1,AD 100 - 200,Historic,Tissamaharama,TSS,81.291421,6.279804,,Southern Sri Lanka,Indian sub-continent,Sri Lanka,Vessel,2.04383,0.82638,38.91824,15.73577,19.04183,
+SEALIP/SL/TSS/2,AD 100 - 200,Historic,Tissamaharama,TSS,81.291421,6.279804,,Southern Sri Lanka,Indian sub-continent,Sri Lanka,Vessel,2.08909,0.85931,37.98415,15.62409,18.18213,
+SEALIP/SL/TSS/3,AD 0 - 200,Historic,Tissamaharama,TSS,81.291421,6.279804,,Southern Sri Lanka,Indian sub-continent,Sri Lanka,Vessel,2.08023,0.84791,38.19095,15.56668,18.35896,
+SEALIP/SL/TSS/4,AD 200 - 300,Historic,Tissamaharama,TSS,81.291421,6.279804,,Southern Sri Lanka,Indian sub-continent,Sri Lanka,Vessel,2.08239,0.85208,38.21229,15.63582,18.35020,
+SEALIP/SL/TSS/5,AD 0 - 100,Historic,Tissamaharama,TSS,81.291421,6.279804,,Southern Sri Lanka,Indian sub-continent,Sri Lanka,Vessel,2.11821,0.88597,37.23322,15.57333,17.57769,
+SEALIP/IN/MAH/1,,Historic,Mahurjhari,MAH,79.947250,22.053381,,Madhya Pradesh,Indian sub-continent,India,Vessel,2.1406,0.9239,36.6395,15.8148,17.1167,
+SEALIP/IN/MAH/2,,Historic,Mahurjhari,MAH,79.947250,22.053381,,Madhya Pradesh,Indian sub-continent,India,Vessel,2.0617,0.8172,39.8723,15.8049,19.3393,
+SEALIP/IN/MAH/3,,Historic,Mahurjhari,MAH,79.947250,22.053381,,Madhya Pradesh,Indian sub-continent,India,Vessel,2.0904,0.8499,38.6486,15.7124,18.4882,
+SEALIP/IN/MAH/4,,Historic,Mahurjhari,MAH,79.947250,22.053381,,Madhya Pradesh,Indian sub-continent,India,Vessel,1.7591,0.6976,42.7670,16.9605,24.3115,
+SEALIP/IN/MAH/5,,Historic,Mahurjhari,MAH,79.947250,22.053381,,Madhya Pradesh,Indian sub-continent,India,Vessel,2.2021,0.9443,36.2271,15.5343,16.4512,
+SEALIP/IN/MAH/6,,Historic,Mahurjhari,MAH,79.947250,22.053381,,Madhya Pradesh,Indian sub-continent,India,Vessel,2.1068,0.8914,37.1091,15.7019,17.6140,
+SEALIP/VN/GM/1,8e - 6e century BCE,Bronze Age,Gò Mun,GM,105.359256,21.339197,,Phu Tho Province,Red river basin,Vietnam,Axe,2.08899,0.84126,38.794,15.624,18.571,Low
+SEALIP/VN/GM/2,8e - 6e century BCE,Bronze Age,Gò Mun,GM,105.359256,21.339197,,Phu Tho Province,Red river basin,Vietnam,Spearhead,2.09383,0.84404,39.041,15.737,18.646,Low
+SEALIP/VN/GM/3,8e - 6e century BCE,Bronze Age,Gò Mun,GM,105.359256,21.339197,,Phu Tho Province,Red river basin,Vietnam,Spearhead,2.10228989370514,0.852011590029807,38.8581515728342,15.752399239692,18.4853882173954,Low
+SEALIP/VN/GM/4,9e - 6e century BCE,Bronze Age,Gò Mun,GM,105.359256,21.339197,,Phu Tho Province,Red river basin,Vietnam,Axe,2.0986081971079,0.848146175171584,38.9132479809059,15.7275806282418,18.5425109137328,Low
+SEALIP/VN/TD/1,1st 1/2 2nd mil- end of 2nd mil. ,Bronze Age,Thành Dên,TD,105.889906, 20.286842,,Vinh Phuc Province,Red river basin,Vietnam,Awl,2.08304,0.8394,38.784,15.629,18.618,Low
+SEALIP/VN/TD/2,1st 1/2 2nd mil- end of 2nd mil. ,Bronze Age,Thành Dên,TD,105.889906, 20.286842,,Vinh Phuc Province,Red river basin,Vietnam,Awl,2.08545964478779,0.840204581499691,38.8794213393298,15.6564217156372,18.6431637208219,Low
+SEALIP/VN/TD/3,1st 1/2 2nd mil- end of 2nd mil. ,Bronze Age,Thành Dên,TD,105.889906, 20.286842,,Vinh Phuc Province,Red river basin,Vietnam,Knife,2.09515116964911,0.844030963617585,39.0197737747289,15.7172749789103,18.6239142115635,Low
+SEALIP/VN/TD/4,1st 1/2 2nd mil- end of 2nd mil. ,Bronze Age,Thành Dên,TD,105.889906, 20.286842,,Vinh Phuc Province,Red river basin,Vietnam,Fragment,2.08276423008811,0.836558527962415,38.950360793527,15.6399821086008,18.7010022743629,Medium
+SEALIP/VN/TD/5,1st 1/2 2nd mil- end of 2nd mil. ,Bronze Age,Thành Dên,TD,105.889906, 20.286842,,Vinh Phuc Province,Red river basin,Vietnam,Awl,2.0880558406063,0.840107085871164,38.8186964957789,15.6155434719303,18.5916061938718,Low
+SEALIP/VN/TD/6,1st 1/2 2nd mil- end of 2nd mil. ,Bronze Age,Thành Dên,TD,105.889906, 20.286842,,Vinh Phuc Province,Red river basin,Vietnam,Awl,2.09726404677353,0.847090996495857,38.9133554007018,15.7187500066183,18.5542947642071,High
+SEALIP/VN/XL/1,500 - 100 BC,Iron Age,Xuân Lâp,XL,105.529853, 19.976544,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Vessel,2.09896464835373,0.847733833543365,38.9673509661789,15.7405861417173,18.5647889789152,Medium
+SEALIP/VN/XL/2,500 - 100 BC,Iron Age,Xuân Lâp,XL,105.529853, 19.976544,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Axe,2.09652142206323,0.846026045798863,38.9963096942434,15.7384066310512,18.600866030451,Low
+SEALIP/VN/XL/3,500 - 100 BC,Iron Age,Xuân Lâp,XL,105.529853, 19.976544,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Socketed,2.09587766721061,0.846152197557507,38.9956170070737,15.7455565868406,18.6062486793257,High
+SEALIP/VN/XL/4,500 - 100 BC,Iron Age,Xuân Lâp,XL,105.529853, 19.976544,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Fragment,2.11335711752343,0.851338135477366,38.9698834785192,15.7007505307912,18.4405849313079,Medium
+SEALIP/VN/DTR/1,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Fragment,2.08103314304391,0.838962430409538,38.8237563201255,15.6464374897154,18.6558978132241,Low
+SEALIP/VN/DTR/2,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Knife,2.09256677021352,0.840609635824906,39.1803977054587,15.7379053362352,18.7242256375688,Low
+SEALIP/VN/DTR/3,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Drill,2.08980309883081,0.841003170465286,38.8566165252903,15.6340559825223,18.5936859423542,Medium
+SEALIP/VN/DTR/4,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Hook,2.08984983216664,0.840298657498003,38.8322278806187,15.6161146552398,18.581482044351,Low
+SEALIP/VN/DTR/5,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Needle,2.09273769213558,0.838049476895585,39.3865300016894,15.7763357413306,18.8212576302086,Low
+SEALIP/VN/DTR/6,9e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Arrowhead,2.09047732700213,0.842791345929752,38.9049054708804,15.6757907388467,18.6104493266196,High
+SEALIP/VN/DTR/7,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Hook,2.09314408202171,0.838120985333997,39.3875480304051,15.7756012366608,18.8183667068291,Low
+SEALIP/VN/DTR/8,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Axe,2.09677767393634,0.845627783173198,39.0147973666817,15.7393663400744,18.6076383988582,High
+SEALIP/VN/DTR/9,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Knife,2.16742838526133,0.894035340612893,38.8890855290438,15.6554509890001,18.593711601587,Medium
+SEALIP/VN/DTR/10,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Fragment,2.11683807693085,0.859322884963483,38.7132449330912,15.7150363981816,18.289206682423,Medium
+SEALIP/VN/DTR/11,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Spear,2.09184577391687,0.838082244372696,39.3604901855739,15.7685825847185,18.8170125688121,Low
+SEALIP/VN/DTR/12,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Spearhead,2.09638046663438,0.845835335224607,39.0045142602283,15.7364480652718,18.6066465500285,Low
+SEALIP/VN/DTR/13,8e - 6e century BCE,Bronze Age,Dai Trach,DTR,106.044083, 21.056258,,Bac Ninh Province,Red river basin,Vietnam,Chisel,2.0860109938348,0.838461232453423,39.1149838836894,15.7211221249556,18.7522526943036,Medium
+SEALIP/TH/NBJ/1,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11599212894378,0.855127069948698,38.8665908332429,15.706938315295,18.3693988208579,High
+SEALIP/TH/NBJ/2,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11518113824659,0.856114668054076,38.833580580349,15.7164374908378,18.3594592472024,High
+SEALIP/TH/NBJ/3,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11402825637064,0.85502362764664,38.8416055539979,15.7077261592355,18.3752126659136,Low
+SEALIP/TH/NBJ/4,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.1105391848299,0.861324193381166,38.6229993830182,15.7624057321436,18.300522268529,High
+SEALIP/TH/NBJ/5,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11007849247162,0.861158148851712,38.6183634660058,15.75975188934,18.3032860964195,High
+SEALIP/TH/NBJ/6,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11082360065933,0.860765622260892,38.6404404600353,15.7560178759504,18.3070820391202,High
+SEALIP/TH/NBJ/7,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11170864783434,0.858493969648572,38.7103066678464,15.7357860279304,18.332281772591,High
+SEALIP/TH/NBJ/8,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.1105061326463,0.858308222851093,38.7216053585066,15.7448083250065,18.3471750712321,High
+SEALIP/TH/NBJ/9,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11003393400651,0.85858359697712,38.7091769990763,15.749249901854,18.346075384642,High
+SEALIP/TH/NBJ/10,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.12076609431678,0.856097733558265,38.86251651539,15.6864311699435,18.3257747099019,High
+SEALIP/TH/NBJ/11,AD 200 - 400,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11083075036898,0.86323903351856,38.5575293801303,15.7647637598143,18.2665661282547,High
+SEALIP/TH/NBJ/12,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.1122715491403,0.854882754031185,38.8449397408374,15.7175239373694,18.3901970746283,Low
+SEALIP/TH/NBJ/13,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11229937228968,0.854869898384847,38.8507698621574,15.7197040520722,18.3920641007278,Low
+SEALIP/TH/NBJ/14,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11290957999382,0.856184733724652,38.8132916552663,15.7250021912467,18.3698779074103,High
+SEALIP/TH/NBJ/15,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11494407272954,0.855965680669644,38.8398346294515,15.7179823820589,18.365076268476,High
+SEALIP/TH/NBJ/16,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11350076675556,0.856114710724636,38.8291282814931,15.726549162944,18.3728886375469,High
+SEALIP/TH/NBJ/17,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11332171942031,0.856219046691887,38.8279055750415,15.7289195189231,18.3733188914583,High
+SEALIP/TH/NBJ/18,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11327107774807,0.85614359351336,38.8201667745024,15.7240426716553,18.369826830642,High
+SEALIP/TH/NBJ/19,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11376918763491,0.856290890764629,38.832349777525,15.7278534593294,18.3709064677826,High
+SEALIP/TH/NBJ/20,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.16746518008407,0.892493583612895,38.8528528608575,15.7180081034176,18.3736183441839,High
+SEALIP/TH/NBJ/21,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.16754967189924,0.903531330097278,38.8530291316815,15.7196950210919,18.3736283517436,High
+SEALIP/TH/NBJ/22,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.16752278337493,0.901609809547057,38.6416914306006,15.7623965638574,18.3114153563418,High
+SEALIP/TH/NBJ/23,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.16746350282719,0.902423386652168,38.6261505534619,15.7576101226701,18.3071371245858,high
+SEALIP/TH/NBJ/24,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.16707883444534,0.902705347098642,38.6353246486214,15.7510096192717,18.3070790807398,High
+SEALIP/TH/NBJ/25,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.16698427908891,0.891258843199469,38.6519912553408,15.7465996060046,18.3040788143528,High
+SEALIP/TH/NBJ/26,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.16739237665276,0.902511372806516,38.6599685116668,15.7541351723749,18.3143856000498,High
+SEALIP/TH/NBJ/28,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.16738131724023,0.905416675734148,38.9071012084904,15.7122455525968,18.3761082250281,High
+SEALIP/TH/NBJ/29,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.16736643158544,0.900512514427841,38.8451480230778,15.7163071698102,18.4187474344847,High
+SEALIP/TH/NBJ/30,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.1676114683323,0.903887757710147,38.7264957246551,15.7377935954035,18.3306078542637,High
+SEALIP/TH/NBJ/31,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.10699579615227,0.851824184630909,38.8788839592548,15.7193123442561,18.4533759491421,High
+SEALIP/TH/NBJ/32,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11084713818227,0.858808665002719,38.6946070430227,15.7406161001664,18.3320140996517,High
+SEALIP/TH/NBJ/33,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11024193872796,0.857469314806414,38.7316076050404,15.7360460766998,18.3553821267028,High
+SEALIP/TH/NBJ/34,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.10598382821552,0.850134304088661,38.9134995844919,15.7056403073412,18.4784129780396,High
+SEALIP/TH/NBJ/35,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11671764584919,0.857884024873622,38.7739538495414,15.7181202478253,18.3184253434872,High
+SEALIP/TH/NBJ/36,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.10996858030133,0.858191575222166,38.6988786373481,15.744188534908,18.3408873005334,High
+SEALIP/TH/NBJ/37,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11008384994217,0.863578689182462,38.4880010644252,15.7454253984633,18.2403499529856,Medium
+SEALIP/TH/NBJ/38,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bell,2.11065000087659,0.861658628149992,38.5823147819072,15.7495369023272,18.2792614956181,High
+SEALIP/TH/NBJ/39,AD 400 - 550,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bell,2.11752134189332,0.85531688005576,38.8796251966323,15.7009542302401,18.3611090650706,High
+SEALIP/TH/NBJ/40,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.12179257811589,0.855704868785582,38.8917971742536,15.6788982195391,18.3296092969777,Medium
+SEALIP/TH/NBJ/41,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.12883093689457,0.858521690498347,38.7911079882413,15.6543276013501,18.2224574770377,Medium
+SEALIP/TH/NBJ/42,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.12872166836986,0.85842375398781,38.7907325625776,15.6539703120006,18.2227656357211,Medium
+SEALIP/TH/NBJ/43,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Anklet,2.11705365109855,0.853842168735439,38.9093860938785,15.7042690462511,18.3790130938282,High
+SEALIP/TH/NBJ/44,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Anklet,2.11813602988219,0.853787946971678,38.904155162964,15.6929058438021,18.3676732544883,High
+SEALIP/TH/NBJ/45,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Anklet,2.1191715792981,0.854255206617482,38.9062675580319,15.6936074119646,18.3594270081641,High
+SEALIP/TH/NBJ/46,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11166336580358,0.857350498551288,38.7594926499049,15.7341562520282,18.3553390770646,High
+SEALIP/TH/NBJ/47,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11694115981482,0.854701372247824,38.8930643735271,15.7006185292127,18.3726482922027,Medium
+SEALIP/TH/NBJ/48,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11686731092529,0.852852386284479,38.9655183859456,15.6981864462964,18.4075138540476,Medium
+SEALIP/TH/NBJ/49,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11542695738079,0.853422845587834,38.9306184368114,15.7040174401525,18.4033696477411,High
+SEALIP/TH/NBJ/50,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11609810169252,0.858394498750603,38.7099665394664,15.7046319664531,18.2932990479856,Low
+SEALIP/TH/NBJ/51,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11976066605527,0.854732820487807,38.9017984827793,15.6873261433112,18.3517603137254,Low
+SEALIP/TH/NBJ/53,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11567873303495,0.854044340501385,38.9064791515992,15.7060818004841,18.3902510370092,Low
+SEALIP/TH/NBJ/54,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11743638733354,0.853492215322571,38.9404267422487,15.6978054094663,18.3906452940118,Low
+SEALIP/TH/NBJ/55,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Earring,2.11239613520207,0.851651828363045,38.9759873338783,15.7136835517103,18.4518648104135,Low
+SEALIP/TH/NBJ/56,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Belt,2.11571087122187,0.855518017806894,38.8644380918863,15.7066485983992,18.3699591660814,High
+SEALIP/TH/NBJ/57,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Belt,2.11620711668763,0.855254536436504,38.8758810433002,15.7025405112374,18.3707946195179,High
+SEALIP/TH/NBJ/58,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11587218352088,0.85359727462787,38.9164465013005,15.6915586049921,18.3933488606736,Low
+SEALIP/TH/NBJ/59,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11854044105245,0.853909791141679,38.9356599265899,15.6844007107311,18.3786028573841,Low
+SEALIP/TH/NBJ/60,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11726115046276,0.855698203453243,38.8490483284615,15.6922137783768,18.3493089583265,High
+SEALIP/TH/NBJ/61,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11057863424584,0.861276322082619,38.5856723625001,15.7372865833404,18.2830297683418,Low
+SEALIP/TH/NBJ/62,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Earring,2.11103465941159,0.850983977608827,38.9892151152799,15.7080992867087,18.4694813652148,Medium
+SEALIP/TH/NBJ/63,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.10773450625904,0.852933087711464,38.8426653629342,15.7093956996374,18.4288316892164,High
+SEALIP/TH/NBJ/64,AD 550 - 600,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11479343958513,0.853794151655979,38.9060129530156,15.6983511817777,18.3975294575438,Low
+SEALIP/TH/NBJ/65,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11590953540993,0.854492953977521,38.8857108043656,15.6944269318399,18.3776388724709,Low
+SEALIP/TH/NBJ/66,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11426383576366,0.85453968701088,38.8805137533131,15.7055375475354,18.3892690775695,Medium
+SEALIP/TH/NBJ/67,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11810138476078,0.853846825753939,38.9299313511976,15.6847390990886,18.3803846273163,Medium
+SEALIP/TH/NBJ/68,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11839929816864,0.854200358650433,38.9249747717373,15.6864887256738,18.3744840075232,Medium
+SEALIP/TH/NBJ/69,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.1187926799645,0.855178821110698,38.8837860970861,15.6852072667512,18.351643996094,Medium
+SEALIP/TH/NBJ/70,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11782298533161,0.854165367476421,38.9113827293948,15.6851782563618,18.3731591948038,Medium
+SEALIP/TH/NBJ/71,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11483784941799,0.853301281317451,38.9411421348753,15.7031059395484,18.4130846129078,Medium
+SEALIP/TH/NBJ/72,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11529,0.85492,38.844,15.701,18.364,Low
+SEALIP/TH/NBJ/73,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.12349,0.85655,38.872,15.681,18.307,Medium
+SEALIP/TH/NBJ/74,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.12344,0.85667,38.866,15.678,18.303,Low
+SEALIP/TH/NBJ/75,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Bangle,2.11400335088103,0.8547488931288,38.8595110740858,15.7028768588325,18.3818819391552,Low
+SEALIP/TH/NBJ/76,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Spiral,2.11334828103776,0.857680868729846,38.7717789368713,15.7260490234712,18.3459814539202,High
+SEALIP/TH/NBJ/77,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Spiral,2.11242411818984,0.855234181295832,38.848186082396,15.7188434846225,18.390169899221,High
+SEALIP/TH/NBJ/78,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Belt,2.11307088207572,0.852734316530053,38.8887237449575,15.684723462541,18.4038901103067,High
+SEALIP/TH/NBJ/79,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11663138337292,0.855204771228768,38.8757365076616,15.6977722521297,18.3657598238152,High
+SEALIP/TH/NBJ/80,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.11743826372018,0.855392263187418,38.8738529662245,15.6946951061217,18.3583662873048,High
+SEALIP/TH/NBJ/81,AD 600 - 850,Iron Age,Non Ban Jak,NBJ,102.170275, 15.258581,cemetery,Nakhon Ratchasima Province,Chi/Mun river basin,Thailand,Ring,2.116840533804,0.85525772872912,38.8727624948662,15.6961396441047,18.3631972514775,High
+SEALIP/TH/KSO/1,200 BC - AD 300,Iron Age,Khao Sai On,NBJ,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Wire,2.08147368123853,0.845699897340475,38.4513423316806,15.6243281799601,18.4723036699608,Medium
+SEALIP/TH/KSO/2,201 BC - AD 300,Iron Age,Khao Sai On,NBJ,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Hook,2.09906651106369,0.851385345453039,38.5108212968372,15.6221775413235,18.346810743627,Medium
+SEALIP/TH/TK/1,,Iron Age,Tha Kae,TK,100.619445, 14.843889,,Lopburi Province,Chao Phraya river basin,Thailand,Fragment,2.11206250588351,0.856586454178311,38.7722349365183,15.7248562729107,18.3572121632239,Low
+SEALIP/TH/PKTL/1,400 - 200 BC,Iron Age,Phu Khao Thong Langsuan,PKTL, 99.082367,  9.914160,cave burial,Chumpon Province,Maritime,Thailand,Bowl,2.06441402730161,0.829787314756229,39.277992478405,15.7866998746846,19.0256879329986,High
+SEALIP/TH/PKTL/2,400 - 200 BC,Iron Age,Phu Khao Thong Langsuan,PKTL, 99.082367,  9.914160,cave burial,Chumpon Province,Maritime,Thailand,Bowl,2.01860752359188,0.805643142701144,39.5575639862581,15.7856791715599,19.5962805224529,High
+SEALIP/TH/PKTL/3,400 - 200 BC,Iron Age,Phu Khao Thong Langsuan,PKTL, 99.082367,  9.914160,cave burial,Chumpon Province,Maritime,Thailand,Lid,2.1079148351875,0.862362434308783,38.5303976389714,15.7595571770824,18.2781171597517,High
+SEALIP/TH/SCP/1,400 BC - AD 300,Iron Age,Sab Champa,SCP,101.240427,15.052521,,Nakhon Ratchasima Province,Chao Phraya river basin,Thailand,Figurine,2.10969390426693,0.862789245254609,38.5229876153015,15.7529128909154,18.2597313390138,High
+SEALIP/TH/SCP/2,400 BC - AD 300,Iron Age,Sab Champa,SCP,101.240427,15.052521,,Nakhon Ratchasima Province,Chao Phraya river basin,Thailand,Bangle,2.11565974428417,0.852886021314101,38.9541111014101,15.7024293443414,18.4119123386237,Low
+SEALIP/TH/SCP/3,400 BC - AD 300,Iron Age,Sab Champa,SCP,101.240427,15.052521,,Nakhon Ratchasima Province,Chao Phraya river basin,Thailand,Axe,2.10790542310106,0.860932182264297,38.259474937096,15.6256713382551,18.1496683471378,Low
+SEALIP/TH/PTT/1,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,Burial,Lopburi Province,Chao Phraya river basin,Thailand,Ring,2.11600707367078,0.852863840729522,38.9648597344255,15.7033869806956,18.4136278684482,High
+SEALIP/TH/PTT/2,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,Burial,Lopburi Province,Chao Phraya river basin,Thailand,Ring,2.1160741179488,0.85290662324472,38.963345236218,15.7027695704233,18.4126625703254,High
+SEALIP/TH/PTT/3,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,Burial,Lopburi Province,Chao Phraya river basin,Thailand,Ring,2.11603634597868,0.852797588420837,38.9660423104809,15.7037394316628,18.4148379042494,High
+SEALIP/TH/PTT/4,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,Burial,Lopburi Province,Chao Phraya river basin,Thailand,Ring,2.11345668989965,0.853203490580664,38.9174222954405,15.7107720781194,18.4142467292259,High
+SEALIP/TH/PTT/5,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,Burial,Lopburi Province,Chao Phraya river basin,Thailand,Ring,2.10584930613671,0.850714336588749,38.9475758334051,15.7312716221303,18.4940773639154,Low
+SEALIP/TH/PTT/6,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,Burial,Lopburi Province,Chao Phraya river basin,Thailand,Ring,2.10596057757037,0.850726687197466,38.9483295467358,15.7318289903824,18.4943884560175,Low
+SEALIP/TH/PTT/7,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,Burial,Lopburi Province,Chao Phraya river basin,Thailand,Strip,2.10890433999764,0.863012021812303,38.5006785743688,15.7480910835146,18.2566108802354,Low
+SEALIP/IN/TAN/1,,Historic,Tanjure,TAN, 79.137827,10.786999,,Tamil Nadu,Indian sub-continent,India,Bowl,2.10870383868002,0.855234560098105,38.6698589961462,15.6805541131657,18.3383542604714,Low
+SEALIP/IN/TAX/1,,Historic,Taxila,TAX, 72.839734, 33.746275,,,Indian sub-continent,India,,2.09644705934641,0.856095650483217,38.6517183637428,15.7833693116543,18.4377530928198,Low
+SEALIP/IN/ADI/1,,Historic,Aichanallur,ADI,77.873172,8.627942,,Tamil Nadu,Indian sub-continent,India,Jar,1.97150673009657,0.795867823259017,39.4042355919041,15.9059853496517,19.9871026022005,Medium
+SEALIP/IN/KOD/1,500 - 200 BC,Historic,Kodumanal,KOD,77.512495,11.112701,,Tamil Nadu,Indian sub-continent,India,Strainer,2.16718207747406,0.920336615795979,36.1790347888936,15.364267249511,16.6945260893074,Low
+SEALIP/MY/HL29-1/1,800-700 BC,Bronze Age,Halin,HL29-1, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bangle,2.1081288684845,0.857395438410144,38.6448040317998,15.7182415405017,18.3308307872903,Medium
+SEALIP/MY/HL29-1/2,800-700 BC,Bronze Age,Halin,HL29-1, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bangle,2.10880372893928,0.857738197711047,38.6592536860677,15.7249141619961,18.3320731834963,Medium
+SEALIP/MY/HL29-1/3,800-700 BC,Bronze Age,Halin,HL29-1, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bangle,2.10829087902369,0.857394455495252,38.6714170216415,15.7271517117353,18.3425955391245,Medium
+SEALIP/MY/HL29-1/4,800-700 BC,Bronze Age,Halin,HL29-1, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bangle,2.10858987140485,0.857859573072078,38.643899857851,15.7204415517614,18.3261540764652,Medium
+SEALIP/MY/HL29-1/5,800-700 BC,Bronze Age,Halin,HL29-1, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Axe,2.09235908413585,0.847868407501117,38.6452833273117,15.6599859166643,18.4692035967896,High
+SEALIP/MY/HL29-1/6,800-700 BC,Bronze Age,Halin,HL29-1, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ring,2.05441853314621,0.827770135445132,39.0851825690189,15.7479674191218,19.0238365974763,Low
+SEALIP/MY/HL29-1/7,800-700 BC,Bronze Age,Halin,HL29-1, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ring,2.10424747835724,0.854970970139429,38.6695541066705,15.7119674353938,18.376188397151,Medium
+SEALIP/MY/HL29-1/8,800-700 BC,Bronze Age,Halin,, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ring,2.10798256887409,0.85917493082299,38.7713868851383,15.7937132374993,18.3928323847187,Low
+SEALIP/LA/TPP/1,1100 - 1000 BC,Bronze Age,Tham Pà Ping,TPP,103.409722, 20.208611,burial,Houaphan Province,Mekong river basin,Laos,Axe,2.10938403583579,0.855971885731983,38.767347835695,15.72904391971,18.3786164076574,Low
+SEALIP/LA/PBL/8,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ge,2.10442,0.85401,38.78,15.736,18.428,Low
+SEALIP/LA/PBL/9,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10174331237329,0.849261858605004,38.9616886065857,15.7439245008466,18.5352566111343,Medium
+SEALIP/LA/PBL/10,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.09311515399894,0.850377406459641,38.7374504280228,15.7432730677548,18.5102798824875,Medium
+SEALIP/LA/PBL/11,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10476215422794,0.855202521857382,38.7165331116679,15.7310808612343,18.3946321230122,Medium
+SEALIP/LA/PBL/12,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10482030655504,0.85543245655749,38.701306840256,15.7273434340989,18.3874489368405,Low
+SEALIP/LA/PBL/13,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10506278520916,0.85532215966227,38.716229514574,15.7305456188975,18.3917500501205,Medium
+SEALIP/LA/PBL/14,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10567941709442,0.855210991425462,38.7473559803561,15.7354195252009,18.4011787878591,Low
+SEALIP/LA/PBL/15,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10331589722554,0.854415473480722,38.7510857466118,15.7394664304716,18.4214375255642,Medium
+SEALIP/LA/PBL/16,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10428,0.85441,38.759,15.738,18.418,Low
+SEALIP/LA/PBL/17,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Chisel,2.0957,0.84332,39.155,15.756,18.683,Medium
+SEALIP/LA/PBL/18,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10502803035096,0.854956654485327,38.7300946405858,15.7292038571977,18.4007398684988,Low
+SEALIP/LA/PBL/19,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10048295561869,0.85331843447007,38.7124649468064,15.7245828122545,18.4298237288424,Medium
+SEALIP/LA/PBL/20,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10034589821769,0.853274318430593,38.7081175962007,15.7254001625229,18.428439098128,Low
+SEALIP/LA/PBL/21,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10061454285237,0.853413899450043,38.7238206349327,15.7295806197352,18.4343302626983,Low
+SEALIP/LA/PBL/22,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10292,0.85366,38.767,15.737,18.435,Low
+SEALIP/LA/PBL/23,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Hair pin,2.10721630176857,0.856975054664782,38.6657804463901,15.7231120554467,18.3487267213656,Low
+SEALIP/LA/PBL/24,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10557242849439,0.854904228008798,38.7700521282819,15.7374570048517,18.4120877623569,Low
+SEALIP/LA/PBL/25,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10649621842896,0.855551059462222,38.7426903262685,15.7330129104354,18.3911283150077,Medium
+SEALIP/LA/PBL/26,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10658352269779,0.856165826326848,38.7121145566458,15.7322213235836,18.3767769629833,Low
+SEALIP/LA/PBL/27,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Rod,2.10746083228725,0.85720856448819,38.6695492239748,15.7262233488135,18.3472749645165,Medium
+SEALIP/LA/PBL/28,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Adze,2.09834470368293,0.849521076491496,38.9161018181201,15.7569307212994,18.5479819391099,Medium
+SEALIP/LA/PBL/29,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10728690098008,0.856605016667395,38.6965994241305,15.728851944528,18.3636799581876,Medium
+SEALIP/LA/PBL/30,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10710830123799,0.856612367789416,38.6986077859471,15.7302494807307,18.3646033768456,Medium
+SEALIP/LA/PBL/31,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Spearhead,2.1052436350939,0.854608826620184,38.7376118427126,15.7232939245067,18.3990803109296,Medium
+SEALIP/LA/PBL/32,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10684978476794,0.856259960134681,38.7292996871306,15.7351028643893,18.3819025968368,Low
+SEALIP/LA/PBL/33,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10611306298351,0.855220730125727,38.7610057700019,15.7386947909466,18.4040426791551,Medium
+SEALIP/LA/PBL/34,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10608673299432,0.856005048202108,38.7137601728904,15.7326966987233,18.3816575386636,Low
+SEALIP/LA/PBL/35,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10696611382816,0.855990452729371,38.7415013631998,15.7383745851905,18.388025686736,High
+SEALIP/LA/PBL/36,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.1060302586015,0.855391845244919,38.7510727341499,15.739675553391,18.3994704542786,Meidum
+SEALIP/LA/PBL/37,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10605154932704,0.855253052917369,38.750128606455,15.7383945924806,18.4030549889318,High
+SEALIP/LA/PBL/38,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.10346007785278,0.854252762119699,38.7422629608932,15.7308027812157,18.4170539412557,Medium
+SEALIP/LA/PBL/39,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10685335443218,0.855606618127761,38.7565921705702,15.7425669234592,18.3950075234821,High
+SEALIP/LA/PBL/40,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10659359182671,0.855787714156195,38.7398205908717,15.7404607980909,18.3939019288007,Medium
+SEALIP/LA/PBL/41,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Fragment,2.10389649621723,0.851929474328017,38.8764963911105,15.7430462568788,18.478028712681,Medium
+SEALIP/LA/PBL/42,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10966918670057,0.857371631787106,38.6758744780949,15.7166946856943,18.3329932568416,Low
+SEALIP/LA/PBL/43,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Fragment,2.10288829286043,0.851959818791828,38.8734617324831,15.748982102421,18.4843591907491,Low
+SEALIP/LA/PBL/44,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.1041118782763,0.854393509062804,38.6957476317637,15.710075167833,18.3906392088633,Medium
+SEALIP/LA/PBL/45,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Axe,2.09713279348064,0.848644613381054,38.9232236613293,15.7508603815307,18.5612377244775,Low
+SEALIP/LA/PBL/46,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Knife,2.10196840709525,0.851303140868112,38.876481904279,15.7470427601074,18.4980502984983,High
+SEALIP/LA/PBL/47,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Ingot,2.08733771457381,0.846671426381334,38.8142475048235,15.7518605881001,18.5969106227835,Low
+SEALIP/LA/TNN/1,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1089,0.85676,38.688,15.717,18.345,Slag
+SEALIP/LA/TNN/2,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1097,0.8582,38.589,15.697,18.291,Slag
+SEALIP/LA/TNN/3,400 - 100 BC,Iron Age,Thong Na Nguak,TNN,106.000893,16.971067,,Savannakhet Province,Mekong river basin,Laos,Ingot,2.107700,0.857140,38.636000,15.712000,18.331000,Low
+SEALIP/LA/TNN/4,400 - 100 BC,Iron Age,Thong Na Nguak,TNN,106.000893,16.971067,,Savannakhet Province,Mekong river basin,Laos,Ingot,2.11013034297658,0.857580146162299,38.6876878579112,15.7224683190777,18.3358742167358,Low
+SEALIP/LA/VC/1,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ge,2.09694,0.84749,38.918,15.728,18.56,Medium
+SEALIP/LA/VC/2,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ge,2.09846877570168,0.850534585624375,38.7625392260965,15.7204205559668,18.4744377693902,Medium
+SEALIP/LA/VC/3,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ge,2.10505389809717,0.853590738021696,38.7920075572314,15.7361605962562,18.4301615246862,Medium
+SEALIP/LA/VC/4,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10814,0.85769,38.626,15.715,18.323,Medium
+SEALIP/LA/VC/5,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10743356767661,0.857349269015883,38.6096766750567,15.7059854965249,18.3208097473047,Medium
+SEALIP/LA/VC/6,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10736078975646,0.857259520711783,38.6250371600933,15.7108539642255,18.3286058376292,Medium
+SEALIP/LA/VC/7,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10813668878442,0.857875080028637,38.6104532521075,15.7085655509044,18.3148488542685,Medium
+SEALIP/LA/VC/8,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Ingot,2.10787204472738,0.857402383178038,38.6649880210218,15.7275010296816,18.3429630408378,Medium
+SEALIP/LA/VC/9,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Bell,2.11861814145614,0.853924419097015,38.9294899160801,15.691351457854,18.3734586646465,Medium
+SEALIP/LA/VC/10,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Bell,2.11356910934955,0.851748452951875,38.9582175818432,15.700569032195,18.4320691517953,Medium
+SEALIP/LA/VC/11,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Bell,2.11959045852634,0.854456293444255,38.9167378793894,15.6862113396476,18.3614974930507,Medium
+SEALIP/LA/VC/12,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Drum,2.10136835879163,0.849194441506232,38.9355767938416,15.7323499866676,18.5291649855405,Low
+SEALIP/LA/VC/13,400 BC - AD 300,Iron Age,Vilabouly Complex,VC,105.949639,16.972217,villagers' collections,Savannakhet Province,Mekong river basin,Laos,Drum,2.09418609379219,0.844326467057251,39.0332311058776,15.7360370000057,18.6373288178202,High
+SEALIP/LA/PBL/1,400 - 100 BC,Iron Age,Puen Baolo,PBL,105.925631, 16.951142,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1039,0.85626,38.569,15.697,18.332,Slag
+SEALIP/LA/PBL/2,401 - 100 BC,Iron Age,Puen Baolo,PBL,105.925632, 16.951143,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1102,0.85857,38.688,15.741,18.334,Slag
+SEALIP/LA/PBL/3,402 - 100 BC,Iron Age,Puen Baolo,PBL,105.925633, 16.951144,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1024,0.85412,38.695,15.72,18.405,Slag
+SEALIP/LA/PBL/4,403 - 100 BC,Iron Age,Puen Baolo,PBL,105.925634, 16.951145,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1048,0.85572,38.671,15.722,18.373,Slag
+SEALIP/LA/PBL/5,404 - 100 BC,Iron Age,Puen Baolo,PBL,105.925635, 16.951146,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1067,0.85669,38.654,15.719,18.348,Slag
+SEALIP/LA/PBL/6,405 - 100 BC,Iron Age,Puen Baolo,PBL,105.925636, 16.951147,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.1095,0.8583,38.678,15.737,18.335,Slag
+SEALIP/LA/PBL/7,406 - 100 BC,Iron Age,Puen Baolo,PBL,105.925637, 16.951148,cemetery/settlement/copper smelting,Savannakhet Province,Mekong river basin,Laos,Slag,2.105,0.85584,38.679,15.726,18.375,Slag
+SEALIP/MY/HL28/1,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.08886937288537,0.841481869563554,38.6428047380107,15.569123336067,18.500841761344,Medium
+SEALIP/MY/HL28/2,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.09620,0.84724,38.634,15.616,18.430,Low
+SEALIP/MY/HL28/3,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.08788,0.83994,38.811,15.614,18.589,Low
+SEALIP/MY/HL28/4,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.08785938627331,0.839879541184506,38.8258644608006,15.6179454737765,18.5955598011267,Low
+SEALIP/MY/HL28/5,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.08775701655198,0.840048937189297,38.8093380011836,15.6162541980627,18.5892630468914,Low
+SEALIP/MY/HL28/6,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.08818040491068,0.840476140806537,38.7986981167148,15.6182597108026,18.5800260065586,Low
+SEALIP/MY/HL28/7,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.08664445881808,0.839056093899787,38.8285364453365,15.6160680576587,18.6079122041363,Low
+SEALIP/MY/HL28/8,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.0877,0.83977,38.825,15.618,18.597,Low
+SEALIP/MY/HL28/9,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.086800565138,0.838904114107916,38.8391462962586,15.6170377891183,18.6113847230354,Low
+SEALIP/MY/HL28/10,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Casting spillage,2.10702862005537,0.85860778777109,38.5420966197224,15.7025778259983,18.292143524504,High
+SEALIP/MY/HL28/11,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Wire bundle,2.08765369369833,0.8400378073069,38.8142852822554,15.6178837288848,18.5925679170594,Low
+SEALIP/MY/HL28/12,500 - 100 BC,Iron Age,Halin,HL28, 95.799608,22.455975,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Bell,2.06199201077049,0.836226594526789,38.5315757663575,15.6272818414452,18.6865750929633,Medium
+SEALIP/MY/HL29/2,800-700 BC,Bronze Age,Halin,HL29, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Spearhead,2.08817,0.84083,38.783,15.619,18.573,Low
+SEALIP/MY/HL29/3,800-700 BC,Bronze Age,Halin,HL29, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Spearhead,2.08777467753721,0.840634321812074,38.7762514312528,15.6157641247528,18.5725613668478,Low
+SEALIP/MY/HL29/4,800-700 BC,Bronze Age,Halin,HL29, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Axe,2.04226446827109,0.821655821742703,39.1956436208406,15.7708452800456,19.1921574182169,High
+SEALIP/MY/HL29/5,800-700 BC,Bronze Age,Halin,HL29, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Axe,2.08416242564049,0.838830778565009,39.0098582399685,15.7037905844805,18.7175452536247,High
+SEALIP/MY/HL29/6,800-700 BC,Bronze Age,Halin,HL29, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Axe,2.09042490082528,0.849461798774041,38.4603231380506,15.6199824053904,18.3985097704829,High
+SEALIP/MY/HL29/7,800-700 BC,Bronze Age,Halin,HL29, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Spearhead,2.05852566617349,0.833158122377842,38.7862458610355,15.6894322369727,18.8419458208137,High
+SEALIP/MY/HL29/8,800-700 BC,Bronze Age,Halin,HL29, 95.806511, 22.457735,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Spearhead,2.1061224366912,0.860977514730067,38.0372181798727,15.5408681330963,18.0604857974828,High
+SEALIP/MY/HL30-1/1,800-700 BC,Bronze Age,Halin,HL30-1, 95.805538, 22.455223,cemetery,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Ring,2.11014867106021,0.858358862886493,38.6651578511079,15.7193273180401,18.3236092969565,High
+SEALIP/MY/HLTP1/1,AD 1000-1200,Historic,Halin,HLTP1, 95.801888, 22.444580,settlement,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Fragment,2.08866590804298,0.847344286265966,38.8400686258091,15.7481391920985,18.5958185406187,High
+SEALIP/MY/HLTP1/2,AD 1000-1200,Historic,Halin,HLTP1, 95.801888, 22.444580,settlement,Sagaing Division,Irrawady/Chindwin river basin ,Myanmar,Fragment,2.10285014357617,0.857802820337369,38.6019556593477,15.737900059115,18.3571505493588,Low
+SEALIP/MY/MLW/1,300 - 100 BC,Iron Age,Maliwan,MLW, 98.623468, 10.324234,,Thanintharyi Division,Maritime,Myanmar,,2.11564511368755,0.852458771973682,38.9808270778297,15.7051468283723,18.4250755919688,Low
+SEALIP/MY/MLW/2,300 - 100 BC,Iron Age,Maliwan,MLW, 98.623468, 10.324234,,Thanintharyi Division,Maritime,Myanmar,,2.1635105020992,0.87591227807729,38.4716391890504,15.5758169386479,17.7835578094857,Medium
+SEALIP/MY/MLW/3,300 - 100 BC,Iron Age,Maliwan,MLW, 98.623468, 10.324234,,Thanintharyi Division,Maritime,Myanmar,,2.10617184702101,0.859082790961282,38.6533473724537,15.7698223159032,18.3569666882713,Medium
+SEALIP/MY/PDHT/1,,,Pala Dauk Hter Taung (Copper Footprint Mountain),PDHT,,,,,,Myanmar,Ore,2.09206976638391,0.847544989080534,38.5215116885904,15.6053868086134,18.4136624602609,Ore
+SEALIP/MY/PDHT/2,,,Pala Dauk Hter Taung (Copper Footprint Mountain),PDHT,,,,,,Myanmar,Ore,2.08785123939696,0.850564898464207,38.3256132477276,15.6151255056383,18.3559271735409,Ore
+SEALIP/MY/PDHT/3,,,Pala Dauk Hter Taung (Copper Footprint Mountain),PDHT,,,,,,Myanmar,Ore,2.03037286378566,0.829121467186027,38.1596039351411,15.5916179628153,18.7950168059057,Ore
+SEALIP/MY/ST/1,,,Sabad Taung (Jasmine Mountain),ST,,,,,,Myanmar,Ore,1.43250705285198,0.57605135813214,40.4219879660913,16.2578641652469,28.2185504534497,Ore
+SEALIP/MY/ST/2,,,Sabad Taung (Jasmine Mountain),ST,,,,,,Myanmar,Ore,1.95452138667322,0.734320886386101,42.2814966613512,15.8852232914012,21.6346224181601,Ore
+SEALIP/MY/ST/3,,,Sabad Taung (Jasmine Mountain),ST,,,,,,Myanmar,Ore,1.97118495948819,0.749383576860827,41.7963189315997,15.8890317956773,21.2044726159509,Ore
+SEALIP/TH/BKC/1,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.10284260250988,0.848352132967755,38.6988320380713,15.6140387291127,18.4034008224894,
+SEALIP/TH/BKC/2,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Matte,2.1076101742197,0.850539149261131,38.6884114979149,15.6158301975759,18.3567316986658,
+SEALIP/TH/BKC/3,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.10758334508349,0.850802770892843,38.6965354374316,15.6178776314497,18.3599724088031,
+SEALIP/TH/BKC/4,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09204841950342,0.847066651093464,38.5875920714259,15.6222549408402,18.4450134244583,
+SEALIP/TH/BKC/5,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09237495250258,0.846234290115219,38.65964645425,15.6353786237287,18.4770994406314,
+SEALIP/TH/BKC/6,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09167896268523,0.846425402789798,38.6201354423522,15.6279186980987,18.4639040336837,
+SEALIP/TH/BKC/7,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09130429900786,0.84719491857485,38.5449248571044,15.6156069185037,18.4316423692333,
+SEALIP/TH/BKC/8,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09124105449821,0.846940651220769,38.5624552718601,15.618758421832,18.4401905197346,
+SEALIP/TH/BKC/9,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09633453914424,0.845583188112789,38.8331244752208,15.6639042824667,18.5242143169664,
+SEALIP/TH/BKC/10,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09057905671098,0.846646190582824,38.5664068539024,15.6188724371081,18.4473903743017,
+SEALIP/TH/BKC/11,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Matte,2.10500169500711,0.850030406226057,38.6493397308777,15.6080755833133,18.3613407070308,
+SEALIP/TH/BKC/12,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.10498747108256,0.85013958255443,38.6538853609246,15.611500402914,18.3623459926783,
+SEALIP/TH/BKC/13,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09229108227733,0.847410568422009,38.5716740862394,15.6224583722856,18.4357568503556,
+SEALIP/TH/BKC/14,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.10261026934486,0.848517836097937,38.6918642986686,15.6153425478055,18.4025400780357,
+SEALIP/TH/BKC/15,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.11012463979626,0.862286733350019,38.6132102803542,15.7778594025432,18.299575213591,
+SEALIP/TH/BKC/16,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.10960104495291,0.862426024685007,38.5721290525625,15.7680597764878,18.2867100037053,
+SEALIP/TH/BKC/17,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.1092568511327,0.86230091472934,38.5719197967168,15.768174889562,18.28820207184,
+SEALIP/TH/BKC/18,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.10825918933582,0.862103537338573,38.5425028301854,15.7593922624925,18.2819886237861,
+SEALIP/TH/BKC/19,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.10767139238778,0.860251530085722,38.5379211488175,15.729093655928,18.284630090837,
+SEALIP/TH/BKC/20,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.09942058598608,0.846692646240727,38.7413939034857,15.6264396310453,18.4538694507616,
+SEALIP/TH/BKC/21,17e century AD,Historic,Bang Krachai II,BKC,101.465183,12.262706,Shipwerk,,Maritime,Thailand,Ingot,2.0982616,0.8483158,38.6615634,15.6329329,18.4254470,
+SEALIP/TH/BPT/1,800-500 BC,Bronze Age,Ban Phak Top,BPT,103.023739,17.319876,cemetery,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.00716111571584,0.761708069082311,41.4573334827029,15.7238104950135,20.6539971782651,Medium
+SEALIP/TH/BPT/2,800-500 BC,Bronze Age,Ban Phak Top,BPT,103.023739,17.319876,cemetery,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.11776012622508,0.857662848303349,38.7702425867217,15.6921978306848,18.3068243234551,Medium
+SEALIP/TH/BPT/3,800-500 BC,Bronze Age,Ban Phak Top,BPT,103.023739,17.319876,cemetery,Udon Thani Province,Chi/Mun river basin,Thailand,Fragment,2.10753971214046,0.852738008242224,38.8928204860655,15.7270179855411,18.454187024777,Medium
+SEALIP/TH/BPT/4,800-500 BC,Bronze Age,Ban Phak Top,BPT,103.023739,17.319876,cemetery,Udon Thani Province,Chi/Mun river basin,Thailand,Fragment,2.02538627172437,0.780344445848337,40.8151529318202,15.7160260910291,20.1523230121191,Low
+SEALIP/TH/BPT/5,800-500 BC,Bronze Age,Ban Phak Top,BPT,103.023739,17.319876,cemetery,Udon Thani Province,Chi/Mun river basin,Thailand,Bangle,2.10740080453525,0.852578833070383,38.9311108889063,15.7410092156085,18.4733902215338,Medium
+SEALIP/TH/DK/4,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.09072808896469,0.845423773048977,38.9078592458264,15.724060668696,18.6097949611434,Low
+SEALIP/TH/DK/5,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.11224145435957,0.8563021736206,38.7204400667798,15.6878175302154,18.3314146535581,High
+SEALIP/TH/DK/6,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.11279816611949,0.855039476394039,38.7845038295871,15.6867773451964,18.3571664520379,Low
+SEALIP/TH/DK/7,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.1126036215492,0.856915910767227,38.7750900207623,15.7188567283478,18.3542545967202,Low
+SEALIP/TH/DK/8,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.11258300622951,0.85691837159917,38.771796539513,15.7177853147651,18.3531588985852,Low
+SEALIP/TH/DK/9,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.10453842812913,0.854395088543429,38.6836586153408,15.6958108322659,18.3813298479871,Low
+SEALIP/TH/DK/10,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.0903120947299,0.854002229860325,38.2387263517888,15.6139090798474,18.2934338311333,Low
+SEALIP/TH/DK/11,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.11368158700978,0.853728659415782,38.8930436776104,15.7008254480764,18.4015753363462,Medium
+SEALIP/TH/DK/12,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.11369269508662,0.853719566409563,38.8898935645864,15.698595643337,18.3989937964862,Low
+SEALIP/TH/DK/13,200 BC - AD 300,Iron Age,Don Klang,DK,102.428432,17.187304,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Wire,2.10891682248383,0.854636939700395,38.8767604169629,15.7462288342168,18.4350322930512,Low
+SEALIP/VN/DS/1,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10936174911978,0.854001633980646,38.8987413520883,15.7537186456709,18.4402708830201,Medium
+SEALIP/VN/DS/2,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.08688846556731,0.8372523096853,39.2672388700332,15.7589689766303,18.8162107622291,Medium
+SEALIP/VN/DS/3,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10764262699266,0.852877425171872,38.8318670671413,15.7198632703847,18.4248894366794,Low
+SEALIP/VN/DS/4,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.11187288035819,0.852386287976078,38.9410297090306,15.7237422088914,18.4397385560976,Medium
+SEALIP/VN/DS/5,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.09487801009495,0.84521803360124,39.0161003046945,15.7477966327147,18.6245720695015,High
+SEALIP/VN/DS/6,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.1068691205847,0.850704424742131,38.7209507833676,15.6373765381992,18.378374935137,Medium
+SEALIP/VN/DS/7,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.09442637394481,0.844124513117963,39.037705275133,15.7374281165714,18.6384283293611,Medium
+SEALIP/VN/DS/8,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.11539972853649,0.852123715083781,38.9759218922984,15.7029818660935,18.4243648857671,High
+SEALIP/VN/DS/9,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10378730561233,0.849938393700788,38.9581048464187,15.7426641708605,18.5167980526461,High
+SEALIP/VN/DS/10,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.11010515139966,0.850255802082488,38.9552219556703,15.6983153615827,18.461030372156,Low
+SEALIP/VN/DS/11,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10523110131961,0.850938260984591,38.9375919681589,15.7385715474257,18.4956060267196,Medium
+SEALIP/VN/DS/12,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10726720922938,0.853330064393264,38.9216574034493,15.7617629775339,18.4702249102573,Low
+SEALIP/VN/DS/13,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10786305050013,0.853533262237969,38.8878645498717,15.7483904673986,18.4494569047748,Low
+SEALIP/VN/DS/14,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.09607992410049,0.845365992905169,39.0143566735624,15.7354203638112,18.6129891873212,Medium
+SEALIP/VN/DS/15,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10458382195461,0.852342836519763,38.8776951491285,15.7457127621353,18.4728046499766,Low
+SEALIP/VN/DS/16,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10305640582506,0.851020290212482,38.8745802762213,15.7307202794845,18.4844407693183,Medium
+SEALIP/VN/DS/17,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.09442987220345,0.844264658746339,39.0417853865871,15.7384122543621,18.6409102657877,Low
+SEALIP/VN/DS/18,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.10549217888294,0.852379123051817,38.8757900351684,15.7392070784189,18.4649075994641,Medium
+SEALIP/VN/DS/19,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Situla,2.11101582645091,0.856500763602854,38.8919915916632,15.7797991634377,18.4228992761813,High
+SEALIP/VN/DS/20,500 - 100 BC,Iron Age,Đông Sơn,DS,105.620726, 20.921841,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.08117487939477,0.830595229738824,39.1795947565775,15.637021134184,18.8330127871207,Low
+SEALIP/VN/LN/1,500 - 100 BC,Iron Age,Lang Ngam,LN,106.149272, 21.080101,probably cemetery,Bac Ninh Province,Red river basin,Vietnam,Drum,2.10870869787947,0.850633844576851,39.0577564940338,15.7562943526081,18.5222031867296,Low
+SEALIP/VN/THD/1,500 - 100 BC,Iron Age,Thieu Duong,THD,105.773263, 19.864941,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.06680721023392,0.819366927268024,39.4659175580175,15.6459665048872,19.0955968813406,Medium
+SEALIP/VN/THD/2,500 - 100 BC,Iron Age,Thieu Duong,THD,105.773263, 19.864941,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.11001816940551,0.85205839991116,38.8474175678348,15.6866337323452,18.410926500607,High
+SEALIP/VN/THD/3,500 - 100 BC,Iron Age,Thieu Duong,THD,105.773263, 19.864941,probably cemetery,Than Hoa Province,Red river basin,Vietnam,Drum,2.11026175012347,0.855677901517287,38.8906590210498,15.7679051233285,18.4284861283876,Medium
+SEALIP/CH/HBS/7,798 - 600 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Ore,2.0404190185431,0.83481623770677,38.4322125809861,15.7153087923726,18.8356854095316,Ore
+SEALIP/CH/HBS/8,799 - 600 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Ore,2.08463018530064,0.85508163675257,38.2021756916609,15.6613198844134,18.326173006662,Ore
+SEALIP/CH/HBS/3,800 - 600 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Fragment,2.09116229551775,0.842999963547371,38.853528365747,15.6543510894616,18.5801996287684,Low
+SEALIP/CH/HBS/4,800 - 600 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Fragment,2.09671381365493,0.846806814198968,38.8622417422153,15.6874166061431,18.5366807650401,Low
+SEALIP/CH/HBS/5,800 - 600 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Fragment,2.09607486269765,0.851049192815565,38.5618079656922,15.6474133024966,18.3957089412778,High
+SEALIP/CH/HBS/6,800 - 600 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Fragment,2.08971605809481,0.839953904762283,38.8171627946961,15.5933632856914,18.5757546918732,Low
+SEALIP/CH/HBS/1,800 - 600 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Fragment,2.10514611409285,0.859001025892566,38.4562684554298,15.6836597588397,18.26843220082,Medium
+SEALIP/CH/HBS/2,675 - 550 BC,Bronze Age,Hebosuo,HBS,102.688685, 24.710593,,Yunnan,Red river basin,China,Fragment,2.09090848158258,0.844568024350534,38.6820828562641,15.6147860919371,18.5002860702655,Medium
+SEALIP/CH/JXT/1,1100 - 800 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Pin,2.09218686443389,0.838499903967061,39.3321724563389,15.7537477548631,18.7999943620209,Low
+SEALIP/CH/JXT/2,1100 - 800 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Fragment,2.09236758924246,0.846361922597499,38.6443735323898,15.6232433841259,18.4693129883388,Low
+SEALIP/CH/JXT/3,800 - 750 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Fragment,2.08331,0.855,38.21682,15.67379,18.34456,Low
+SEALIP/CH/JXT/4,800 - 750 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Fragment,2.09667,0.84678,38.88202,15.69385,18.54409,Low
+SEALIP/CH/JXT/5,800 - 750 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Fragment,2.10420789108589,0.859544529382895,38.3081233218691,15.6395128311824,18.205866786237,Low
+SEALIP/CH/JXT/6,800 - 500 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Fragment,2.09977481934526,0.853972932935102,38.5274409463476,15.6616322419278,18.3493580545491,Medium
+SEALIP/CH/JXT/7,800 - 750 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Fragment,2.09244334444714,0.847243871342309,38.5460745908095,15.5998191780111,18.421835607382,Low
+SEALIP/CH/JXT/8,800 - 750 BC,Bronze Age,Xiwangmiao,XIW,102.691642,24.709975,,Yunnan,Red river basin,China,Fragment,2.09233847042214,0.847115992069631,38.4761528662684,15.5721956585745,18.3901484404944,Low
+SEALIP/TH/LLR/1,early 1st mill AD,Iron Age,Long Long Rak,LLR,,,,,,Thailand,Ring,2.10889840291253,0.850259863248361,38.9793325236543,15.706647076259,18.4831690656564,Medium
+SEALIP/TH/LLR/2,early 1st mill AD,Iron Age,Long Long Rak,LLR,,,,,,Thailand,Ring,2.11595015301412,0.852661099032803,38.969009814595,15.6941016535974,18.4165209438507,Low
+SEALIP/TH/KSO/15,200 BC - AD 300,Iron Age,Khao Sai On ,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Bangle,2.07998542583288,0.839551058298033,38.9284966962735,15.7037654841627,18.7156735231179,Medium
+SEALIP/TH/PTT/1,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.08316141620085,0.853003949541865,37.9604853950267,15.5346646554976,18.2224680265313,
+SEALIP/TH/PTT/2,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.08178207071975,0.851896168223009,38.0054577298506,15.5434884873956,18.2562282165193,
+SEALIP/TH/PTT/3,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.00679697170819,0.821347344283445,38.1146274818955,15.5904605624931,18.9923816613151,
+SEALIP/TH/PTT/4,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.04934193442264,0.83810906135924,38.1255912156724,15.5827390843817,18.6037357469644,
+SEALIP/TH/PTT/5,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.06492811807104,0.845178837268628,38.0582829015705,15.5684795079498,18.4307754327558,
+SEALIP/TH/PTT/6,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.07405577661621,0.848488574447419,38.0322417313748,15.549967021334,18.3373715012825,
+SEALIP/TH/PTT/7,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.06024897699043,0.842571847400685,38.0653095186049,15.5585217605185,18.4762911339537,
+SEALIP/TH/PTT/8,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.06856091633795,0.846629956540212,38.0571902584266,15.5669684651109,18.3979307796471,
+SEALIP/TH/PTT/9,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.09373400106636,0.858459529343326,37.8607049631233,15.514470655576,18.0830895700963,
+SEALIP/TH/PTT/10,400 - 100 BC,Iron Age,Prommatin Tai,PTT,100.618757,14.992706,,Lopburi Province,Chao Phraya river basin,Thailand,,2.0459752493359,0.837236863757576,38.0490219362494,15.5611956166738,18.5975137495835,
+SEALIP/TH/TK/2,,Iron Age,Tha Kae,TK,100.619445, 14.843889,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.07983578382469,0.85280347616778,37.9008877524239,15.53159870976,18.222938269942,Slag
+SEALIP/TH/TK/3,,Iron Age,Tha Kae,TK,100.619445, 14.843889,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.08222091201402,0.848500659130517,38.5083865003142,15.6831431458452,18.4936985246785,Slag
+SEALIP/TH/TK/4,,Iron Age,Tha Kae,TK,100.619446, 14.843890,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.00205949043908,0.82126249527074,38.0200203689022,15.5866925008947,18.9901081670947,Slag
+SEALIP/TH/TK/5,,Iron Age,Tha Kae,TK,100.619447, 14.843891,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,1.90564297244818,0.782692760291495,38.1871044016798,15.6755729760622,20.0394496093796,Slag
+SEALIP/TH/TK/6,,Iron Age,Tha Kae,TK,100.619448, 14.843892,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,1.96968889290083,0.808126393419824,38.0556565254403,15.6043375583698,19.3201961258217,Slag
+SEALIP/TH/TK/7,,Iron Age,Tha Kae,TK,100.619449, 14.843893,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,1.88364585267507,0.770757560126197,38.3896128105738,15.6994096786918,20.3801144570115,Slag
+SEALIP/TH/TK/8,,Iron Age,Tha Kae,TK,100.619450, 14.843894,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,1.99351350471656,0.818298624286923,38.0407786219928,15.6059738452012,19.082579205496,Slag
+SEALIP/TH/TK/9,,Iron Age,Tha Kae,TK,100.619451, 14.843895,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,1.99733922409876,0.820252867347024,37.9836840482674,15.5900110900749,19.0169231411167,Slag
+SEALIP/TH/TK/10,,Iron Age,Tha Kae,TK,100.619452, 14.843896,,Lopburi Province,Chao Phraya river basin,Thailand,Slag,1.8148539505824,0.744167136714396,38.4301639351959,15.7491855063546,21.1763210611365,Slag
+SEALIP/TH/KSO/3,199 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Bangle,2.0636405361222,0.841510317904653,38.2393380520392,15.5843403599614,18.5306533524401,Medium
+SEALIP/TH/KSO/4,200 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Bangle,2.08018657544044,0.839598315417208,38.931563046627,15.7044019247895,18.7154911963271,Low
+SEALIP/TH/KSO/5,200 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.06206404786515,0.845801740005931,37.9134211974371,15.5420117916203,18.3863415587941,Slag
+SEALIP/TH/KSO/6,201 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.08105562776606,0.853441883366318,37.8886600247139,15.5293523196997,18.2066349808248,Slag
+SEALIP/TH/KSO/7,202 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.06619552279291,0.845906275039885,38.0255133640186,15.5588545957272,18.4038462556446,Slag
+SEALIP/TH/KSO/8,203 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.09986289027126,0.860441408901326,37.9180187089226,15.5284890775416,18.0573139991917,Slag
+SEALIP/TH/KSO/9,204 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.07792231817947,0.85185224064199,37.9179526286048,15.5356620897269,18.2480437154442,Slag
+SEALIP/TH/KSO/10,205 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.07151221068501,0.851279565735752,37.9045594950603,15.5682113939796,18.2982849097094,Slag
+SEALIP/TH/KSO/11,206 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.07114894876433,0.84886383331269,37.9584191063113,15.5486253622557,18.3274117748484,Slag
+SEALIP/TH/KSO/12,207 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.04563865522226,0.838233072140175,38.0152394342203,15.5687805692631,18.5839605146185,Slag
+SEALIP/TH/KSO/13,208 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.05616114219128,0.84274987246559,37.9715826307966,15.5544601591426,18.4675260938463,Slag
+SEALIP/TH/KSO/14,209 BC - AD 300,Iron Age,Khao Sai On,KSO,100.729883, 14.784515,cemetery/settlement/copper smelting,Lopburi Province,Chao Phraya river basin,Thailand,Slag,2.09082470506523,0.856209753881242,37.9513141781228,15.5326442431556,18.1513846467581,Slag
+SEALIP/TH/BC/7,500-200 BC,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Fragment,2.1076377746802,0.861526776280822,38.5372697630365,15.7530330541329,18.2848391517457,Low
+SEALIP/TH/BC/18,200 BC - AD 300,Iron Age,Ban Chiang,BC,103.241775,17.404531,cemetery/settlement,Udon Thani Province,Chi/Mun river basin,Thailand,Fragment,2.10489923474791,0.850382965200742,38.9835713737356,15.7496782515371,18.5205754121493,Medium
+SEALIP/MY/KAW/1,,Modern,Kawlin,KAW,95.310,23.4230,modern mine,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.12528795429057,0.854711679845209,38.9037545192835,15.6461236355901,18.3055871125331,Ore
+SEALIP/MY/KAW/2,,Modern,Kawlin,KAW,95.310,23.4230,modern mine,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.12520489777468,0.854688473058943,38.9003877864201,15.6456002287492,18.3049028141462,Ore
+SEALIP/MY/KAW/3,,Modern,Kawlin,KAW,95.310,23.4230,modern mine,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.12429357766601,0.854255446430735,38.9206182169002,15.6523634857873,18.322095310898,Ore
+SEALIP/MY/TKM/1,,Modern,Thabeik Kyinn,TKM,,,modern mine,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.10223972864634,0.849236171635311,38.9993747019981,15.7457088381465,18.5515282302994,Ore
+SEALIP/MY/TKM/2,,Modern,Thabeik Kyinn,TKM,,,modern mine,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.11150831291588,0.857142551001825,38.7593376824836,15.7251548921271,18.3564137000164,Ore
+SEALIP/MY/TKM/3,,Modern,Thabeik Kyinn,TKM,,,modern mine,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.10753427378111,0.858661134768179,38.6730246977038,15.7573090593356,18.3502555901282,Ore
+SEALIP/TH/NNT/1,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.10202834346598,0.853834764492263,38.4671957130386,15.6251195132441,18.2997989192941,Medium
+SEALIP/TH/NNT/2,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.1030313488597,0.859743564658168,38.0390164864711,15.5510182386563,18.0880922029939,Medium
+SEALIP/TH/NNT/3,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.10460779009383,0.855340359082267,38.6978611165304,15.7275348721787,18.3872864738941,Medium
+SEALIP/TH/NNT/4,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.09271277893062,0.850573360768122,38.3989974420234,15.607095327701,18.348972920009,Low
+SEALIP/TH/NNT/5,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.07266536599387,0.839847401989576,38.6000866820546,15.6406721277606,18.6233004468987,High
+SEALIP/TH/NNT/6,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.08843027869743,0.848020119342539,38.4587231228155,15.6165485914893,18.4154366365497,Medium
+SEALIP/TH/NNT/7,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.00665643833598,0.769914655443672,41.0648074636315,15.7560661429038,20.4644591510187,Medium
+SEALIP/TH/NNT/8,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.02837135389446,0.818039705691195,38.8799508544751,15.6808458911567,19.1686488344127,Low
+SEALIP/TH/NNT/9,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.02221608422886,0.780834630149509,40.7270198002326,15.7257674707369,20.1395483653831,Low
+SEALIP/TH/NNT/10,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.10098680407045,0.85244629488413,38.5461458915348,15.6397974654803,18.3466982618721,Low
+SEALIP/TH/NNT/11,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.09738234524191,0.852125518701508,38.3930261767469,15.5985869077801,18.305392584084,Low
+SEALIP/TH/NNT/12,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.08683325578019,0.833993872244415,39.4083726622145,15.7497700384925,18.8843885057802,
+SEALIP/TH/NNT/13,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.10862493596933,0.862278297821609,38.0343425888129,15.5538053879765,18.037709608584,
+SEALIP/TH/NNT/14,1000-600 BC,Bronze Age,Non Nok Tha,NNT,102.311586,16.800936,cemetery/settlement,Khon Kaen Province,Chi/Mun river basin,Thailand,,2.10657014801878,0.861293801928028,38.0225623647746,15.5465532947301,18.0494193743691,Medium
+SEALIP/TH/BT/1,500 BC - AD 300,Iron Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Fragment,2.09637566580428,0.845508016769064,39.0033406060256,15.7312995194666,18.6051720220546,Low
+SEALIP/TH/BT/2,500 BC - AD 300,Iron Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Wire,2.11039561818805,0.857731188798203,38.6954348250134,15.7276924888207,18.335791381411,High
+SEALIP/TH/BT/3,500 - 200 BC,Iron Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Wire,2.10905052703628,0.858324557013384,38.5773748820328,15.7001608848223,18.2916274708125,Medium
+SEALIP/TH/BT/4,500 - 200 BC,Iron Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Wire,2.10539480389626,0.85408043984113,38.7809672330426,15.7324538623148,18.4196980893981,Low
+SEALIP/TH/BT/5,500 - 200 BC,Iron Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Bangle,2.10225756697547,0.850007789924278,38.9218387663372,15.7378483688755,18.5144714276796,Medium
+SEALIP/TH/BT/6,500 - 200 BC,Iron Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Wire,2.11171671307232,0.858796134479936,38.6355291067845,15.712259992394,18.2954563428934,Low
+SEALIP/TH/BT/7,800-500 BC,Bronze Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Fragment,2.1095296839592,0.856050197571793,38.7723066259096,15.7340381858557,18.3795024362178,Low
+SEALIP/TH/BT/8,800-500 BC,Bronze Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Fragment,2.08026898773181,0.845672602342294,38.3764658173948,15.6010871187848,18.4479679115869,Medium
+SEALIP/TH/BT/9,800-500 BC,Bronze Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Wire,2.09707950985227,0.847951223206835,38.8072354051513,15.6920260890292,18.5055330573712,Low
+SEALIP/TH/BT/10,800-500 BC,Bronze Age,Ban Tong,BT,103.258446,17.363925,cemetery,Sakhon Nakhon Province,Chi/Mun river basin,Thailand,Fragment,2.07774570814647,0.839137890307206,39.1158964396907,15.7982027888442,18.8264389604452,Low
+SEALIP/MY/MIN/1,,Modern,Mingan,MIN,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.09444591550938,0.834296259271078,39.4449441797569,15.7036576161609,18.8333027885326,Ore
+SEALIP/MY/MIN/2,,Modern,Mingan,MIN,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.18333753862939,0.82348226662706,41.6988339207261,15.7186632020745,19.098854365069,Ore
+SEALIP/MY/MIN/3,,Modern,Mingan,MIN,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.21771162042956,0.816956739730317,42.7113356150162,15.7252385943051,19.2596117940091,Ore
+SEALIP/MY/NTL/1,,Modern,"Nant Twin village, Lashio",NTL,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.04152210530336,0.821909043590543,39.1751038162353,15.762974232824,19.1893535773932,Ore
+SEALIP/MY/NTL/2,,Modern,"Nant Twin village, Lashio",NTL,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.03973456436714,0.822119296657071,39.1332059853693,15.763946220364,19.1856298208769,Ore
+SEALIP/MY/NTL/3,,Modern,"Nant Twin village, Lashio",NTL,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.03748335309723,0.820377406373987,39.1717724486549,15.7634462378876,19.2257565842371,Ore
+SEALIP/MY/BAW/1,,Modern,"Baw Mountain, Kyaukse",BAW,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.10577274382128,0.855923221521594,38.8054688906177,15.7642957429743,18.4283189121814,Ore
+SEALIP/MY/BAW/2,,Modern,"Baw Mountain, Kyaukse",BAW,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.10660524853809,0.85626567370315,38.8136204278448,15.7676821902549,18.4249061015254,Ore
+SEALIP/MY/BAW/3,,Modern,"Baw Mountain, Kyaukse",BAW,,,,,Irrawady/Chindwin river basin ,Myanmar,Ore,2.10471711158489,0.855435766400781,38.79563042417,15.75717984453,18.4328874921616,Ore
+SEALIP/MY/BWD/1,,Modern,Bawdwin,BWD,97.1749,23.633,Modern mine,,Irrawady/Chindwin river basin ,Myanmar,Copper,2.10864574004783,0.859476232128082,38.7670449379143,15.7925142198049,18.3849886730935,Low
+SEALIP/MY/BWD/2,,Modern,Bawdwin,BWD,97.1749,23.633,Modern mine,,Irrawady/Chindwin river basin ,Myanmar,Slag,2.10902279023098,0.859434493957857,38.7873907314224,15.7972106641853,18.3913485809687,Slag
+SEALIP/MY/YTCM/1,,Modern,"Yang Tse Copper, Monywa",YTCM,,,Modern mine,,Irrawady/Chindwin river basin ,Myanmar,Ingot,2.11654305925615,0.872517143475381,37.853059886076,15.5957470839455,17.8845561535381,Low
+SEALIP/CH/TLS/1,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0913,0.84766,38.466,15.591,18.393,Slag
+SEALIP/CH/TLS/2,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0902,0.84711,38.461,15.587,18.4,Slag
+SEALIP/CH/TLS/3,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0932,0.84835,38.475,15.593,18.381,Slag
+SEALIP/CH/TLS/4,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0835,0.84358,38.506,15.591,18.482,Slag
+SEALIP/CH/TLS/5,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0903,0.84742,38.442,15.585,18.391,Slag
+SEALIP/CH/TLS/6,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0924,0.84816,38.469,15.594,18.386,Slag
+SEALIP/CH/TLS/7,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0962,0.85089,38.44,15.603,18.338,Slag
+SEALIP/CH/TLS/8,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.101,0.85129,38.468,15.586,18.309,Slag
+SEALIP/CH/TLS/9,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0929,0.84841,38.456,15.589,18.374,Slag
+SEALIP/CH/TLS/10,1600 BC-100 AD,Bronze Age/Iron Age,Tonglüshan,TLS,114.564842,30.044363,Copper mine/smelting site,Hubei Province,Yangtze river basin,China,Slag,2.0933,0.84882,38.462,15.596,18.374,Slag

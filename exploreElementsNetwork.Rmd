@@ -294,12 +294,14 @@ kableExtra::row_spec(kbl,which(merged[,2]!=merged[,3]) , background = "red")
 
 
 ```{r}
-datappm=read.csv("data/SEALIP_BROGLASEA data_Pryce.csv")
+datappm=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V2.csv")
 
 # set an arbitrary epsilon value and replace "tr"s and "0"s with it
 epsilon=0.0001
 datappm[,12:42]=apply(datappm[,12:42],2,function(i){i[i=="tr"]=epsilon;as.numeric(i)})
+datappm[,12:42]=apply(datappm[,12:42],2,function(i){i[i=="nd"]=epsilon;as.numeric(i)})
 datappm[,12:42]=apply(datappm[,12:42],2,function(i){i[i==0]=epsilon;as.numeric(i)})
+datappm[,12:42]=apply(datappm[,12:42],2,function(i){i[is.na(i)]=epsilon;as.numeric(i)})
 
 
 ppms=datappm[,12:42]
@@ -307,10 +309,16 @@ listelements=c("Sb","Sn","Ag","Mo","Bi","Pb","Se","As","Au","Zn","Cu","Ni","Co")
 ppms=datappm[,listelements]
 #ppms=ppms[,-7]
 artnull=which(apply(ppms,1,sd)==0)
-artnull=c(222,289,296,299,531,172,181,531)
+ttt=dist(ppms)
+ttt=as.matrix(ttt)
+dupli=which(apply(ttt,2,function(i)any(sum(i==0)>1)))
+#artnull=c(222,289,296,299,531,172,181,531)
 datappm=datappm[-artnull,]
+datappm=datappm[-dupli,]
 ppms=ppms[-artnull,]
+ppms=ppms[-dupli,]
 #plot(ppms,pch=20,cex=.7,col=adjustcolor(1,.2))
+
 ```
 
 Check the correaltion between the elements' ppm
