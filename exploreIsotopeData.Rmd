@@ -38,11 +38,11 @@ seashapefile=readOGR(dsn="Cartes/",layer="allsea")
 ```
 
 ```{r,out.width="50%"}
-pryce=read.csv("data/DATA isotopie_Pryce_V2.csv")
-pryce[,11:15]=apply(pryce[,11:15],2,as.numeric)
-pryce=pryce[!is.na(pryce[,11]),]
-isotopes=pryce[,11:15]
-pryce.pca=prcomp(pryce[,11:15])
+pryce=read.csv("data/DATA isotopie_Pryce_V4.csv")
+pryce[,15:19]=apply(pryce[,15:19],2,as.numeric)
+pryce=pryce[!is.na(pryce[,15]),]
+isotopes=pryce[,15:19]
+pryce.pca=prcomp(pryce[,15:19])
 pryce.dist=dist(pryce.pca$x)
 pryce.clust=hclust(pryce.dist)
 pryce.kclust=cutree(pryce.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
@@ -59,15 +59,15 @@ pryce$Easting...Longitude= as.numeric(gsub("°","",pryce$Easting...Longitude))
 pryce$Northing.Latitude= as.numeric(gsub("°","",pryce$Northing.Latitude))
 plot(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
 
-plot(pryce[,15:14],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
-text(pryce[,15],pryce[,14],pryce$Site,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
+plot(pryce[,19:18],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+text(pryce[,19],pryce[,18],pryce$Site,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
 
-ttt=dist(isotopes)
-ttt=as.matrix(ttt)
-dupli=which(apply(ttt,2,function(i)any(sum(i==0)>1)))
-
-isotopes=isotopes[-as.numeric(dupli),]
-pryce=pryce[-dupli,]
+## fin duplicate lines => now obsolete 
+#ttt=dist(isotopes)
+#ttt=as.matrix(ttt)
+#dupli=which(apply(ttt,2,function(i)any(sum(i==0)>1)))
+#isotopes=isotopes[-as.numeric(dupli),]
+#pryce=pryce[-dupli,]
 
 ```
 
@@ -183,8 +183,8 @@ Try ternary plots:
 #devtools::install_git('https://bitbucket.org/nicholasehamilton/ggtern')
 library(ggtern)
 
-pryce[,13:15]=apply(pryce[,13:15],1,function(i)i/sum(i))
-only=pryce[,c(13:15)]
+pryce[,17:19]=apply(pryce[,17:19],1,function(i)i/sum(i))
+only=pryce[,c(17:19)]
 colnames(only)=c("208Pb","207Pb","206Pb")
 colnames(only)=c("A","B","C")
 #only=t(apply(only,1,function(i)i/sum(i)))
@@ -229,8 +229,8 @@ ggtern(only ,aes(A,B,C))+geom_point(color=as.numeric(as.factor(pryce$Region)))+
 tern_limits(.25,.8,.40)
 geom_density_tern(aes(fill=..level..),bins=5) +
  geom_point()
-plot(pryce[,11:12],col=as.factor(pryce$Region),pch=20)
-plot3D(pryce[,11],pryce[,12],pryce[,15])
+plot(pryce[,15:16],col=as.factor(pryce$Region),pch=20)
+plot3D(pryce[,15],pryce[,16],pryce[,19])
 
 Ternary::TernaryPlot(xlim=c(-0.032,-0.01),ylim=c(.455,.465),padding=0,isometric=F)
 
