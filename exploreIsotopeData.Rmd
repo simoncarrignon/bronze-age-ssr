@@ -33,33 +33,36 @@ seashapefile=do.call("rbind",allshapefiles)
 ```
 
 ```{r}
-library(rgdal)
-seashapefile=readOGR(dsn="Cartes/",layer="allsea")
+library(sf)
+seashapefile=st_read("Cartes/allsea.shp")
 ```
 
 ```{r,out.width="50%"}
 pryce=read.csv("data/DATA isotopie_Pryce_V4.csv")
-pryce[,15:19]=apply(pryce[,15:19],2,as.numeric)
-pryce=pryce[!is.na(pryce[,15]),]
-isotopes=pryce[,15:19]
-pryce.pca=prcomp(pryce[,15:19])
+ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
+pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
+pryce=pryce[!is.na(pryce[,15]),]#useless with the new cleaner dataset
+isotopes=pryce[,ratioiso]
+pryce.pca=prcomp(pryce[,ratioiso])
 pryce.dist=dist(pryce.pca$x)
 pryce.clust=hclust(pryce.dist)
 pryce.kclust=cutree(pryce.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
 plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
-plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
-text(pryce.pca$x[,1],pryce.pca$x[,2],pryce$Region,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
+text(pryce.pca$x[,1],pryce.pca$x[,2],pryce$River.basin,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
 
 
-plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
 plot(pryce.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
 text(pryce.pca$x[,1],pryce.pca$x[,2],pryce$Site,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
 
 pryce$Easting...Longitude= as.numeric(gsub("°","",pryce$Easting...Longitude))
 pryce$Northing.Latitude= as.numeric(gsub("°","",pryce$Northing.Latitude))
-plot(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+plot(seashapefile[,1],reset=F)
+points(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
 
-plot(pryce[,19:18],pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+wholeSEA=st_union(seashapefile)
+plot(wholeSEA[,1],reset=F)
+points(pryce$Easting...Longitude,pryce$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust])
+
 text(pryce[,19],pryce[,18],pryce$Site,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclust],cex=.4)
 
 ## fin duplicate lines => now obsolete 
@@ -70,6 +73,32 @@ text(pryce[,19],pryce[,18],pryce$Site,pch=21,bg=rainbow(10,alpha=.6)[pryce.kclus
 #pryce=pryce[-dupli,]
 
 ```
+
+
+Plot Isotopes ratio classic bi-plot:
+
+```{r}
+pryce$kclust=pryce.kclust 
+qualities=pryce[pryce$Artefact.type %in% c("Slag","Ingots","slag","ingots"),]
+
+par(mfrow=c(1,2))
+plot(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust])
+text(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$River.basin,cex=.4)
+plot(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust])
+text(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$River.basin,cex=.4)
+text(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$LABEL.analytical,cex=.6)
+
+ql.pca=prcomp(qualities[,ratioiso])
+ql.dist=dist(ql.pca$x)
+ql.clust=hclust(ql.dist)
+ql.kclust=cutree(ql.clust,k=5)
+
+oligroup=read.csv("data/group differences.csv")
+qualities$klcust=ql.kclust
+plot(ql.pca$x[,1:2],pch=21,bg=rainbow(5)[ql.kclust])
+text(ql.pca$x[,1],ql.pca$x[,2],qualities$LABEL.analytical,cex=.6)
+```
+
 
 Tsnea and networks:
 ```{r,fig.height=20,fig.width=20}
