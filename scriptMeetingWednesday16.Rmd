@@ -15,6 +15,17 @@ output:
 
 
 ```{r}
+fun_range <- function(x,n=100) {                              # Create user-defined function
+  (x - min(x)) / (max(x) - min(x)) * 100
+}
+simpmatch  <-  function(i,j){
+    if(length(i)>length(j)){
+        tmp=i
+        i=j
+        j=tmp
+    }
+    length(na.omit(match(i,j)))
+}
 library(sf)
 seashapefile=st_read("Cartes/allsea.shp")
 seashapefile=st_make_valid(seashapefile)
@@ -193,7 +204,7 @@ knitr::kable(allgroups)
 Play with full dataset:
 ```{r}
 allsites=createRatioMatrix(pryce,ratioiso,recomp)
-allgraphs=lapply(1:3,function(i)graphFromAdj(allsites,mask=i,label=cleanlist$Site.abreviation))
+allgraphs=lapply(1:3,function(i)graphFromAdj(allsites,mask=i,label=pryce$Site.abreviation))
 alcomu=sapply(allgraphs,cluster_louvain)
 allgroups=sapply(alcomu,membership)
 plot(pryce$Easting...Longitude,pryce$Northing.Latitude,col=alcomu[[1]]$membership,pch=20)
@@ -202,23 +213,35 @@ plot(pryce$Easting...Longitude,pryce$Northing.Latitude,col=alcomu[[1]]$membershi
 Create inter basin connections
 
 ```{r}
-pryce=cbind(pryce,allgroups)
-sites=unique(pryce$River.basin)
-matdim2=matrix(NA,nrow=length(sites),ncol=length(sites))
-for(s1 in 1:length(sites)){
-    for(s2 in 1:length(sites)){
-        c1=pryce[["1"]][ pryce$River.basin == sites[s1]]
-        c2=pryce[["1"]][ pryce$River.basin == sites[s2]]
-        matdim2[s1,s2]=simpmatch(c1,c2)
+#'@param dataset all data
+#'@param sites how dataset should be grouped by site
+#'@param match a function that coompute how sites match
+creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
+    sites=unique(sitesgroup)
+    adjmat=matrix(NA,nrow=length(sites),ncol=length(sites))
+    for(s1 in 1:length(sites)){
+        for(s2 in 1:length(sites)){
+            c1=artgroup[ sitesgroup == sites[s1]]
+            c2=artgroup[ sitesgroup == sites[s2]]
+            adjmat[s1,s2]=match(c1,c2)
+        }
     }
+    adjmat
 }
-sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
-V(sites.graph)$label=as.character(sites)
+pryce=cbind(pryce,allgroups)
+matdim2=creatSiteAdjMat(pryce,pryce$River.basin,allgroups[,3],match=simpmatch)
+sites.graph=graph.adjacency(1/(matdim2^2), mode = "undirected", weighted = TRUE, diag = FALSE)
+allcomu=cluster_louvain(sites.graph)
+V(sites.graph)$label=unique(pryce$River.basin)
+V(sites.graph)$color=allcomu$membership
 V(sites.graph)$label.cex=.7
 V(sites.graph)$size=8
 V(sites.graph)$label.color="black"
-E(sites.graph)$color=NA
-sites.graph=set_graph_attr(sites.graph,"layout",layout(c(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)))
-plot(sites.graph,layout=cbind(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N))
+E(sites.graph)$color=1
+E(sites.graph)$width=E(sites.graph)$weight*100
+#sites.graph=set_graph_attr(sites.graph,"layout",layout(c(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)))
+plot(sites.graph)
+plot(seashapefile)
+plot(sites.graph,layout=unique(cbind(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)),add=F)
 ```
 
