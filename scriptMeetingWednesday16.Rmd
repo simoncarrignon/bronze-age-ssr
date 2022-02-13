@@ -229,19 +229,21 @@ creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
     adjmat
 }
 pryce=cbind(pryce,allgroups)
-matdim2=creatSiteAdjMat(pryce,pryce$River.basin,allgroups[,3],match=simpmatch)
-sites.graph=graph.adjacency(1/(matdim2^2), mode = "undirected", weighted = TRUE, diag = FALSE)
-allcomu=cluster_louvain(sites.graph)
-V(sites.graph)$label=unique(pryce$River.basin)
-V(sites.graph)$color=allcomu$membership
-V(sites.graph)$label.cex=.7
-V(sites.graph)$size=8
-V(sites.graph)$label.color="black"
-E(sites.graph)$color=1
-E(sites.graph)$width=E(sites.graph)$weight*100
-#sites.graph=set_graph_attr(sites.graph,"layout",layout(c(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)))
-plot(sites.graph)
-plot(seashapefile)
-plot(sites.graph,layout=unique(cbind(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)),add=F)
+for(i in 1:3){
+    matdim2=creatSiteAdjMat(pryce,pryce$River.basin,allgroups[,i],match=simpmatch)
+    sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
+    allcomu=cluster_louvain(sites.graph)
+    V(sites.graph)$label=unique(pryce$River.basin)
+    V(sites.graph)$color=allcomu$membership
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=8
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=1
+    E(sites.graph)$width=E(sites.graph)$weight/50
+    #sites.graph=set_graph_attr(sites.graph,"layout",layout(c(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)))
+    plot(sites.graph)
+    #plot(seashapefile)
+    #plot(sites.graph,layout=unique(cbind(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)),add=F)
+}
 ```
 
