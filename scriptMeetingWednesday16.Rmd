@@ -1,0 +1,131 @@
+---
+title: "Isotpo"
+author: "SC"
+date: "`r Sys.time()`"
+output: 
+    bookdown::html_document2:
+        code_folding: show
+        section_numbers: true
+        toc: true
+        toc_depth: 3
+        toc_float: true
+---
+
+# Isotope data
+
+
+```{r}
+library(sf)
+seashapefile=st_read("Cartes/allsea.shp")
+seashapefile=st_make_valid(seashapefile)
+seashapefile=st_union(seashapefile)
+
+```
+
+```{r}
+pryce=read.csv("data/DATA isotopie_Pryce_V4.csv")
+ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
+pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
+```
+We get only some "clean" artefacts:
+
+
+```{r}
+cleanlist=pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),]
+persite=table(cleanlist$Site.abreviation)
+cleanlist=pryce[pryce$Site.abreviation %in% names(persite)[persite>9] & pryce$Corrosion.products %in% c("Low","Ingot","Slag"),]
+sitecol=rainbow(length(unique(cleanlist$Site.abreviation)),alpha=.8)
+names(sitecol)=unique(cleanlist$Site.abreviation)
+plot(cleanlist[,ratioiso[3:2]],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+plot(cleanlist[,ratioiso[c(3,1)]],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+val=legend("topleft",fill=sitecol,legend=names(sitecol),title="Site",bty="n")
+newxleg=val$rect$left+val$rect$w
+newyleg=val$rect$top
+
+legend(x=newxleg,y=newyleg,pch=20+1:length(unique(cleanlist$Country)),legend=levels(as.factor(cleanlist$Country)),title="Country",bty="n")
+```
+
+Using tsnea to separate artefacts
+
+```{r}
+library(Rtsne)
+isotopes.tsne=Rtsne(as.matrix(cleanlist[,ratioiso]),pca=F)
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),"Site.abreviation"],cex=.6)
+```
+
+
+Faire les distance "à la oli" => groupe les artefact avec une difference <.1%
+
+
+D'abord recalculer les difference maximum entre les ratio ingot/slag d'un même sites:
+
+```{r}
+ratioSpan  <-  function(a,b=NULL){
+    maxr=NULL
+    minr=NULL
+    if(length(a)>=2){
+        maxr=max(a)
+        minr=min(a)
+    }
+    else{
+        maxr=max(a,b)
+        minr=min(a,b)
+    }
+    minr/maxr
+}
+samegroups=pryce[pryce$Artefact.type %in% c("Slag","Ingot"),]
+#remove weirdos
+samegroups=samegroups[samegroups$LABEL.analytical != "SEALIP/TH/NPW/1",]
+
+minim=sapply(unique(samegroups$Site.abreviation),function(site){
+    sitesratio=samegroups[samegroups$Site.abreviation == site,ratioiso]
+    apply(sitesratio,2,ratioSpan)
+}
+)
+
+(1-apply(minim,1,min))*100
+knitr::kable(t(minim))
+
+oliselection=minim[,c("PBL","NPW","NKH")]
+knitr::kable(t(oliselection))
+recomp=(1-apply(oliselection,1,min))*100
+knitr::kable(recomp)
+recomp=1-apply(oliselection,1,min)
+```
+
+Which correspond to oli's computation:
+```{r}
+olidiff=read.csv("data/prod sys var.csv",header=F)
+knitr::kable(olidiff[6,c(4,6,8)]-recomp)
+```
+
+On va donc ensuite comparer chaque element deux a deux et voir quel ratios sont inferieur aux ratio min calculé precedement
+
+
+```{r}
+
+same <- function(a,b=NULL,threshold=0.01){
+    maxr=minr=NULL
+    if(length(a)==2){
+        maxr=max(a)
+        minr=min(a)
+    }
+    else{
+        maxr=max(a,b)
+        minr=min(a,b)
+    }
+    if(1-(minr/maxr) <= threshold) return(1)
+    else return(0)
+}
+
+adjmat=matrix(0,nrow=nrow(cleanlist),ncol=ncol(cleanlist))
+for(i in 1:(ncol(cleanlist)+1)){
+    for(j in (i+1):ncol(cleanlist)){
+        adjmat[i,j]=
+       
+}
+
+```
+
+
