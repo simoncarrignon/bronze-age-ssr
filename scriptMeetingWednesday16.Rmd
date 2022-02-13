@@ -119,13 +119,37 @@ same <- function(a,b=NULL,threshold=0.01){
     else return(0)
 }
 
-adjmat=matrix(0,nrow=nrow(cleanlist),ncol=ncol(cleanlist))
-for(i in 1:(ncol(cleanlist)+1)){
-    for(j in (i+1):ncol(cleanlist)){
-        adjmat[i,j]=
-       
+adjmat=matrix(0,nrow=nrow(cleanlist),ncol=nrow(cleanlist))
+for(i in 1:(nrow(cleanlist)-1)){
+    for(j in (i+1):nrow(cleanlist)){
+        adjmat[j,i]=adjmat[i,j]=sum(sapply(ratioiso,function(iso)same(cleanlist[c(i,j),iso],threshold=recomp[iso])))
+    }
 }
+       
 
+```
+
+
+Using this as a graph
+
+```{r}
+library(igraph)
+
+limited=adjmat
+limited[limited<2]=0
+limited[limited>=2]=1
+graph=graph_from_adjacency_matrix(limited,diag=F,weighted=T)
+V(graph)$label=cleanlist$Site.abreviation
+V(graph)$size=8
+V(graph)$frame.color="black"
+V(graph)$frame.width=.5
+V(graph)$color=sitecol[cleanlist$Site.abreviation]
+V(graph)$label.color=adjustcolor("black",.6)
+E(graph)$color="black"
+E(graph)$width=.4
+E(graph)$arrow.mode="-"
+graph=set_graph_attr(graph,"layout",layout_with_fr(graph))
+plot(graph)
 ```
 
 
