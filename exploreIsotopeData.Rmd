@@ -35,6 +35,9 @@ seashapefile=do.call("rbind",allshapefiles)
 ```{r}
 library(sf)
 seashapefile=st_read("Cartes/allsea.shp")
+seashapefile=st_make_valid(seashapefile)
+seashapefile=st_union(seashapefile)
+
 ```
 
 ```{r,out.width="50%"}
@@ -79,7 +82,7 @@ Plot Isotopes ratio classic bi-plot:
 
 ```{r}
 pryce$kclust=pryce.kclust 
-qualities=pryce[pryce$Artefact.type %in% c("Slag","Ingots","slag","ingots"),]
+qualities=pryce[pryce$Artefact.type %in% c("Slag","Ingots"),]
 
 par(mfrow=c(1,2))
 plot(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust])
@@ -282,4 +285,5 @@ ggtern() +
   scale_L_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2)) +
   scale_R_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2))
 ```
+
 
