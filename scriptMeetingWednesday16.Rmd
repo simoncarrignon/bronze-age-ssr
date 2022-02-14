@@ -13,6 +13,10 @@ output:
 
 # Isotope data
 
+```{r,initialisation}
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+```
+
 
 ```{r}
 fun_range <- function(x,n=100) {                              # Create user-defined function
@@ -36,6 +40,10 @@ seashapefile=st_union(seashapefile)
 ```{r}
 pryce=read.csv("data/DATA isotopie_Pryce_V4.csv")
 pryce[,c("Easting...Longitude","Northing.Latitude")]=apply(pryce[,c("Easting...Longitude","Northing.Latitude")],2,as.numeric)
+spat=pryce[,c("Easting...Longitude","Northing.Latitude")]
+spat=spat[!is.na(spat[,1]),]
+p.sf=st_as_sf(spat,coords=c("Easting...Longitude","Northing.Latitude"),crs=st_crs(seashapefile))
+seashapefile=st_crop(seashapefile,p.sf)
 pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")]=apply(pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")],2,as.numeric)
 pryce=pryce[!is.na(pryce$River.basin.coordinates.E),]
 ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
@@ -65,7 +73,7 @@ Using tsnea to separate artefacts
 library(Rtsne)
 isotopes.tsne=Rtsne(as.matrix(cleanlist[,ratioiso]),pca=F)
 plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
-text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),"Site.abreviation"],cex=.6)
+#text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),"Site.abreviation"],cex=.6)
 ```
 
 
@@ -176,11 +184,10 @@ graphFromAdj <- function(adjmat,mask=NULL,label=NULL){
 }
 ```
 
-```{r,width.out="33%"}
-
+```{r,out.width="50%"}
 par(mar=c(0,0,0,0))
 limited=adjmat
-for(i in 1:3){
+for(i in 0:3){
     graph=graphFromAdj(limited,mask=i,label=cleanlist$Site.abreviation)
     V(graph)$color=sitecol[cleanlist$Site.abreviation]
     plot(graph)
@@ -188,23 +195,24 @@ for(i in 1:3){
 ```
 
 Let use this simplified matrix to detect groups
-```{r}
-
-
-allgroups=sapply(c(NULL,1:3,function(m)cluster_louvain(graphFromAdj(limited,mask=m,label=cleanlist$Site.abreviation))$membership)
-for(i in 1:3){
-    graph=graphFromAdj(limited,mask=i,label=cleanlist$Site.abreviation)
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
+allgraphs=lapply(0:3,function(m)graphFromAdj(limited,mask=m,label=cleanlist$Site.abreviation))
+allcomus=lapply(allgraphs,cluster_louvain)
+allgroups=sapply(allcomus,membership)
+for(i in 1:4){
+    graph=allgraphs[[i]]
     V(graph)$color=allgroups[,i]
     plot(graph)
 }
 knitr::kable(allgroups)
-``
+```
 
 
 Play with full dataset:
 ```{r}
 allsites=createRatioMatrix(pryce,ratioiso,recomp)
-allgraphs=lapply(1:3,function(i)graphFromAdj(allsites,mask=i,label=pryce$Site.abreviation))
+allgraphs=lapply(0:3,function(i)graphFromAdj(allsites,mask=i,label=pryce$Site.abreviation))
 alcomu=sapply(allgraphs,cluster_louvain)
 allgroups=sapply(alcomu,membership)
 plot(pryce$Easting...Longitude,pryce$Northing.Latitude,col=alcomu[[1]]$membership,pch=20)
@@ -212,7 +220,8 @@ plot(pryce$Easting...Longitude,pryce$Northing.Latitude,col=alcomu[[1]]$membershi
 
 Create inter basin connections
 
-```{r}
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
 #'@param dataset all data
 #'@param sites how dataset should be grouped by site
 #'@param match a function that coompute how sites match
@@ -229,7 +238,7 @@ creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
     adjmat
 }
 pryce=cbind(pryce,allgroups)
-for(i in 1:3){
+for(i in 1:4){
     matdim2=creatSiteAdjMat(pryce,pryce$River.basin,allgroups[,i],match=simpmatch)
     sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
     allcomu=cluster_louvain(sites.graph)
@@ -245,5 +254,93 @@ for(i in 1:3){
     #plot(seashapefile)
     #plot(sites.graph,layout=unique(cbind(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)),add=F)
 }
+```
+Same with geoloc
+
+```{r,out.width="50%"}
+basinriv=pryce[!is.na(pryce$River.basin.coordinates.E) ,]
+allsites=createRatioMatrix(basinriv,ratioiso,recomp)
+allgraphs=lapply(0:3,function(i)graphFromAdj(allsites,mask=i,label=basinriv$Site.abreviation))
+alcomu=sapply(allgraphs,cluster_louvain)
+allgroups=sapply(alcomu,membership)
+par(mar=c(0,0,0,0))
+coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(basinriv[basinriv$River.basin == lbl,c("River.basin.coordinates.E","River.basin.coordinates.N")]),2,mean)))
+seashapefile=st_crop(seashapefile,st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)))
+for(i in 1:4){
+    matdim2=creatSiteAdjMat(basinriv,basinriv$River.basin,allgroups[,i],match=simpmatch)
+    sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
+    allcomu=membership(cluster_louvain(sites.graph))
+    sites.graph=allgraphs[[i]]
+    V(sites.graph)$label=unique(basinriv$River.basin)
+    V(sites.graph)$color=allcomu
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=100
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=allcomu[head_of(sites.graph,E(sites.graph))]
+
+    E(sites.graph)$width=E(sites.graph)$weight/10
+    plot(seashapefile,reset=F)
+    plot(sites.graph,layout=coordsites,add=T,rescale=F)
+}
+
+
+```
+
+
+
+Using sites instead of River Basin
+
+First we remove site with few artefacts:
+
+```{r}
+countsite=table(pryce$Site.abreviation)
+bignames=names(countsite[countsite>2])
+bigsite=pryce[!is.na(pryce$Easting...Longitude) ,]
+bigsite=bigsite[bigsite$Site.abreviation %in% bignames ,]
+```
+
+
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
+allmatdim=lapply(1:4,function(i)creatSiteAdjMat(bigsite,bigsite$Site.abreviation,allgroups[,i],match=simpmatch))
+allgraphs=lapply(allmatdim,graph.adjacency, mode = "undirected", weighted = TRUE, diag = FALSE)
+allclus=lapply(allgraphs,cluster_louvain)
+allcommus=sapply(allclus,membership)
+for(i in 1:4){
+    sites.graph=allgraphs[[i]]
+    V(sites.graph)$label=unique(bigsite$Site.abreviation)
+    V(sites.graph)$color=allcommus[,i]
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=8
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=1
+    E(sites.graph)$width=E(sites.graph)$weight/50
+    #sites.graph=set_graph_attr(sites.graph,"layout",layout(c(bigsite$River.basin.coordinates.E,bigsite$River.basin.coordinates.N)))
+    plot(sites.graph)
+    #plot(seashapefile)
+    #plot(sites.graph,layout=unique(cbind(bigsite$River.basin.coordinates.E,bigsite$River.basin.coordinates.N)),add=F)
+}
+```
+
+Same but with geoloc
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
+coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(bigsite[bigsite$Site.abreviation == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
+seashapefile=st_crop(seashapefile,st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)))
+for(i in 1:4){
+    sites.graph=allgraphs[[i]]
+    V(sites.graph)$label=unique(bigsite$Site.abreviation)
+    V(sites.graph)$color=allcommus[,i]
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=100
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=allcommus[head_of(sites.graph,E(sites.graph)),i]
+
+    E(sites.graph)$width=E(sites.graph)$weight/80
+    plot(seashapefile,reset=F)
+    plot(sites.graph,layout=coordsites,add=T,rescale=F)
+}
+
+
 ```
 
