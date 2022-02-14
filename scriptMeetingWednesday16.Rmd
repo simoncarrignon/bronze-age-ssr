@@ -14,7 +14,7 @@ output:
 # Isotope data
 
 ```{r,initialisation}
-knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
 ```
 
 
@@ -31,9 +31,8 @@ simpmatch  <-  function(i,j){
     length(na.omit(match(i,j)))
 }
 library(sf)
-seashapefile=st_read("Cartes/allsea.shp")
-seashapefile=st_make_valid(seashapefile)
-seashapefile=st_union(seashapefile)
+seashapefile=st_read("Cartes/allseaborder.shp")
+seashapefile=st_geometry(seashapefile)
 
 ```
 
@@ -43,7 +42,7 @@ pryce[,c("Easting...Longitude","Northing.Latitude")]=apply(pryce[,c("Easting...L
 spat=pryce[,c("Easting...Longitude","Northing.Latitude")]
 spat=spat[!is.na(spat[,1]),]
 p.sf=st_as_sf(spat,coords=c("Easting...Longitude","Northing.Latitude"),crs=st_crs(seashapefile))
-seashapefile=st_crop(seashapefile,p.sf)
+seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(p.sf,dist=100)))
 pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")]=apply(pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")],2,as.numeric)
 pryce=pryce[!is.na(pryce$River.basin.coordinates.E),]
 ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
@@ -82,7 +81,7 @@ Faire les distance "à la oli" => groupe les artefact avec une difference <.1%
 
 D'abord recalculer les difference maximum entre les ratio ingot/slag d'un même sites:
 
-```{r}
+```{r,show="asis"}
 ratioSpan  <-  function(a,b=NULL){
     maxr=NULL
     minr=NULL
@@ -117,7 +116,7 @@ recomp=1-apply(oliselection,1,min)
 ```
 
 Which correspond to oli's computation:
-```{r}
+```{r,show="asis"}
 olidiff=read.csv("data/prod sys var.csv",header=F)
 knitr::kable(olidiff[6,c(4,6,8)]-recomp)
 ```
@@ -265,7 +264,7 @@ alcomu=sapply(allgraphs,cluster_louvain)
 allgroups=sapply(alcomu,membership)
 par(mar=c(0,0,0,0))
 coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(basinriv[basinriv$River.basin == lbl,c("River.basin.coordinates.E","River.basin.coordinates.N")]),2,mean)))
-seashapefile=st_crop(seashapefile,st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=100))
 for(i in 1:4){
     matdim2=creatSiteAdjMat(basinriv,basinriv$River.basin,allgroups[,i],match=simpmatch)
     sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
@@ -279,7 +278,7 @@ for(i in 1:4){
     E(sites.graph)$color=allcomu[head_of(sites.graph,E(sites.graph))]
 
     E(sites.graph)$width=E(sites.graph)$weight/10
-    plot(seashapefile,reset=F)
+    plot(seashapefile.cr,reset=F)
     plot(sites.graph,layout=coordsites,add=T,rescale=F)
 }
 
@@ -326,7 +325,7 @@ Same but with geoloc
 ```{r,out.width="50%"}
 par(mar=c(0,0,0,0))
 coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(bigsite[bigsite$Site.abreviation == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
-seashapefile=st_crop(seashapefile,st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=10))
 for(i in 1:4){
     sites.graph=allgraphs[[i]]
     V(sites.graph)$label=unique(bigsite$Site.abreviation)
@@ -337,10 +336,177 @@ for(i in 1:4){
     E(sites.graph)$color=allcommus[head_of(sites.graph,E(sites.graph)),i]
 
     E(sites.graph)$width=E(sites.graph)$weight/80
-    plot(seashapefile,reset=F)
+    plot(seashapefile.cr,reset=F)
     plot(sites.graph,layout=coordsites,add=T,rescale=F)
 }
 
 
+```
+
+# Data Elements
+
+## Artefact Network
+
+
+```{r}
+datappm=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V4.csv")
+
+# set an arbitrary epsilon value and replace "tr"s and "0"s with it
+epsilon=0.0001
+
+listelements=c("Sb","Sn","Ag","Mo","Bi","Pb","Se","As","Au","Zn","Cu","Ni","Co")
+
+datappm[,listelements]=apply(datappm[,listelements],2,as.numeric)
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="tr"]=epsilon;as.numeric(i)})
+#datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="nd"]=epsilon;as.numeric(i)})
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[is.na(i)]=epsilon;as.numeric(i)})
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i==0]=epsilon;as.numeric(i)})
+
+
+ppms=datappm[,listelements]
+
+##detect dupliate and not artefact with nothing detected
+artnull=which(apply(ppms,1,sd)==0)
+ttt=dist(ppms)
+ttt=as.matrix(ttt)
+dupli=which(apply(ttt,2,function(i)any(sum(i==0)>1)))
+datappm=datappm[-artnull,]
+datappm=datappm[-dupli,]
+ppms=ppms[-artnull,]
+ppms=ppms[-dupli,]
+
+ppms=as.data.frame(apply(ppms,2,log)) #log
+
+```
+
+### PCA - dimeension reduction
+
+Compute PCA scores:
+
+```{r pcafig,fig.cap="cluster using directly the PCA result",out.width="50%"}
+# remove eelement poorly detected
+#ppms=ppms[,apply(ppms,2,function(i)sum(i==log(epsilon)))<(.4*nrow(ppms))]
+
+ppms.pca=prcomp(ppms)
+ppms.dist=dist(ppms.pca$x) #compute distance between PCA scores
+
+#plot(seashapefile,lwd=0.1)
+
+datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
+datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
+
+
+ppms.ew=1/(exp(as.matrix(ppms.dist)))
+ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(ppms.graph)$label=as.character(datappm$Country)
+V(ppms.graph)$label.cex=.4
+V(ppms.graph)$size=8
+V(ppms.graph)$frame.color="black"
+V(ppms.graph)$frame.width=.5
+V(ppms.graph)$label.color=adjustcolor("black",.6)
+E(ppms.graph)$color=NA
+ppms.graph=set_graph_attr(ppms.graph,"layout",layout_with_fr(ppms.graph))
+plot(ppms.graph)
+```
+
+Use this graph to  compute the communities
+
+```{r louvain.new, results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
+par(mar=c(0,0,0,0))
+ppms.louvain=cluster_louvain(ppms.graph)
+knitr::kable(sizes(ppms.louvain))
+ppms.dist=dist(ppms.pca$x) #compute distance between PCA scores
+ncommu=length(sizes(ppms.louvain))
+
+plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],vertex.label=NA)
+
+plot(ppms.graph,vertex.color=rainbow(ncommu,alpha=.6)[ppms.louvain$membership])
+
+```
+
+
+
+## Site Network
+
+```{r}
+joined=cbind(datappm,louvain=ppms.louvain$membership)
+sites=unique(joined$Site)
+
+matdim2=matrix(NA,nrow=length(sites),ncol=length(sites))
+for(s1 in 1:length(sites)){
+    for(s2 in 1:length(sites)){
+        c1=joined$louvain[ joined$Site == sites[s1]]
+        c2=joined$louvain[ joined$Site == sites[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
+}
+
+sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+
+```
+
+visualise  communities of sites
+
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+sites.communities=cluster_louvain(sites.graph)
+comus=sites.communities$memberships[1,]
+E(sites.graph)$color=comus[head_of(sites.graph,E(sites.graph))]
+V(sites.graph)$color=comus
+
+#plot(seashapefile,lwd=0.1)
+plot(sites.graph)
+points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+
+
+```
+
+Try with  communities of regions:
+
+```{r}
+joined=cbind(datappm,louvain=ppms.louvain$membership)
+datappm=datappm[datappm$Region!="-",]
+regions=unique(datappm$Region)
+
+system.time({
+matdim1=sapply(regions,function(s1) sapply(regions,function(s2) simpmatch(joined$louvain[ joined$Region == s1],joined$louvain[ joined$Region == s2])))
+})
+
+system.time({
+matdim2=matrix(NA,nrow=length(regions),ncol=length(regions))
+for(s1 in 1:length(regions)){
+    for(s2 in 1:length(regions)){
+        c1=joined$louvain[ joined$Region == regions[s1]]
+        c2=joined$louvain[ joined$Region == regions[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
+}
+})
+
+regions.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(regions.graph)$label=as.character(regions)
+V(regions.graph)$label.cex=.7
+V(regions.graph)$size=8
+V(regions.graph)$label.color="black"
+E(regions.graph)$color=NA
+regions.graph=set_graph_attr(regions.graph,"layout",layout_nicely(regions.graph))
+
+```
+
+Compute communities of regions:
+
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+regions.communities=cluster_louvain(regions.graph)
+E(regions.graph)$color=regions.communities[head_of(regions.graph,E(regions.graph))]
+V(regions.graph)$color=regions.communities
+plot(regions.graph)
+plot(datappm$Easting...Longitude,datappm$Northing.Latitude ,pch=21,bg=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
 ```
 
