@@ -158,7 +158,7 @@ library(igraph)
 adjmat=createRatioMatrix(cleanlist,ratioiso,recomp)
 
 graphFromAdj <- function(adjmat,mask=NULL,label=NULL){
-    if(!is.null(mask)){
+    if(!is.null(mask) &&  mask>0){
         adjmat[adjmat<mask]=0
         adjmat[adjmat>=mask]=1
     }
@@ -178,7 +178,7 @@ graphFromAdj <- function(adjmat,mask=NULL,label=NULL){
 
 ```{r,width.out="33%"}
 
-par(mar=c(0,0,0,0)
+par(mar=c(0,0,0,0))
 limited=adjmat
 for(i in 1:3){
     graph=graphFromAdj(limited,mask=i,label=cleanlist$Site.abreviation)
@@ -190,13 +190,13 @@ for(i in 1:3){
 Let use this simplified matrix to detect groups
 ```{r}
 
+
+allgroups=sapply(c(NULL,1:3,function(m)cluster_louvain(graphFromAdj(limited,mask=m,label=cleanlist$Site.abreviation))$membership)
 for(i in 1:3){
     graph=graphFromAdj(limited,mask=i,label=cleanlist$Site.abreviation)
     V(graph)$color=allgroups[,i]
     plot(graph)
 }
-
-allgroups=sapply(1:3,function(m)cluster_louvain(graphFromAdj(limited,mask=m,label=cleanlist$Site.abreviation))$membership)
 knitr::kable(allgroups)
 ``
 
