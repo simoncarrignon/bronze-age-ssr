@@ -31,7 +31,7 @@ simpmatch  <-  function(i,j){
     length(na.omit(match(i,j)))
 }
 library(sf)
-seashapefile=st_read("Cartes/allseaborder.shp")
+seashapefile=st_read("Cartes/allseaborder_lowq.shp")
 seashapefile=st_geometry(seashapefile)
 
 ```
@@ -264,7 +264,7 @@ alcomu=sapply(allgraphs,cluster_louvain)
 allgroups=sapply(alcomu,membership)
 par(mar=c(0,0,0,0))
 coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(basinriv[basinriv$River.basin == lbl,c("River.basin.coordinates.E","River.basin.coordinates.N")]),2,mean)))
-seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=100))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
 for(i in 1:4){
     matdim2=creatSiteAdjMat(basinriv,basinriv$River.basin,allgroups[,i],match=simpmatch)
     sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
@@ -325,7 +325,7 @@ Same but with geoloc
 ```{r,out.width="50%"}
 par(mar=c(0,0,0,0))
 coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(bigsite[bigsite$Site.abreviation == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
-seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=10))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
 for(i in 1:4){
     sites.graph=allgraphs[[i]]
     V(sites.graph)$label=unique(bigsite$Site.abreviation)
@@ -362,6 +362,10 @@ datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="tr"]=eps
 datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[is.na(i)]=epsilon;as.numeric(i)})
 datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i==0]=epsilon;as.numeric(i)})
 
+datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
+datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
+
+datappm=datappm[!is.na(datappm$Easting...Longitude),]
 
 ppms=datappm[,listelements]
 
@@ -390,10 +394,6 @@ Compute PCA scores:
 ppms.pca=prcomp(ppms)
 ppms.dist=dist(ppms.pca$x) #compute distance between PCA scores
 
-#plot(seashapefile,lwd=0.1)
-
-datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
-datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
 
 
 ppms.ew=1/(exp(as.matrix(ppms.dist)))
@@ -459,10 +459,12 @@ sites.communities=cluster_louvain(sites.graph)
 comus=sites.communities$memberships[1,]
 E(sites.graph)$color=comus[head_of(sites.graph,E(sites.graph))]
 V(sites.graph)$color=comus
-
-#plot(seashapefile,lwd=0.1)
 plot(sites.graph)
-points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+coordsites=t(sapply(V(regions.graph)$label,function(lbl)apply(unique(joined[joined$Site == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
+V(sites.graph)$size=100
+plot(seashapefile.cr,lwd=0.6,reset=F)
+plot(sites.graph,layout=coordsites,rescale=F,add=T)
 
 
 ```
@@ -470,15 +472,10 @@ points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(le
 Try with  communities of regions:
 
 ```{r}
-joined=cbind(datappm,louvain=ppms.louvain$membership)
 datappm=datappm[datappm$Region!="-",]
+joined=cbind(datappm,louvain=ppms.louvain$membership)
 regions=unique(datappm$Region)
 
-system.time({
-matdim1=sapply(regions,function(s1) sapply(regions,function(s2) simpmatch(joined$louvain[ joined$Region == s1],joined$louvain[ joined$Region == s2])))
-})
-
-system.time({
 matdim2=matrix(NA,nrow=length(regions),ncol=length(regions))
 for(s1 in 1:length(regions)){
     for(s2 in 1:length(regions)){
@@ -487,15 +484,13 @@ for(s1 in 1:length(regions)){
         matdim2[s1,s2]=simpmatch(c1,c2)
     }
 }
-})
 
-regions.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+regions.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
 V(regions.graph)$label=as.character(regions)
 V(regions.graph)$label.cex=.7
 V(regions.graph)$size=8
 V(regions.graph)$label.color="black"
-E(regions.graph)$color=NA
-regions.graph=set_graph_attr(regions.graph,"layout",layout_nicely(regions.graph))
+E(regions.graph)$width=E(regions.graph)$weight/4
 
 ```
 
@@ -503,10 +498,15 @@ Compute communities of regions:
 
 ```{r,out.width="100%"}
 par(mar=c(0,0,0,0))
-regions.communities=cluster_louvain(regions.graph)
+regions.communities=membership(cluster_louvain(regions.graph))
+E(regions.graph)$color=regions.communities[head_of(regions.graph,E(regions.graph))]
 E(regions.graph)$color=regions.communities[head_of(regions.graph,E(regions.graph))]
 V(regions.graph)$color=regions.communities
 plot(regions.graph)
-plot(datappm$Easting...Longitude,datappm$Northing.Latitude ,pch=21,bg=rainbow(length(regions.communities),alpha=.6)[regions.communities$membership])
+V(regions.graph)$size=100
+coordregions=t(sapply(V(regions.graph)$label,function(lbl)apply(unique(joined[joined$Region == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordregions),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
+plot(seashapefile.cr,lwd=0.6,reset=F)
+plot(regions.graph,layout=coordregions,rescale=F,add=T)
 ```
 
