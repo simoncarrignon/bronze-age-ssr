@@ -83,5 +83,7 @@ creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
             adjmat[s1,s2]=match(c1,c2)
         }
     }
+    rownames(adjmat)=sites
+    colnames(adjmat)=sites
     adjmat
 }
