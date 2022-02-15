@@ -1,0 +1,66 @@
+
+Get range of ou data:
+
+```{r}
+library(sf)
+alldata1=read.csv("data/DATA isotopie_Pryce_V4.csv")
+alldata2=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V4.csv")
+
+alldata=rbind(alldata1[,c("Easting...Longitude","Northing.Latitude")],alldata2[,c("Easting...Longitude","Northing.Latitude")])
+
+alldata=apply(alldata,2,as.numeric)
+alldata=as.data.frame(alldata[!is.na(alldata[,1]),])
+alldata=st_as_sf(alldata,coords=1:2)
+
+rivb=cbind(alldata1$River.basin.coordinates.E,alldata1$River.basin.coordinates.N)
+
+```
+
+
+```{r}
+alldata=st_as_sf(alldata,coords=1:2,crs=st_crs(allryver))
+allryver=st_read("Cartes/as_bas_30s_beta/as_bas_30s_beta.shp")
+allryver=st_make_valid(allryver)
+allryver=st_crop(allryver,st_buffer(alldata.sf,dist=1000))
+plot(allryver)
+allryver=st_read("Cartes/river_basin_20s_cropped.shp")
+allryver=rmapshaper::ms_simplify(allryver)
+allryver=allryver[st_is_valid(st_geometry(allryver)),]
+allryver=st_simplify(allryver,dTolerance = 1000)
+test=allryver[1:50000,1]
+testdt=st_simplify(test,dTolerance=1000)
+tesbf=st_buffer(st_buffer(allryver,-10,nQuadSegs=1),10,nQuadSegs=1)
+plot(test)
+testdt=testdt[!st_is_empty(testdt),]
+plot(testdt)
+testms=rmapshaper::ms_simplify(allryver,keep=.00001)
+plot(testms)
+library(rmapshaper)
+
+rivb=unique(rivb)
+rivb=as.data.frame(rivb[!is.na(rivb[,1]),])
+rivb=st_as_sf(rivb,coords=1:2,crs=st_crs(allryver))
+contain=st_contains(allryver,rivb)
+
+alldata=rbind(alldata1[,c("Easting...Longitude","Northing.Latitude")],alldata2[,c("Easting...Longitude","Northing.Latitude")])
+
+alldata=apply(alldata,2,as.numeric)
+alldata=as.data.frame(alldata[!is.na(alldata[,1]),])
+alldata.sf=st_as_sf(alldata,coords=1:2,crs=st_crs(allryver))
+contain=st_contains(allryver,alldata.sf)
+contain=unique(unlist(t(contain)))
+SEA=st_read("Cartes/allseaborder_lowq.shp")
+SEA=st_transform(SEA,crs=st_crs(allryver))
+subsetriver= allryver[contain,]
+subsetriver= rmapshaper::ms_simplify(subsetriver)
+plot(SEA,col="white",bgc=adjustcolor("grey",.4),reset=F)
+plot(subsetriver,add=T)
+plot(alldata.sf,add=T,pch=21,col="red",bg="green")
+st_write(subsetriver,"Cartes/riverbasin_sitelimited.shp")
+st_write(allryver,"Cartes/riverbasin_sitelimited.shp")
+
+allryver=rmapshaper::ms <- simplify(allryver,keep=0.000001)
+
+
+```
+
