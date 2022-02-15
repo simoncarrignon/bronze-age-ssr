@@ -87,3 +87,24 @@ creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
     colnames(adjmat)=sites
     adjmat
 }
+
+groupGraph <- function(subset,coords,grouping,ratioiso,recomp){
+    subset=subset[!is.na(subset[[coords[1]]]),]
+    subset=subset[subset[[grouping]]!="",]
+    group=unique(subset[,grouping])
+    getSitesCoordiates=unique(subset[,c(grouping,coords)])
+    coordsites=t(sapply(group,function(lbl)apply(unique(getSitesCoordiates[getSitesCoordiates[[grouping]] == lbl,coords]),2,mean)))
+    allsites=createRatioMatrix(subset,ratioiso,recomp)
+    graph=graphFromAdj(allsites,mask=3,label=subset[[grouping]])
+    comus=cluster_louvain(graph)$memberships[1,]
+    adjmat=creatSiteAdjMat(subset,subset[[grouping]],comus,match=simpmatch)
+    groupgraph=graph.adjacency(adjmat, mode = "undirected", weighted = TRUE, diag = FALSE)
+    groupgraph=set_graph_attr(groupgraph,"layout",coordsites)
+    groupcomu=cluster_louvain(groupgraph)$memberships[1,]
+    print(length(unique(groupcomu)))
+    E(groupgraph)$color=groupcomu[head_of(groupgraph,E(groupgraph))]
+    V(groupgraph)$color=groupcomu
+    V(groupgraph)$size=100
+    V(groupgraph)$label.color="black"
+    groupgraph
+}
