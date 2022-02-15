@@ -7,7 +7,7 @@ simpmatch  <-  function(i,j){
         i=j
         j=tmp
     }
-    length(na.omit(match(i,j)))
+    length(na.omit(match(i,j)))/(length(c(i,j)))
 }
 
 ratioSpan  <-  function(a,b=NULL){
@@ -88,7 +88,7 @@ creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
     adjmat
 }
 
-groupGraph <- function(subset,coords,grouping,ratioiso,recomp){
+groupGraphIso <- function(subset,coords,grouping,ratioiso,recomp){
     subset=subset[!is.na(subset[[coords[1]]]),]
     subset=subset[subset[[grouping]]!="",]
     group=unique(subset[,grouping])
@@ -105,6 +105,33 @@ groupGraph <- function(subset,coords,grouping,ratioiso,recomp){
     E(groupgraph)$color=groupcomu[head_of(groupgraph,E(groupgraph))]
     V(groupgraph)$color=groupcomu
     V(groupgraph)$size=100
+    E(groupgraph)$width=E(groupgraph)$weight*2
+    V(groupgraph)$label.color="black"
+    groupgraph
+}
+
+groupGraphElmt <- function(subset,coords,grouping,listelements){
+    subset=subset[!is.na(subset[[coords[1]]]),]
+    subset=subset[subset[[grouping]]!="",]
+    group=unique(subset[,grouping])
+    getSitesCoordiates=unique(subset[,c(grouping,coords)])
+    coordsites=t(sapply(group,function(lbl)apply(unique(getSitesCoordiates[getSitesCoordiates[[grouping]] == lbl,coords]),2,mean)))
+    elts=subset[,listelements]
+    elts.pca=prcomp(elts)
+    elts.dist=dist(elts.pca$x) #compute distance between PCA scores
+    elts.ew=1/exp(as.matrix(elts.dist))
+    elts.graph=graph.adjacency(elts.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+    elts.commu=membership(cluster_louvain(elts.graph))
+    comus=cluster_louvain(graph)$memberships[1,]
+    adjmat=creatSiteAdjMat(subset,subset[[grouping]],elts.commu,match=simpmatch)
+    groupgraph=graph.adjacency(adjmat, mode = "undirected", weighted = TRUE, diag = FALSE)
+    groupgraph=set_graph_attr(groupgraph,"layout",coordsites)
+    groupcomu=cluster_louvain(groupgraph)$memberships[1,]
+    print(length(unique(groupcomu)))
+    E(groupgraph)$color=groupcomu[head_of(groupgraph,E(groupgraph))]
+    V(groupgraph)$color=groupcomu
+    V(groupgraph)$size=100
+    E(groupgraph)$width=E(groupgraph)$weight*2
     V(groupgraph)$label.color="black"
     groupgraph
 }
