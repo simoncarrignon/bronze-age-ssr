@@ -14,7 +14,7 @@ output:
 # Isotope data
 
 ```{r,initialisation}
-knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
 ```
 
 
@@ -476,18 +476,19 @@ for(ns in names(tg) ){
         gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
         seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=200000)))
         plot(seashapefile.cr,reset=F,main=ns)
-        plot(ggraph,add=T,rescale=F)
         if(g == "River.basin"){
-            rb=st_read("Cartes/river_basin_lowq.shp")
+            rb=st_read("Cartes/riverbasin_sitelimited.shp")
             rb=st_make_valid(rb)
-            plot(st_intersection(gcoor,rb[st_is_valid(rb),]),add=T)
+            gcoor$ID=1:length(V(ggraph))
+            inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+            plot(inter,col=V(ggraph)$color[inter$ID],add=T)
         }
         else{
             V(ggraph)$size=200
             V(ggraph)$label.size=.8
             V(ggraph)$cex=.8
-            
         }
+        plot(ggraph,add=T,rescale=F)
     }
     plot.new()
 
