@@ -479,9 +479,9 @@ for(ns in names(tg) ){
         seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=200000)))
         plot(seashapefile.cr,reset=F,main=ns)
         if(g == "River.basin"){
-            gcoor$ID=1:length(V(ggraph))
+            gcoor$ID_N=1:length(V(ggraph))
             inter=st_intersection(gcoor,rb[st_is_valid(rb),])
-            plot(inter,col=V(ggraph)$color[inter$ID],add=T)
+            plot(rb[inter$ID_RB,],col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
         }
         else{
             V(ggraph)$size=200
