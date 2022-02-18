@@ -464,10 +464,12 @@ pb=pryce[ pryce$LABEL.analytical %in% labelPB,]
 nopb=pryce[ pryce$LABEL.analytical %in% labelNOPB,]
 
 groups=c("Site.abreviation","Region","River.basin")
+rb=st_read("Cartes/riverbasin_sitelimited.shp")
+rb=st_make_valid(rb)
 tg=list(leaded=pb,notleaded=nopb)
 for(ns in names(tg) ){
     s=tg[[ns]]
-    par(mar=c(0,0,0,0))
+    par(mar=c(0,0,2,0))
     for(g in groups){
         nsite=table(s[[g]])
         ss=s[s[[g]] %in% names(nsite[nsite>=3]),]
@@ -477,8 +479,6 @@ for(ns in names(tg) ){
         seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=200000)))
         plot(seashapefile.cr,reset=F,main=ns)
         if(g == "River.basin"){
-            rb=st_read("Cartes/riverbasin_sitelimited.shp")
-            rb=st_make_valid(rb)
             gcoor$ID=1:length(V(ggraph))
             inter=st_intersection(gcoor,rb[st_is_valid(rb),])
             plot(inter,col=V(ggraph)$color[inter$ID],add=T)
