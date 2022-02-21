@@ -466,6 +466,7 @@ nopb=pryce[ pryce$LABEL.analytical %in% labelNOPB,]
 groups=c("Site.abreviation","Region","River.basin")
 rb=st_read("Cartes/riverbasin_sitelimited.shp")
 rb=st_make_valid(rb)
+rb$ID_RB=1:nrow(rb)
 tg=list(leaded=pb,notleaded=nopb)
 for(ns in names(tg) ){
     s=tg[[ns]]
