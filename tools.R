@@ -91,39 +91,33 @@ creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
 groupGraphIso <- function(subset,coords,grouping,ratioiso,recomp){
     subset=subset[!is.na(subset[[coords[1]]]),]
     subset=subset[subset[[grouping]]!="",]
-    group=unique(subset[,grouping])
-    getSitesCoordiates=unique(subset[,c(grouping,coords)])
-    coordsites=t(sapply(group,function(lbl)apply(unique(getSitesCoordiates[getSitesCoordiates[[grouping]] == lbl,coords]),2,mean)))
     allsites=createRatioMatrix(subset,ratioiso,recomp)
     graph=graphFromAdj(allsites,mask=3,label=subset[[grouping]])
     comus=cluster_louvain(graph)$memberships[1,]
-    adjmat=creatSiteAdjMat(subset,subset[[grouping]],comus,match=simpmatch)
-    groupgraph=graph.adjacency(adjmat, mode = "undirected", weighted = TRUE, diag = FALSE)
-    groupgraph=set_graph_attr(groupgraph,"layout",coordsites)
-    groupcomu=cluster_louvain(groupgraph)$memberships[1,]
-    print(length(unique(groupcomu)))
-    E(groupgraph)$color=groupcomu[head_of(groupgraph,E(groupgraph))]
-    V(groupgraph)$color=groupcomu
-    V(groupgraph)$size=100
-    E(groupgraph)$width=E(groupgraph)$weight*2
-    V(groupgraph)$label.color="black"
-    groupgraph
+    groupedGraphAndCommunity(subset,coords,grouping,comus)
 }
 
 groupGraphElmt <- function(subset,coords,grouping,listelements){
     subset=subset[!is.na(subset[[coords[1]]]),]
     subset=subset[subset[[grouping]]!="",]
-    group=unique(subset[,grouping])
-    getSitesCoordiates=unique(subset[,c(grouping,coords)])
-    coordsites=t(sapply(group,function(lbl)apply(unique(getSitesCoordiates[getSitesCoordiates[[grouping]] == lbl,coords]),2,mean)))
     elts=subset[,listelements]
     elts.pca=prcomp(elts)
     elts.dist=dist(elts.pca$x) #compute distance between PCA scores
     elts.ew=1/exp(as.matrix(elts.dist))
     elts.graph=graph.adjacency(elts.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
     elts.commu=membership(cluster_louvain(elts.graph))
-    comus=cluster_louvain(graph)$memberships[1,]
-    adjmat=creatSiteAdjMat(subset,subset[[grouping]],elts.commu,match=simpmatch)
+    groupedGraphAndCommunity(subset,coords,grouping,elts.commu)
+}
+
+#' @param dataset a `data.frame` storing all data
+#' @param grouping the column in dataset used to group the data together
+#' @param categories this is a liste of the size of unique(dataset$grouping) that tell how each group of grouping are linked
+#' @param coords coordinates of the echantillon from original data `dataset`
+groupedGraphAndCommunity <- function(dataset,coords,grouping,categories){
+    group=unique(dataset[,grouping])
+    getSitesCoordiates=unique(dataset[,c(grouping,coords)])
+    coordsites=t(sapply(group,function(lbl)apply(unique(getSitesCoordiates[getSitesCoordiates[[grouping]] == lbl,coords]),2,mean)))
+    adjmat=creatSiteAdjMat(dataset,dataset[[grouping]],categories,match=simpmatch)
     groupgraph=graph.adjacency(adjmat, mode = "undirected", weighted = TRUE, diag = FALSE)
     groupgraph=set_graph_attr(groupgraph,"layout",coordsites)
     groupcomu=cluster_louvain(groupgraph)$memberships[1,]
