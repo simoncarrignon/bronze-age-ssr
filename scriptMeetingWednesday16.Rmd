@@ -23,11 +23,28 @@ source("tools.R")
 library(sf)
 seashapefile=st_read("Cartes/allseaborder_lowq.shp")
 seashapefile=st_geometry(seashapefile)
+datappm=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V4.csv",stringsAsFactor=F)
+
+# set an arbitrary epsilon value and replace "tr"s and "0"s with it
+epsilon=0.0001
+
+listelements=c("Sb","Sn","Ag","Mo","Bi","Pb","Se","As","Au","Zn","Cu","Ni","Co")
+
+datappm[,listelements]=apply(datappm[,listelements],2,as.numeric)
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="tr"]=epsilon;as.numeric(i)})
+#datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="nd"]=epsilon;as.numeric(i)})
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[is.na(i)]=epsilon;as.numeric(i)})
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i==0]=epsilon;as.numeric(i)})
+
+datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
+datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
+
+datappm=datappm[!is.na(datappm$Easting...Longitude),]
 
 ```
 
 ```{r}
-pryce=read.csv("data/DATA isotopie_Pryce_V4.csv")
+pryce=read.csv("data/DATA isotopie_Pryce_V4.csv",stringsAsFactor=F)
 pryce[,c("Easting...Longitude","Northing.Latitude")]=apply(pryce[,c("Easting...Longitude","Northing.Latitude")],2,as.numeric)
 spat=pryce
 spat=spat[!is.na(spat[,"Easting...Longitude"]),]
@@ -274,23 +291,6 @@ for(i in 1:4){
 
 
 ```{r}
-datappm=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V4.csv")
-
-# set an arbitrary epsilon value and replace "tr"s and "0"s with it
-epsilon=0.0001
-
-listelements=c("Sb","Sn","Ag","Mo","Bi","Pb","Se","As","Au","Zn","Cu","Ni","Co")
-
-datappm[,listelements]=apply(datappm[,listelements],2,as.numeric)
-datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="tr"]=epsilon;as.numeric(i)})
-#datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="nd"]=epsilon;as.numeric(i)})
-datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[is.na(i)]=epsilon;as.numeric(i)})
-datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i==0]=epsilon;as.numeric(i)})
-
-datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
-datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
-
-datappm=datappm[!is.na(datappm$Easting...Longitude),]
 
 ppms=datappm[,listelements]
 
