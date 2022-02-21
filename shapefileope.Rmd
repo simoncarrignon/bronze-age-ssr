@@ -57,10 +57,17 @@ plot(SEA,col="white",bgc=adjustcolor("grey",.4),reset=F)
 plot(subsetriver,add=T)
 plot(alldata.sf,add=T,pch=21,col="red",bg="green")
 st_write(subsetriver,"Cartes/riverbasin_sitelimited.shp")
-st_write(allryver,"Cartes/riverbasin_sitelimited.shp")
+st_write(allryver,"Cartes/river_basin_lowq.shp")
 
 allryver=rmapshaper::ms <- simplify(allryver,keep=0.000001)
 
+ma=st_read("Cartes/MALAYSIA_adm/MYS_adm0.shp")
+lk=st_read("Cartes/SRILANKA_adm/LKA_adm0.shp")
+ma=rmapshaper::ms_simplify(st_geometry(ma))
+lk=rmapshaper::ms_simplify(st_geometry(lk))
 
+SEA=st_union(st_union(ma,SEA),lk)
+st_write(SEA,"Cartes/allseaborder_lowq.shp")
+plot(st_union(st_combine(SEA)))
 ```
 
