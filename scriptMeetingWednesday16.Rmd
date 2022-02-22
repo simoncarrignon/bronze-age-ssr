@@ -56,7 +56,7 @@ ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
 pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
 ```
 Ratios en fonction teneur en plombs
-```{r,out.width="33%"}
+```{r,out.width="33%",eval=F}
     teneurs=datappm$Pb
     names(teneurs)=datappm$LABEL.analytical
     pryce$teneur=teneurs[pryce$LABEL.analytical]
@@ -68,7 +68,7 @@ Ratios en fonction teneur en plombs
 ```
 
 
-```{r,out.width="33%"}
+```{r,out.width="33%",eval=F}
     for(i in ratioiso){
         cls=rainbow(length(unique(pryce$Site)),alpha=.8)
         plot(1/pryce$teneur,pryce[[i]],col=cls[as.factor(pryce$Site)],pch=as.numeric(as.factor(pryce$Country)),ylab=i,xlab="1/Pb ppm",log="x")
@@ -435,16 +435,16 @@ par(mar=c(0,0,0,0))
 subsetiso=pryce
 
 coords=c("Easting...Longitude","Northing.Latitude")
-bySite= groupGraph(pryce,coords,"Site",ratioiso,recomp)
+bySite= groupGraphIso(pryce,coords,"Site",ratioiso,recomp)
 plot(seashapefile.cr,reset=F)
 plot(bySite,add=T,rescale=F)
-bySiteabb= groupGraph(pryce,coords,"Site.abreviation",ratioiso,recomp)
+bySiteabb= groupGraphIso(pryce,coords,"Site.abreviation",ratioiso,recomp)
 plot(seashapefile.cr,reset=F)
 plot(bySiteabb,add=T,rescale=F)
-byRegion= groupGraph(pryce,coords,"Region",ratioiso,recomp)
+byRegion= groupGraphIso(pryce,coords,"Region",ratioiso,recomp)
 plot(seashapefile.cr,reset=F)
 plot(byRegion,add=T,rescale=F)
-byBasin= groupGraph(pryce,coords,"River.basin",ratioiso,recomp)
+byBasin= groupGraphIso(pryce,coords,"River.basin",ratioiso,recomp)
 plot(seashapefile.cr,reset=F)
 plot(byBasin,add=T,rescale=F)
 
@@ -464,18 +464,31 @@ pb=pryce[ pryce$LABEL.analytical %in% labelPB,]
 nopb=pryce[ pryce$LABEL.analytical %in% labelNOPB,]
 
 groups=c("Site.abreviation","Region","River.basin")
+rb=st_read("Cartes/riverbasin_sitelimited.shp")
+rb=st_make_valid(rb)
+rb$ID_RB=1:nrow(rb)
 tg=list(leaded=pb,notleaded=nopb)
 for(ns in names(tg) ){
     s=tg[[ns]]
-    par(mar=c(0,0,0,0))
+    par(mar=c(0,0,2,0))
     for(g in groups){
         nsite=table(s[[g]])
         ss=s[s[[g]] %in% names(nsite[nsite>=3]),]
-        ggraph=groupGraph(ss,coords,g,ratioiso,recomp)
+        ggraph=groupGraphIso(ss,coords,g,ratioiso,recomp)
         gcoor=graph_attr(ggraph,"layout")
         gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
         seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=200000)))
         plot(seashapefile.cr,reset=F,main=ns)
+        if(g == "River.basin"){
+            gcoor$ID_N=1:length(V(ggraph))
+            inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+            plot(rb[inter$ID_RB,],col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+        }
+        else{
+            V(ggraph)$size=200
+            V(ggraph)$label.size=.8
+            V(ggraph)$cex=.8
+        }
         plot(ggraph,add=T,rescale=F)
     }
     plot.new()
