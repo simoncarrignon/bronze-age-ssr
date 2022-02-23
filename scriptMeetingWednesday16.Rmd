@@ -541,6 +541,53 @@ for(elts in names(allcases)){
 }
 
 
-
 ```
+
+Testing Different data transformation:
+* Log transform the ppm (like Miljana/Jelena did)
+* Using threshold to determine presence/absence
+
+```{r,width.out="50%"}
+logdata=datappm
+logdata[,listelements]=apply(datappm[,listelements],2,log)
+pa <- function(i,ts=1){
+    i[i<ts]=0
+    i[i>=ts]=1
+    i
+}
+padata=datappm
+padata[,listelements]=apply(datappm[,listelements],2,pa)
+
+diffsets=list(log=logdata,pa=padata)
+fullexpnames=list(log="Logarithmic Transformation",pa="Presence Absence threshold")
+
+
+for(nst in names(diffsets)){
+    subset=diffsets[[nst]]
+    for(elts in names(allcases)){
+        for(g in groups){
+            par(mar=c(0,0,2,0))
+            le=allcases[[elts]]
+            ggraph=groupGraphElmt(subset,coords,g,le)
+            gcoor=graph_attr(ggraph,"layout")
+            gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+            seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
+            plot(seashapefile.cr,reset=F,main=paste(fulltitle[[elts]],"with",fullexpnames[[nst]]))
+            if(g == "River.basin"){
+                gcoor$ID_N=1:length(V(ggraph))
+                inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+                plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+            }
+            else{
+                V(ggraph)$size=300
+                V(ggraph)$label.size=.7
+                V(ggraph)$cex=.8
+            }
+            plot(ggraph,add=T,rescale=F)
+        }
+        plot.new()
+    }
+}
+```
+
 
