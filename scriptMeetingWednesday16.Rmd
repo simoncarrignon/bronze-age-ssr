@@ -508,7 +508,7 @@ for(ns in names(tg) ){
 ```
 
 
-Build network using elements signatures
+Build network using elements signatures. 
 ```{r,out.width="50%"}
 
 MJ=c("As","Sb","Co","Ni","Ag","Au","Se")
@@ -547,14 +547,18 @@ Testing Different data transformation:
 * Log transform the ppm (like Miljana/Jelena did)
 * Using threshold to determine presence/absence
 
-```{r,width.out="50%"}
-logdata=datappm
-logdata[,listelements]=apply(datappm[,listelements],2,log)
+```{r,out.width="50%"}
+#This function replace all value above ts by 1 and value below ts by zero
 pa <- function(i,ts=1){
     i[i<ts]=0
     i[i>=ts]=1
     i
 }
+
+logdata=datappm
+logdata[,listelements]=apply(datappm[,listelements],2,log)
+
+
 padata=datappm
 padata[,listelements]=apply(datappm[,listelements],2,pa)
 
@@ -591,3 +595,48 @@ for(nst in names(diffsets)){
 ```
 
 
+In the following graph instead doing as Miljana and Jelena did to group sample (distance using PCA, then louvian community detection to group samples together) we use hierarchical clustering.
+
+
+```{r,out.width="50%"}
+
+diffsets=list(raw=datappm,log=logdata,pa=padata)
+fullexpnames=list(raw="Raw data",log="Logarithmic Transformation",pa="Presence Absence threshold")
+
+for(nst in names(diffsets)){
+    subset=diffsets[[nst]]
+    for(eltsn in names(allcases)){
+        for(g in groups){
+            par(mar=c(0,0,2,0))
+            le=allcases[[eltsn]]
+            ssubset=subset[!is.na(subset[[coords[1]]]),]
+            ssubset=ssubset[ssubset[[g]]!="",]
+            elts=subset[,le]
+            elts.dist=dist(elts) #compute distance between PCA scores
+            elts.hclust=hclust(elts.dist)
+            h=max(elts.hclust$height)*.6
+            elts.commu=cutree(elts.hclust,h=h)
+            plot(elts.hclust)
+            cls=rainbow(max(elts.commu))
+            rect.hclust(elts.hclust,cluster=elts.commu,h=h,border=cls)
+            abline(h=h*1.1,lwd=3,col="red")
+            ggraph=groupedGraphAndCommunity(ssubset,coords,g,elts.commu)
+            gcoor=graph_attr(ggraph,"layout")
+            gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+            seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
+            plot(seashapefile.cr,reset=F,main=paste(fulltitle[[eltsn]],"with",fullexpnames[[nst]]))
+            if(g == "River.basin"){
+                gcoor$ID_N=1:length(V(ggraph))
+                inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+                plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+            }
+            else{
+                V(ggraph)$size=300
+                V(ggraph)$label.size=.7
+                V(ggraph)$cex=.8
+            }
+            plot(ggraph,add=T,rescale=F)
+        }
+    }
+}
+```
