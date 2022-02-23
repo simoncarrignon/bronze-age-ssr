@@ -1,5 +1,5 @@
 ---
-title: "Isotpo"
+title: "Generate all graph for presentation made in Saclay"
 author: "SC"
 date: "`r Sys.time()`"
 output: 
@@ -15,6 +15,10 @@ output:
 
 ```{r,initialisation}
 knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+```
+
+```{r,eval=F}
+rmarkdown::render("scriptMeetingWednesday16.Rmd",output_dir="/var/www/html")
 ```
 
 
@@ -477,12 +481,12 @@ for(ns in names(tg) ){
         ggraph=groupGraphIso(ss,coords,g,ratioiso,recomp)
         gcoor=graph_attr(ggraph,"layout")
         gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
-        seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=200000)))
+        seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
         plot(seashapefile.cr,reset=F,main=ns)
         if(g == "River.basin"){
             gcoor$ID_N=1:length(V(ggraph))
             inter=st_intersection(gcoor,rb[st_is_valid(rb),])
-            plot(rb[inter$ID_RB,],col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+            plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
         }
         else{
             V(ggraph)$size=200
@@ -505,9 +509,38 @@ for(ns in names(tg) ){
 
 
 Build network using elements signatures
-```{r}
-noalliages=ppms[!(colnames(ppms) %in% c("Pb","Sn")),]
-noa.pca=prcomp(noalliages)
-noa.dist=dist(noa.pca$x) #compute distance between PCA scores
+```{r,out.width="50%"}
+
+MJ=c("As","Sb","Co","Ni","Ag","Au","Se")
+
+allcases=list(allelements=listelements,notalliage=listelements[!(listelements %in% c("Pb","Sn"))],MJ=MJ)
+coords=c("Easting...Longitude","Northing.Latitude")
+fulltitle=list(allelements="All elements",notalliage="Without Pb and Sn",MJ="Radivojevic & Grujic list")
+for(elts in names(allcases)){
+    for(g in groups){
+    par(mar=c(0,0,2,0))
+        le=allcases[[elts]]
+        ggraph=groupGraphElmt(datappm,coords,g,le)
+        gcoor=graph_attr(ggraph,"layout")
+        gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+        seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
+        plot(seashapefile.cr,reset=F,main=fulltitle[[elts]])
+        if(g == "River.basin"){
+            gcoor$ID_N=1:length(V(ggraph))
+            inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+            plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+        }
+        else{
+            V(ggraph)$size=300
+            V(ggraph)$label.size=.7
+            V(ggraph)$cex=.8
+        }
+        plot(ggraph,add=T,rescale=F)
+    }
+    plot.new()
+}
+
+
+
 ```
 
