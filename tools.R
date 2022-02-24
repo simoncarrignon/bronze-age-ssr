@@ -1,6 +1,8 @@
 fun_range <- function(x,n=100) {                              # Create user-defined function
   (x - min(x)) / (max(x) - min(x)) * 100
 }
+
+# A normalised verison of the match used by Jelena and Miljana that cont how many similar elements are shared between two vectors
 simpmatch  <-  function(i,j){
     if(length(i)>length(j)){
         tmp=i
@@ -10,6 +12,7 @@ simpmatch  <-  function(i,j){
     length(na.omit(match(i,j)))/(length(c(i,j)))
 }
 
+# return the ratio betwen the smallest and largest element of a and b 
 ratioSpan  <-  function(a,b=NULL){
     maxr=NULL
     minr=NULL
@@ -24,6 +27,7 @@ ratioSpan  <-  function(a,b=NULL){
     minr/maxr
 }
 
+# return tru if the ratio between a an b is beloew a threshold (overlap with ratioSpan)
 same <- function(a,b=NULL,threshold=0.01){
     maxr=minr=NULL
     if(length(a)==2){
@@ -88,6 +92,10 @@ creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
     adjmat
 }
 
+#' @param subset all data
+#' @param coords the colonms with coordinates in subset
+#' @param recomp a list of the same size than `ratioiso` used to define the threhold below which two sample are similiar
+#' @param ratioiso the list of isotops ratio to use
 groupGraphIso <- function(subset,coords,grouping,ratioiso,recomp){
     subset=subset[!is.na(subset[[coords[1]]]),]
     subset=subset[subset[[grouping]]!="",]
@@ -97,6 +105,11 @@ groupGraphIso <- function(subset,coords,grouping,ratioiso,recomp){
     groupedGraphAndCommunity(subset,coords,grouping,comus)
 }
 
+#' @param subset all data
+#' @param coords the colonms with coordinates in subset
+#' @param grouping the column use to define geographical sites
+#' @param listelements the list of elements used to compute the distance between two samples
+#' @return a graph
 groupGraphElmt <- function(subset,coords,grouping,listelements){
     subset=subset[!is.na(subset[[coords[1]]]),]
     subset=subset[subset[[grouping]]!="",]
@@ -120,8 +133,8 @@ groupedGraphAndCommunity <- function(dataset,coords,grouping,categories){
     adjmat=creatSiteAdjMat(dataset,dataset[[grouping]],categories,match=simpmatch)
     groupgraph=graph.adjacency(adjmat, mode = "undirected", weighted = TRUE, diag = FALSE)
     groupgraph=set_graph_attr(groupgraph,"layout",coordsites)
+    #should use graphFromAdj instead of the two previous lines
     groupcomu=cluster_louvain(groupgraph)$memberships[1,]
-    print(length(unique(groupcomu)))
     E(groupgraph)$color=groupcomu[head_of(groupgraph,E(groupgraph))]
     V(groupgraph)$color=groupcomu
     V(groupgraph)$size=100
