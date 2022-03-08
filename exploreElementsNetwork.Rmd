@@ -257,7 +257,6 @@ sites=unique(joined$siteperiod)
 matSP=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$siteperiod == s1],joined$louvain[ joined$siteperiod == s2])))
 
 getSitesCoordiates=unique(cbind.data.frame(siteperiod,longitude,latitude))
-coordsites=t(sapply(sites,function(lbl)apply(unique(getSitesCoordiates[getSitesCoordiates$siteperiod == lbl,c("longitude","latitude")]),2,mean)))
 
 sites.graph=graph.adjacency(matSP, mode = "undirected", weighted = TRUE, diag = FALSE)
 V(sites.graph)$label=as.character(sites)
