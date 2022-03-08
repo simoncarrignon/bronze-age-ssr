@@ -276,8 +276,16 @@ plot(sites.graph,vertex.color=sites.communities)
 #text(longitude ,latitude,joined$siteperiod,cex=.7)
 ```
 
+Plot for each time period:
+
+```{r}
+for(period in unique(datappm$absolute.period)){
+    plot(induced_subgraph(sites.graph,V(sites.graph)[grep(period,label)]))
+}
+```
+
+
 Compare the communities found with original results:
-,
 
 ```{r,results="asis"}
 orig=read.csv("data/Table S2.csv")
