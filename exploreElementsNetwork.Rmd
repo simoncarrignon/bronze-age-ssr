@@ -1,7 +1,7 @@
 ---
 title: "Network Analysis for Ancient Metallurgy and Beyond: Statistical synthesis of contextual, typological, technological and geochemical data"
 author: "SC"
-date: "12/2021"
+date: "`r Sys.time()`"
 output: 
     bookdown::html_document2:
         code_folding: show
