@@ -256,6 +256,9 @@ joined=cbind(joined,siteperiod)
 sites=unique(joined$siteperiod)
 matSP=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$siteperiod == s1],joined$louvain[ joined$siteperiod == s2])))
 
+getSitesCoordiates=unique(cbind.data.frame(siteperiod,longitude,latitude))
+coordsites=t(sapply(sites,function(lbl)apply(unique(getSitesCoordiates[getSitesCoordiates$siteperiod == lbl,c("longitude","latitude")]),2,mean)))
+
 sites.graph=graph.adjacency(matSP, mode = "undirected", weighted = TRUE, diag = FALSE)
 V(sites.graph)$label=as.character(sites)
 V(sites.graph)$label.cex=.7
@@ -263,13 +266,14 @@ V(sites.graph)$size=8
 V(sites.graph)$frame.color="black"
 V(sites.graph)$frame.width=.5
 V(sites.graph)$label.color="black"
-E(sites.graph)$color=NA
-sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
-sites.communities=cluster_louvain(sites.graph)
-plot(sites.graph,vertex.color=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership])
+V(sites.graph)$color=sites.communities
+sites.graph=set_graph_attr(sites.graph,"layout",as.matrix(getSitesCoordiates[,2:3]))
+sites.communities=cluster_louvain(sites.graph)$memberships[1,]
+E(sites.graph)$color=sites.communities[head_of(sites.graph,E(sites.graph))]
+plot(sites.graph,vertex.color=sites.communities)
 
-plot(longitude ,latitude,bg=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership],pch=21,cex=1.2)
-text(longitude ,latitude,joined$siteperiod,cex=.7)
+#plot(longitude ,latitude,bg=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership],pch=21,cex=1.2)
+#text(longitude ,latitude,joined$siteperiod,cex=.7)
 ```
 
 Compare the communities found with original results:
