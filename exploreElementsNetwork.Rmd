@@ -261,7 +261,7 @@ coordsites=t(sapply(sites,function(lbl)apply(unique(getSitesCoordiates[getSitesC
 
 sites.graph=graph.adjacency(matSP, mode = "undirected", weighted = TRUE, diag = FALSE)
 V(sites.graph)$label=as.character(sites)
-V(sites.graph)$label.cex=.7
+V(sites.graph)$label.cex=.5
 V(sites.graph)$size=8
 V(sites.graph)$frame.color="black"
 V(sites.graph)$frame.width=.5
@@ -279,6 +279,8 @@ plot(sites.graph,vertex.color=sites.communities)
 Plot for each time period:
 
 ```{r}
+#par(mfrow=c(2,2))
+par(mar=c(0,0,0,0))
 for(period in unique(datappm$absolute.period)){
     plot(induced_subgraph(sites.graph,V(sites.graph)[grep(period,label)]))
 }
@@ -290,7 +292,7 @@ Compare the communities found with original results:
 ```{r,results="asis"}
 orig=read.csv("data/Table S2.csv")
 orig$Modularity.No.=orig$Modularity.No.+1
-newds=cbind.data.frame(Label=V(sites.graph)$label,newcommunities=sites.communities$membership)
+newds=cbind.data.frame(Label=V(sites.graph)$label,newcommunities=sites.communities)
 merged=merge(orig[,c("Label","Modularity.No.")],newds )
 kbl=knitr::kable(merged)
 kableExtra::row_spec(kbl,which(merged[,2]!=merged[,3]) , background = "red")
