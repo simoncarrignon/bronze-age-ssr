@@ -116,7 +116,7 @@ code=sapply(code,function(s)paste0(s[3:4],collapse="/"))
 
 
 library(Rtsne)
-isotopes.tsne=Rtsne(isotopes,pca=F)
+isotopes.tsne=Rtsne(isotopes,pca=F,perplexity=10)
 isotopes.dist=dist(isotopes.tsne$Y)
 isotopes.clust=hclust(isotopes.dist, method = "ward.D")
 isotopes.kclust=cutree(isotopes.clust,k=nk) #playing comparing community cluster vs simple hierarchical clustering
@@ -201,7 +201,7 @@ sites.communities=cluster_louvain(sites.graph)
 comus=sites.communities$memberships[1,]
 
 plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
-plot(windowmyan,lwd=0.1)
+plot(st_geometry(windowmyan),lwd=0.1)
 points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
 
 comus=sites.communities$memberships[2,]
@@ -211,83 +211,4 @@ plot(windowmyan,lwd=0.1)
 points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
 
 ```
-
-Try ternary plots:
-
-```{r,eval=F}
-#install.packages("ggtern")
-#devtools::install_git('https://bitbucket.org/nicholasehamilton/ggtern')
-library(ggtern)
-
-myanmar[,17:19]=apply(myanmar[,17:19],1,function(i)i/sum(i))
-only=myanmar[,c(17:19)]
-colnames(only)=c("208Pb","207Pb","206Pb")
-colnames(only)=c("A","B","C")
-#only=t(apply(only,1,function(i)i/sum(i)))
-onlys=as.data.frame(apply(only,2,fun_range,n=50))
-only=as.data.frame(only)
-par(xpd=T)
-ggtern(onlys ,aes(A,B,C))+theme_bw()+ geom_point(color=as.numeric(as.factor(myanmar$Region)))+geom_mask()
-ggtern(only ,aes(A,B,C))+
-geom_density_tern(aes(fill=as.numeric(as.factor(myanmar$Region))),bins=10) + geom_point(color=as.numeric(as.factor(myanmar$Region)))
-
-#legend("topright",legend=unique(as.factor(myanmar$Region)),col=unique(as.numeric(as.factor(myanmar$Region))))
-
-ggtern(onlys ,aes(A,B,C,color=myanmar$Region)) +
-  theme_bw() + geom_mask() +
-  geom_point()
-
-
-```
-
-```{r,eval=F}
-
-#  scale_T_continuous(limits=c(0.2,0.3),
-#                     breaks=seq(0,1,by=0.01))+
-#                     #labels=paste0("B",LETTERS[1:11])) + 
-#  scale_L_continuous(limits=c(0.5,0.6),
-#                     breaks=seq(0,1,by=0.01))+
-#                     #labels=paste0("A",LETTERS[1:11])) + 
-#  scale_R_continuous(limits=c(0.2,0.3),
-#                     breaks=seq(0,1,by=0.01))
-#                     #labels=paste0("C",LETTERS[1:11]))
-
-ggtern(only ,aes(A,B,C))+geom_point(color=as.numeric(as.factor(myanmar$Region)))+
-  scale_T_continuous(limits=c(0.18,0.25),
-                     breaks=seq(0,1,by=0.01))+
-                     #labels=paste0("B",LETTERS[1:11])) + 
-  scale_L_continuous(limits=c(0.54,0.6),
-                     breaks=seq(0,1,by=0.01))+
-                     #labels=paste0("A",LETTERS[1:11])) + 
-  scale_R_continuous(limits=c(0.20,0.27),
-                     breaks=seq(0,1,by=0.01))
- limit_tern(1.0,0.5,0.5)
-tern_limits(.25,.8,.40)
-geom_density_tern(aes(fill=..level..),bins=5) +
- geom_point()
-plot(myanmar[,15:16],col=as.factor(myanmar$Region),pch=20)
-plot3D(myanmar[,15],myanmar[,16],myanmar[,19])
-
-Ternary::TernaryPlot(xlim=c(-0.032,-0.01),ylim=c(.455,.465),padding=0,isometric=F)
-
-
-
-data('Feldspar')
-ggtern(Feldspar,aes(Ab,An,Or)) + 
- geom_density_tern(aes(color=..level..),bins=20) +
- geom_point()
-
-df = data.frame(x = runif(50)*1000,
-                y = runif(50)*1000,
-                z = runif(50)*1000,
-                Group = as.factor(round(runif(50,1,2))))
-ggtern(data=df,aes(x,y,z),color=Group)
-ggtern() + 
-  geom_point(data = df, aes(x/10, y/10, z/10, color = Group)) + 
-  labs(x="X", y="Y", z="Z", title="Title") +
-  scale_T_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2)) +
-  scale_L_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2)) +
-  scale_R_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2))
-```
-
 
