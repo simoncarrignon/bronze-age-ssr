@@ -14,6 +14,8 @@ output:
 # Isotope data
 
 ```{r}
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+
 fun_range <- function(x,n=100) {                              # Create user-defined function
   (x - min(x)) / (max(x) - min(x)) * 100
 }
@@ -36,7 +38,6 @@ rmarkdown::render("myanmarIso.Rmd",output_dir="/var/www/html")
 ```
 
 ```{r}
-library(sf)
 seashapefile=st_read("Cartes/allsea.shp")
 seashapefile=st_make_valid(seashapefile)
 seashapefile=st_union(seashapefile)
@@ -46,6 +47,9 @@ seashapefile=st_union(seashapefile)
 ```{r,out.width="50%"}
 pryce=read.csv("data/DATA isotopie_Pryce_V4.csv")
 myanmar=pryce[pryce$Country == "Myanmar",]
+myanmar$Easting...Longitude= as.numeric(gsub("°","",myanmar$Easting...Longitude))
+myanmar$Northing.Latitude= as.numeric(gsub("°","",myanmar$Northing.Latitude))
+myanmar=myanmar[!is.na(myanmar[,6]),]#useless with the new cleaner dataset
 ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
 myanmar[,ratioiso]=apply(myanmar[,ratioiso],2,as.numeric)
 myanmar=myanmar[!is.na(myanmar[,15]),]#useless with the new cleaner dataset
@@ -66,10 +70,7 @@ crop shapefile:
 
 ```{r}
 
-myanmar$Easting...Longitude= as.numeric(gsub("°","",myanmar$Easting...Longitude))
-myanmar$Northing.Latitude= as.numeric(gsub("°","",myanmar$Northing.Latitude))
-myanmar=myanmar[!is.na(myanmar[,6]),]#useless with the new cleaner dataset
-plot(seashapefile[,1],reset=F)
+plot(st_geometry(seashapefile),reset=F)
 points(myanmar$Easting...Longitude,myanmar$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust])
 
 coords=colnames(myanmar)[6:7]
@@ -88,6 +89,7 @@ text(myanmar[,19],myanmar[,18],myanmar$Site,pch=21,bg=rainbow(10,alpha=.6)[myanm
 Plot Isotopes ratio classic bi-plot:
 
 ```{r}
+
 myanmar$kclust=myanmar.kclust 
 qualities=myanmar
 
@@ -207,7 +209,7 @@ plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
 plot(st_geometry(windowmyan),lwd=0.1)
 points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
 
-comus=sites.communities$memberships[2,]
+comus=sites.communities$memberships[nrow(sites.communities$memberships),]
 
 plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
 plot(windowmyan,lwd=0.1)
