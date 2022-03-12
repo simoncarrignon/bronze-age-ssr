@@ -269,7 +269,7 @@ sites.communities=cluster_louvain(sites.graph)$memberships[2,]
 V(sites.graph)$color=sites.communities
 sites.graph=set_graph_attr(sites.graph,"layout",as.matrix(getSitesCoordiates[,2:3]))
 E(sites.graph)$color=sites.communities[head_of(sites.graph,E(sites.graph))]
-plot(sites.graph,vertex.color=sites.communities)
+plot(sites.graph)
 
 #plot(longitude ,latitude,bg=rainbow(length(sites.communities),alpha=.6)[sites.communities$membership],pch=21,cex=1.2)
 #text(longitude ,latitude,joined$siteperiod,cex=.7)
