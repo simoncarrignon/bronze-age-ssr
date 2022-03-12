@@ -1,0 +1,293 @@
+---
+title: "isotope data"
+author: "SC"
+date: "`r Sys.time()`"
+output: 
+    bookdown::html_document2:
+        code_folding: show
+        section_numbers: true
+        toc: true
+        toc_depth: 3
+        toc_float: true
+---
+
+# Isotope data
+
+```{r}
+fun_range <- function(x,n=100) {                              # Create user-defined function
+  (x - min(x)) / (max(x) - min(x)) * 100
+}
+simpmatch  <-  function(i,j){
+    if(length(i)>length(j)){
+        tmp=i
+        i=j
+        j=tmp
+    }
+    length(na.omit(match(i,j)))
+}
+```
+Get all shapefiles
+```{r,eval=F}
+allshapefiles=lapply(country,function(m) tmpm=readOGR(dsn = "Cartes/", layer=paste0(m,"_adm0") ))
+seashapefile=do.call("rbind",allshapefiles)
+```
+
+```{r}
+library(sf)
+seashapefile=st_read("Cartes/allsea.shp")
+seashapefile=st_make_valid(seashapefile)
+seashapefile=st_union(seashapefile)
+
+```
+
+```{r,out.width="50%"}
+pryce=read.csv("data/DATA isotopie_Pryce_V4.csv")
+myanmar=pryce[pryce$Country == "Myanmar",]
+ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
+myanmar[,ratioiso]=apply(myanmar[,ratioiso],2,as.numeric)
+myanmar=myanmar[!is.na(myanmar[,15]),]#useless with the new cleaner dataset
+isotopes=myanmar[,ratioiso]
+myanmar.pca=prcomp(myanmar[,ratioiso])
+myanmar.dist=dist(myanmar.pca$x)
+myanmar.clust=hclust(myanmar.dist)
+myanmar.kclust=cutree(myanmar.clust,k=10) #playing comparing community cluster vs simple hierarchical clustering
+plot(myanmar.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust])
+text(myanmar.pca$x[,1],myanmar.pca$x[,2],myanmar$River.basin,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust],cex=.4)
+
+
+plot(myanmar.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust])
+text(myanmar.pca$x[,1],myanmar.pca$x[,2],myanmar$Site,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust],cex=.4)
+```
+
+crop shapefile:
+
+```{r}
+
+myanmar$Easting...Longitude= as.numeric(gsub("°","",myanmar$Easting...Longitude))
+myanmar$Northing.Latitude= as.numeric(gsub("°","",myanmar$Northing.Latitude))
+myanmar=myanmar[!is.na(myanmar[,6]),]#useless with the new cleaner dataset
+plot(seashapefile[,1],reset=F)
+points(myanmar$Easting...Longitude,myanmar$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust])
+
+coords=colnames(myanmar)[6:7]
+myan.sf=st_as_sf(myanmar,coords=coords,crs=st_crs(seashapefile))
+windowmyan=st_crop(seashapefile,st_buffer(myan.sf,200000))
+
+
+plot(st_geometry(windowmyan),reset=F)
+points(myanmar$Easting...Longitude,myanmar$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust])
+
+text(myanmar[,19],myanmar[,18],myanmar$Site,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust],cex=.4)
+
+```
+
+
+Plot Isotopes ratio classic bi-plot:
+
+```{r}
+myanmar$kclust=myanmar.kclust 
+qualities=myanmar
+
+par(mfrow=c(1,2))
+plot(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust])
+text(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$River.basin,cex=.4)
+plot(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust])
+text(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$River.basin,cex=.4)
+text(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$LABEL.analytical,cex=.6)
+
+ql.pca=prcomp(qualities[,ratioiso])
+ql.dist=dist(ql.pca$x)
+ql.clust=hclust(ql.dist)
+ql.kclust=cutree(ql.clust,k=5)
+
+oligroup=read.csv("data/group differences.csv")
+qualities$klcust=ql.kclust
+plot(ql.pca$x[,1:2],pch=21,bg=rainbow(5)[ql.kclust])
+text(ql.pca$x[,1],ql.pca$x[,2],qualities$LABEL.analytical,cex=.6)
+```
+
+
+Tsnea and networks:
+```{r,fig.height=20,fig.width=20}
+nk=6
+
+code=strsplit(myanmar[,1],"/")
+code=sapply(code,function(s)paste0(s[3:4],collapse="/"))
+
+
+library(Rtsne)
+isotopes.tsne=Rtsne(isotopes,pca=F)
+isotopes.dist=dist(isotopes.tsne$Y)
+isotopes.clust=hclust(isotopes.dist, method = "ward.D")
+isotopes.kclust=cutree(isotopes.clust,k=nk) #playing comparing community cluster vs simple hierarchical clustering
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2")
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,xlab="PC1",ylab="PC2",main="tSNE")
+
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pch=20,main="tSNE")
+#text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],myanmar$Site,cex=.5)
+text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],code,cex=.5)
+```
+
+netowrsk
+
+```{r}
+library(igraph)
+isotopes.ew=1/(exp(as.matrix(isotopes.dist)))
+isotopes.graph=graph.adjacency(isotopes.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(isotopes.graph)$label=as.character(myanmar$Site)
+V(isotopes.graph)$label.cex=.4
+V(isotopes.graph)$size=8
+V(isotopes.graph)$frame.color="black"
+V(isotopes.graph)$frame.width=.5
+V(isotopes.graph)$label.color=adjustcolor("black",.6)
+E(isotopes.graph)$color=NA
+isotopes.graph=set_graph_attr(isotopes.graph,"layout",layout_with_fr(isotopes.graph))
+plot(isotopes.graph)
+```
+
+```{r louvain,results="hold",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%",fig.show="hold",eval=F}
+par(mar=c(0,0,0,0))
+isotopes.louvain=cluster_louvain(isotopes.graph)
+#while(length(table(isotopes.louvain$memberships[1,]))!=10)isotopes.louvain=cluster_louvain(isotopes.graph)
+#isotopes.louvain=multilevel.community(isotopes.graph)
+counts=as.data.frame(sort(table(isotopes.louvain$membership)))
+colnames(counts)=c("community","size")
+knitr::kable(counts)
+plot(isotopes.graph,vertex.color=rainbow(length(isotopes.louvain),alpha=.6)[isotopes.louvain$membership])
+
+plot(isotopes.graph,vertex.color=rainbow(length(isotopes.louvain),alpha=.6)[isotopes.louvain$membership],vertex.label=paste(myanmar$Site,myanmar$relative.period,sep="-"))
+
+plot(windowmyan,lwd=0.1)
+points(myanmar$Easting...Longitude,myanmar$Northing.Latitude ,pch=21,bg=rainbow(length(isotopes.louvain),alpha=.6)[isotopes.louvain$membership])
+```
+
+## Site Network
+
+```{r,eval=F}
+joined=cbind(myanmar,louvain=isotopes.louvain$membership)
+sites=unique(joined$Site)
+
+system.time({
+matdim1=sapply(sites,function(s1) sapply(sites,function(s2) simpmatch(joined$louvain[ joined$Site == s1],joined$louvain[ joined$Site == s2])))
+})
+
+system.time({
+matdim2=matrix(NA,nrow=length(sites),ncol=length(sites))
+for(s1 in 1:length(sites)){
+    for(s2 in 1:length(sites)){
+        c1=joined$louvain[ joined$Site == sites[s1]]
+        c2=joined$louvain[ joined$Site == sites[s2]]
+        matdim2[s1,s2]=simpmatch(c1,c2)
+    }
+}
+})
+sum(matdim2-matdim1)
+
+sites.graph=graph.adjacency(matdim1, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label=as.character(sites)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+V(sites.graph)$label.color="black"
+E(sites.graph)$color=NA
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+
+```
+
+visualise  communities of sites
+
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+sites.communities=cluster_louvain(sites.graph)
+comus=sites.communities$memberships[1,]
+
+plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
+plot(windowmyan,lwd=0.1)
+points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+
+comus=sites.communities$memberships[2,]
+
+plot(sites.graph,vertex.color=rainbow(length(table(comus)),alpha=.6)[comus])
+plot(windowmyan,lwd=0.1)
+points(joined$Easting...Longitude,joined$Northing.Latitude ,pch=21,bg=rainbow(length(table(comus)),alpha=.6)[comus])
+
+```
+
+Try ternary plots:
+
+```{r,eval=F}
+#install.packages("ggtern")
+#devtools::install_git('https://bitbucket.org/nicholasehamilton/ggtern')
+library(ggtern)
+
+myanmar[,17:19]=apply(myanmar[,17:19],1,function(i)i/sum(i))
+only=myanmar[,c(17:19)]
+colnames(only)=c("208Pb","207Pb","206Pb")
+colnames(only)=c("A","B","C")
+#only=t(apply(only,1,function(i)i/sum(i)))
+onlys=as.data.frame(apply(only,2,fun_range,n=50))
+only=as.data.frame(only)
+par(xpd=T)
+ggtern(onlys ,aes(A,B,C))+theme_bw()+ geom_point(color=as.numeric(as.factor(myanmar$Region)))+geom_mask()
+ggtern(only ,aes(A,B,C))+
+geom_density_tern(aes(fill=as.numeric(as.factor(myanmar$Region))),bins=10) + geom_point(color=as.numeric(as.factor(myanmar$Region)))
+
+#legend("topright",legend=unique(as.factor(myanmar$Region)),col=unique(as.numeric(as.factor(myanmar$Region))))
+
+ggtern(onlys ,aes(A,B,C,color=myanmar$Region)) +
+  theme_bw() + geom_mask() +
+  geom_point()
+
+
+```
+
+```{r,eval=F}
+
+#  scale_T_continuous(limits=c(0.2,0.3),
+#                     breaks=seq(0,1,by=0.01))+
+#                     #labels=paste0("B",LETTERS[1:11])) + 
+#  scale_L_continuous(limits=c(0.5,0.6),
+#                     breaks=seq(0,1,by=0.01))+
+#                     #labels=paste0("A",LETTERS[1:11])) + 
+#  scale_R_continuous(limits=c(0.2,0.3),
+#                     breaks=seq(0,1,by=0.01))
+#                     #labels=paste0("C",LETTERS[1:11]))
+
+ggtern(only ,aes(A,B,C))+geom_point(color=as.numeric(as.factor(myanmar$Region)))+
+  scale_T_continuous(limits=c(0.18,0.25),
+                     breaks=seq(0,1,by=0.01))+
+                     #labels=paste0("B",LETTERS[1:11])) + 
+  scale_L_continuous(limits=c(0.54,0.6),
+                     breaks=seq(0,1,by=0.01))+
+                     #labels=paste0("A",LETTERS[1:11])) + 
+  scale_R_continuous(limits=c(0.20,0.27),
+                     breaks=seq(0,1,by=0.01))
+ limit_tern(1.0,0.5,0.5)
+tern_limits(.25,.8,.40)
+geom_density_tern(aes(fill=..level..),bins=5) +
+ geom_point()
+plot(myanmar[,15:16],col=as.factor(myanmar$Region),pch=20)
+plot3D(myanmar[,15],myanmar[,16],myanmar[,19])
+
+Ternary::TernaryPlot(xlim=c(-0.032,-0.01),ylim=c(.455,.465),padding=0,isometric=F)
+
+
+
+data('Feldspar')
+ggtern(Feldspar,aes(Ab,An,Or)) + 
+ geom_density_tern(aes(color=..level..),bins=20) +
+ geom_point()
+
+df = data.frame(x = runif(50)*1000,
+                y = runif(50)*1000,
+                z = runif(50)*1000,
+                Group = as.factor(round(runif(50,1,2))))
+ggtern(data=df,aes(x,y,z),color=Group)
+ggtern() + 
+  geom_point(data = df, aes(x/10, y/10, z/10, color = Group)) + 
+  labs(x="X", y="Y", z="Z", title="Title") +
+  scale_T_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2)) +
+  scale_L_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2)) +
+  scale_R_continuous(breaks = seq(0,1,0.2), labels = 1000*seq(0,1,0.2))
+```
+
+
