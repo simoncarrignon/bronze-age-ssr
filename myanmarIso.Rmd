@@ -66,7 +66,7 @@ plot(myanmar.pca$x[,1:2],pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust])
 text(myanmar.pca$x[,1],myanmar.pca$x[,2],myanmar$Site,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust],cex=.4)
 ```
 
-crop shapefile:
+Crop shapefile:
 
 ```{r}
 
@@ -74,8 +74,17 @@ plot(st_geometry(seashapefile),reset=F)
 points(myanmar$Easting...Longitude,myanmar$Northing.Latitude,pch=21,bg=rainbow(10,alpha=.6)[myanmar.kclust])
 
 coords=colnames(myanmar)[6:7]
+
 myan.sf=st_as_sf(myanmar,coords=coords,crs=st_crs(seashapefile))
-windowmyan=st_crop(seashapefile,st_buffer(myan.sf,200000))
+
+bbox=st_bbox(myan.sf)
+bigbb=st_bbox(st_buffer(st_as_sfc(bbox),600000))
+
+bbox[["xmin"]]=bigbb[["xmin"]]
+bbox[["xmax"]]=bigbb[["xmax"]]
+
+windowmyan=st_crop(seashapefile,st_buffer(st_as_sfc(bbox),200000))
+windowmyan=st_simplify(windowmyan,dTolerance=1000)
 
 
 plot(st_geometry(windowmyan),reset=F)
@@ -93,12 +102,11 @@ Plot Isotopes ratio classic bi-plot:
 myanmar$kclust=myanmar.kclust 
 qualities=myanmar
 
-par(mfrow=c(1,2))
-plot(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust])
-text(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$River.basin,cex=.4)
-plot(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust])
-text(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$River.basin,cex=.4)
-text(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$LABEL.analytical,cex=.6)
+plot(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust],ylab="207/204",xlab="206/204")
+#text(qualities[,"X206Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$Site.abreviation,cex=.4)
+
+plot(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],pch=21,bg=rainbow(10,alpha=.6)[qualities$kclust],xlab="208/204",ylab="207/204")
+#text(qualities[,"X208Pb.204Pb"],qualities[,"X207Pb.204Pb"],qualities$Site.abreviation,cex=.4)
 
 ql.pca=prcomp(qualities[,ratioiso])
 ql.dist=dist(ql.pca$x)
@@ -108,12 +116,12 @@ ql.kclust=cutree(ql.clust,k=5)
 oligroup=read.csv("data/group differences.csv")
 qualities$klcust=ql.kclust
 plot(ql.pca$x[,1:2],pch=21,bg=rainbow(5)[ql.kclust])
-text(ql.pca$x[,1],ql.pca$x[,2],qualities$LABEL.analytical,cex=.6)
+text(ql.pca$x[,1],ql.pca$x[,2],qualities$Site.abreviation,cex=.6)
 ```
 
 
 Tsnea and networks:
-```{r,fig.height=20,fig.width=20}
+```{r,fig.height=10,fig.width=10}
 nk=6
 
 code=strsplit(myanmar[,1],"/")
@@ -133,7 +141,7 @@ plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],col=rainbow(nk)[isotopes.kclust],pc
 text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],code,cex=.5)
 ```
 
-netowrsk
+Create network using tSNEA based distance
 
 ```{r}
 library(igraph)
@@ -263,16 +271,15 @@ V(isograph)$color=sitecol[myanmar$Site.abreviation]
 plot(isograph)
 ```
 
-Let use this simplified matrix to detect groups
-```{r,out.width="50%"}
+Let use this simplified matrix to detect groups based on the grouping criterion selection
+```{r}
 comuiso=cluster_louvain(isograph)
 comuiso=comuiso$memberships[2,]
 V(isograph)$color=comuiso
 plot(isograph)
-knitr::kable(allgroups)
 ```
 
-Repeat for different level
+Using these group, compute graph between different level of grouping 
 
 ```{r}
 
@@ -289,7 +296,7 @@ rb$ID_RB=1:nrow(rb)
         ss=s
         ggraph=groupGraphIso(ss,coords,g,ratioiso,recomp)
         gcoor=graph_attr(ggraph,"layout")
-        gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+        gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(windowmyan))
         plot(windowmyan,reset=F,main="Myanmar Network")
         if(g == "River.basin"){
             gcoor$ID_N=1:length(V(ggraph))
@@ -303,14 +310,21 @@ rb$ID_RB=1:nrow(rb)
         }
         plot(ggraph,add=T,rescale=F)
     }
-    plot.new()
 
-    par(mar=c(4,5,2,2))
-    sitecol=rainbow(length(unique(s$Site.abreviation)),alpha=.8)
-    names(sitecol)=unique(s$Site.abreviation)
-    plot(s[,ratioiso[3:2]],col=sitecol[s$Site.abreviation],pch=as.numeric(as.factor(s$Country)),main="Myanmar Network")
-    plot(s[,ratioiso[c(3,1)]],col=sitecol[s$Site.abreviation],pch=as.numeric(as.factor(s$Country)))
-    legend("topleft",pch=1:length(unique(s$Country)),legend=levels(as.factor(s$Country)),title="Country",bty="n")
+    #par(mar=c(4,5,2,2))
+    #sitecol=rainbow(length(unique(s$Site.abreviation)),alpha=.8)
+    #names(sitecol)=unique(s$Site.abreviation)
+    #plot(s[,ratioiso[3:2]],col=sitecol[s$Site.abreviation],pch=as.numeric(as.factor(s$Country)),main="Myanmar Network")
+    #plot(s[,ratioiso[c(3,1)]],col=sitecol[s$Site.abreviation],pch=as.numeric(as.factor(s$Country)))
+    #legend("topleft",pch=1:length(unique(s$Country)),legend=levels(as.factor(s$Country)),title="Country",bty="n")
 }
 
+```
+plot the netowkr not on the map for easier visu 
+```{r}
+
+ggraph=groupGraphIso(myanmar,coords,"Site.abreviation",ratioiso,recomp)
+V(ggraph)$size=10
+V(ggraph)$label.cex=.8
+plot(ggraph,layout=layout_with_fr(ggraph))
 ```
