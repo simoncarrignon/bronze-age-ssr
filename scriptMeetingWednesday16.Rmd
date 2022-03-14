@@ -14,12 +14,12 @@ output:
 # Isotope data
 
 ```{r,initialisation}
-knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=TRUE,collapse=TRUE,fig.show="hold",results="hide")
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
 ```
 
 ```{r,eval=F}
 rmarkdown::render("scriptMeetingWednesday16.Rmd",output_dir="/var/www/html")
-```
+``
 
 
 ```{r}
@@ -54,8 +54,8 @@ spat=pryce
 spat=spat[!is.na(spat[,"Easting...Longitude"]),]
 p.sf=st_as_sf(spat,coords=c("Easting...Longitude","Northing.Latitude"),crs=st_crs(seashapefile))
 seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(p.sf,dist=100)))
-pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")]=apply(pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")],2,as.numeric)
-pryce=pryce[!is.na(pryce$River.basin.coordinates.E),]
+#pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")]=apply(pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")],2,as.numeric)
+#pryce=pryce[!is.na(pryce$River.basin.coordinates.E),]
 ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
 pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
 ```
@@ -128,7 +128,7 @@ minim=sapply(unique(samegroups$Site.abreviation),function(site){
 knitr::kable((1-apply(minim,1,min))*100 )
 knitr::kable(t(minim))
 
-oliselection=minim[,c("PBL","NPW","NKH")]
+oliselection=minim[,c("PBL","NKH")]
 knitr::kable(t(oliselection))
 recomp=(1-apply(oliselection,1,min))*100
 knitr::kable(recomp)
@@ -205,7 +205,7 @@ for(i in 1:4){
 ```
 Same with geoloc
 
-```{r,out.width="50%"}
+```{r,out.width="50%",eval=F}
 basinriv=pryce[!is.na(pryce$River.basin.coordinates.E) ,]
 allsites=createRatioMatrix(basinriv,ratioiso,recomp)
 allgraphs=lapply(0:3,function(i)graphFromAdj(allsites,mask=i,label=basinriv$Site.abreviation))
