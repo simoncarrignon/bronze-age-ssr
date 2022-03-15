@@ -393,6 +393,22 @@ plot(seashapefile.cr,lwd=0.6,reset=F)
 plot(sites.graph,layout=coordsites,rescale=F,add=T)
 
 ```
+Look for coordinates under water:
+
+```{r}
+dpm.sf=st_as_sf(datappm,coords=coords,crs=st_crs(seashapefile))
+st_intersects(dpm.sf,seashapefile)
+inter=st_intersects(dpm.sf,seashapefile)
+plot(st_geometry(seashapefile),reset=F)
+plot(dpm.sf[which(sapply(inter,length)==0),],add=T)
+dpm.sf$Site.abreviation[which(sapply(inter,length)==0)]
+#SpatExtent : 113.583500134491, 115.91108912011, 7.407809130548, 8.99587097680309
+weisf=st_as_sf(as.polygons(weird))
+st_crs(weisf)=st_crs(dpm.sf)
+floater=st_intersection(weisf,dpm.sf)
+cat(paste("\n",paste0(floater$LABEL.analytical,collapse="\n\r"),"\n"))
+```
+
 
 Try with communities of regions:
 
