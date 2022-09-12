@@ -1,0 +1,658 @@
+---
+title: "Ex[plore whole dataset vs/mynamar only for PNAS paper"
+author: "SC"
+date: "`r Sys.time()`"
+output: 
+    bookdown::html_document2:
+        code_folding: show
+        section_numbers: true
+        toc: true
+        toc_depth: 3
+        toc_float: true
+---
+
+# Isotope data
+
+```{r,initialisation}
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
+```
+
+```{r,eval=F}
+rmarkdown::render("PNASscript.Rmd",output_dir="/var/www/html")
+``
+
+
+```{r}
+source("tools.R")
+library(sf)
+seashapefile=st_read("Cartes/allseaborder_lowq.shp")
+seashapefile=st_geometry(seashapefile)
+datappm=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V4.csv",stringsAsFactor=F)
+
+# set an arbitrary epsilon value and replace "tr"s and "0"s with it
+epsilon=0.0001
+
+listelements=c("Sb","Sn","Ag","Mo","Bi","Pb","Se","As","Au","Zn","Cu","Ni","Co")
+
+datappm[,listelements]=apply(datappm[,listelements],2,as.numeric)
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="tr"]=epsilon;as.numeric(i)})
+#datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i=="nd"]=epsilon;as.numeric(i)})
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[is.na(i)]=epsilon;as.numeric(i)})
+datappm[,listelements]=apply(datappm[,listelements],2,function(i){i[i==0]=epsilon;as.numeric(i)})
+
+datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
+datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
+
+datappm=datappm[!is.na(datappm$Easting...Longitude),]
+
+```
+
+```{r}
+pryce=read.csv("data/DATA isotopie_Pryce_V4.csv",stringsAsFactor=F)
+pryce[,c("Easting...Longitude","Northing.Latitude")]=apply(pryce[,c("Easting...Longitude","Northing.Latitude")],2,as.numeric)
+spat=pryce
+spat=spat[!is.na(spat[,"Easting...Longitude"]),]
+p.sf=st_as_sf(spat,coords=c("Easting...Longitude","Northing.Latitude"),crs=st_crs(seashapefile))
+seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(p.sf,dist=100)))
+#pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")]=apply(pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")],2,as.numeric)
+#pryce=pryce[!is.na(pryce$River.basin.coordinates.E),]
+ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
+pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
+```
+Ratios en fonction teneur en plombs
+```{r,out.width="33%",eval=F}
+    teneurs=datappm$Pb
+    names(teneurs)=datappm$LABEL.analytical
+    pryce$teneur=teneurs[pryce$LABEL.analytical]
+    pryce$leaded=0
+    pryce$leaded[pryce$teneur>.1]=1
+    for(i in ratioiso){
+        plot(1/pryce$teneur,pryce[[i]],col=pryce$leaded+1,ylab=i,xlab="1/Pb ppm",log="x")
+    }
+```
+
+
+```{r,out.width="33%",eval=F}
+    for(i in ratioiso){
+        cls=rainbow(length(unique(pryce$Site)),alpha=.8)
+        plot(1/pryce$teneur,pryce[[i]],col=cls[as.factor(pryce$Site)],pch=as.numeric(as.factor(pryce$Country)),ylab=i,xlab="1/Pb ppm",log="x")
+    }
+```
+
+
+
+We get only some "clean" artefacts:
+
+
+```{r}
+cleanlist=pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),]
+persite=table(cleanlist$Site.abreviation)
+cleanlist=pryce[pryce$Site.abreviation %in% names(persite)[persite>9] & pryce$Corrosion.products %in% c("Low","Ingot","Slag"),]
+sitecol=rainbow(length(unique(cleanlist$Site.abreviation)),alpha=.8)
+names(sitecol)=unique(cleanlist$Site.abreviation)
+plot(cleanlist[,ratioiso[3:2]],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+plot(cleanlist[,ratioiso[c(3,1)]],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+val=legend("topleft",fill=sitecol,legend=names(sitecol),title="Site",bty="n")
+newxleg=val$rect$left+val$rect$w
+newyleg=val$rect$top
+
+legend(x=newxleg,y=newyleg,pch=20+1:length(unique(cleanlist$Country)),legend=levels(as.factor(cleanlist$Country)),title="Country",bty="n")
+```
+
+Using tsnea to separate artefacts
+
+```{r}
+library(Rtsne)
+isotopes.tsne=Rtsne(as.matrix(cleanlist[,ratioiso]),pca=F)
+plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+#text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),"Site.abreviation"],cex=.6)
+```
+
+
+Faire les distance "à la oli" => groupe les artefact avec une difference <.1%
+
+
+D'abord recalculer les difference maximum entre les ratio ingot/slag d'un même sites:
+
+```{r,results="asis"}
+samegroups=pryce[pryce$Artefact.type %in% c("Slag","Ingot"),]
+#remove weirdos
+samegroups=samegroups[samegroups$LABEL.analytical != "SEALIP/TH/NPW/1",]
+
+minim=sapply(unique(samegroups$Site.abreviation),function(site){
+    sitesratio=samegroups[samegroups$Site.abreviation == site,ratioiso]
+    apply(sitesratio,2,ratioSpan)
+}
+)
+
+knitr::kable((1-apply(minim,1,min))*100 )
+knitr::kable(t(minim))
+
+oliselection=minim[,c("PBL","NKH")]
+knitr::kable(t(oliselection))
+recomp=(1-apply(oliselection,1,min))*100
+knitr::kable(recomp)
+recomp=1-apply(oliselection,1,min)
+```
+
+Which correspond to oli's computation:
+```{r,results="asis"}
+olidiff=read.csv("data/prod sys var.csv",header=F)
+knitr::kable(olidiff[6,c(4,6,8)]-recomp)
+```
+
+On va donc ensuite comparer chaque element deux a deux et voir quel ratios sont inferieur aux ratio min calculé precedement
+
+Using this as a graph
+
+```{r}
+library(igraph)
+adjmat=createRatioMatrix(cleanlist,ratioiso,recomp)
+
+par(mar=c(0,0,0,0))
+limited=adjmat
+for(i in 0:3){
+    graph=graphFromAdj(limited,mask=i,label=cleanlist$Site.abreviation)
+    V(graph)$color=sitecol[cleanlist$Site.abreviation]
+    plot(graph)
+}
+```
+
+Let use this simplified matrix to detect groups
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
+allgraphs=lapply(0:3,function(m)graphFromAdj(limited,mask=m,label=cleanlist$Site.abreviation))
+allcomus=lapply(allgraphs,cluster_louvain)
+allgroups=sapply(allcomus,membership)
+for(i in 1:4){
+    graph=allgraphs[[i]]
+    V(graph)$color=allgroups[,i]
+    plot(graph)
+}
+knitr::kable(allgroups)
+```
+
+
+Play with full dataset:
+```{r}
+allsites=createRatioMatrix(pryce,ratioiso,recomp)
+allgraphs=lapply(0:3,function(i)graphFromAdj(allsites,mask=i,label=pryce$Site.abreviation))
+alcomu=sapply(allgraphs,cluster_louvain)
+allgroups=sapply(alcomu,membership)
+```
+
+Create inter basin connections
+
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
+pryce=cbind(pryce,allgroups)
+for(i in 1:4){
+    matdim2=creatSiteAdjMat(pryce,pryce$River.basin,allgroups[,i],match=simpmatch)
+    sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
+    allcomu=cluster_louvain(sites.graph)
+    V(sites.graph)$label=unique(pryce$River.basin)
+    V(sites.graph)$color=allcomu$membership
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=8
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=1
+    E(sites.graph)$width=E(sites.graph)$weight/50
+    #sites.graph=set_graph_attr(sites.graph,"layout",layout(c(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)))
+    plot(sites.graph)
+    #plot(seashapefile)
+    #plot(sites.graph,layout=unique(cbind(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)),add=F)
+}
+```
+Same with geoloc
+
+```{r,out.width="50%",eval=F}
+basinriv=pryce[!is.na(pryce$River.basin.coordinates.E) ,]
+allsites=createRatioMatrix(basinriv,ratioiso,recomp)
+allgraphs=lapply(0:3,function(i)graphFromAdj(allsites,mask=i,label=basinriv$Site.abreviation))
+alcomu=sapply(allgraphs,cluster_louvain)
+allgroups=sapply(alcomu,membership)
+par(mar=c(0,0,0,0))
+coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(basinriv[basinriv$River.basin == lbl,c("River.basin.coordinates.E","River.basin.coordinates.N")]),2,mean)))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
+for(i in 1:4){
+    matdim2=creatSiteAdjMat(basinriv,basinriv$River.basin,allgroups[,i],match=simpmatch)
+    sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
+    allcomu=membership(cluster_louvain(sites.graph))
+    sites.graph=allgraphs[[i]]
+    V(sites.graph)$label=unique(basinriv$River.basin)
+    V(sites.graph)$color=allcomu
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=100
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=allcomu[head_of(sites.graph,E(sites.graph))]
+
+    E(sites.graph)$width=E(sites.graph)$weight/10
+    plot(seashapefile.cr,reset=F)
+    plot(sites.graph,layout=coordsites,add=T,rescale=F)
+}
+
+
+```
+
+
+
+Using sites instead of River Basin
+
+First we remove site with few artefacts:
+
+```{r}
+countsite=table(pryce$Site.abreviation)
+bignames=names(countsite[countsite>2])
+bigsite=pryce[!is.na(pryce$Easting...Longitude) ,]
+bigsite=bigsite[bigsite$Site.abreviation %in% bignames ,]
+```
+
+
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
+allmatdim=lapply(1:4,function(i)creatSiteAdjMat(bigsite,bigsite$Site.abreviation,allgroups[,i],match=simpmatch))
+allgraphs=lapply(allmatdim,graph.adjacency, mode = "undirected", weighted = TRUE, diag = FALSE)
+allclus=lapply(allgraphs,cluster_louvain)
+allcommus=sapply(allclus,membership)
+for(i in 1:4){
+    sites.graph=allgraphs[[i]]
+    V(sites.graph)$label=unique(bigsite$Site.abreviation)
+    V(sites.graph)$color=allcommus[,i]
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=8
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=1
+    E(sites.graph)$width=E(sites.graph)$weight/50
+    plot(sites.graph)
+}
+```
+
+Same but with geoloc
+```{r,out.width="50%"}
+par(mar=c(0,0,0,0))
+coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(bigsite[bigsite$Site.abreviation == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
+for(i in 1:4){
+    sites.graph=allgraphs[[i]]
+    V(sites.graph)$label=unique(bigsite$Site.abreviation)
+    V(sites.graph)$color=allcommus[,i]
+    V(sites.graph)$label.cex=.7
+    V(sites.graph)$size=100
+    V(sites.graph)$label.color="black"
+    E(sites.graph)$color=allcommus[head_of(sites.graph,E(sites.graph)),i]
+
+    E(sites.graph)$width=E(sites.graph)$weight/80
+    plot(seashapefile.cr,reset=F)
+    plot(sites.graph,layout=coordsites,add=T,rescale=F)
+}
+
+
+```
+
+# Data Elements
+
+## Artefact Network
+
+
+```{r}
+
+ppms=datappm[,listelements]
+
+##detect dupliate and not artefact with nothing detected
+artnull=which(apply(ppms,1,sd)==0)
+ttt=dist(ppms)
+ttt=as.matrix(ttt)
+dupli=which(apply(ttt,2,function(i)any(sum(i==0)>1)))
+datappm=datappm[-artnull,]
+datappm=datappm[-dupli,]
+ppms=ppms[-artnull,]
+ppms=ppms[-dupli,]
+
+ppms=as.data.frame(apply(ppms,2,log)) #log
+
+```
+
+### PCA - dimeension reduction
+
+Compute PCA scores:
+
+```{r pcafig,fig.cap="cluster using directly the PCA result",out.width="50%"}
+# remove eelement poorly detected
+#ppms=ppms[,apply(ppms,2,function(i)sum(i==log(epsilon)))<(.4*nrow(ppms))]
+
+ppms.pca=prcomp(ppms)
+ppms.dist=dist(ppms.pca$x) #compute distance between PCA scores
+
+
+
+ppms.ew=1/exp(as.matrix(ppms.dist))
+ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(ppms.graph)$label=as.character(datappm$Country)
+V(ppms.graph)$label.cex=.4
+V(ppms.graph)$size=8
+V(ppms.graph)$color=as.factor(datappm$Country)
+#V(ppms.graph)$pch=as.factor(datappm$Country)
+V(ppms.graph)$frame.color="black"
+V(ppms.graph)$frame.width=.5
+V(ppms.graph)$label.color=adjustcolor("black",.6)
+E(ppms.graph)$width=E(ppms.graph)$weight*10
+plot(ppms.graph)
+```
+
+Use this graph to  compute the communities
+
+```{r louvain.new, results="asis",fig.cap="simple visualisation of the network with louvain communities. We label node given the site (left) and site + period (right)  where the artefact has been found.",out.width="50%"}
+par(mar=c(0,0,0,0))
+ppms.commu=membership(cluster_louvain(ppms.graph))
+plot(ppms.graph,vertex.color=ppms.commu)
+
+
+```
+
+
+
+## Site Network
+
+```{r}
+
+matdim2=creatSiteAdjMat(datappm,datappm$Site,ppms.commu,match=simpmatch)
+
+sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
+V(sites.graph)$label.cex=.7
+V(sites.graph)$size=8
+
+sitecount=unique(datappm[,c("Site","Country")])
+rownames(sitecount)=sitecount[,1]
+V(sites.graph)$color= as.factor(sitecount[V(sites.graph)$name,2])
+V(sites.graph)$label.color="black"
+E(sites.graph)$width=E(sites.graph)$weight/10
+sites.graph=set_graph_attr(sites.graph,"layout",layout_nicely(sites.graph))
+plot(sites.graph)
+
+```
+
+visualise  communities of sites
+
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+
+sites.communities=cluster_louvain(sites.graph)
+comus=sites.communities$memberships[1,]
+E(sites.graph)$color=comus[head_of(sites.graph,E(sites.graph))]
+V(sites.graph)$color=comus
+plot(sites.graph)
+```
+
+Plot on shapefile
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+coordsites=t(sapply(V(sites.graph)$name,function(lbl)apply(unique(datappm[datappm$Site == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
+seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
+V(sites.graph)$size=100
+plot(seashapefile.cr,lwd=0.6,reset=F)
+plot(sites.graph,layout=coordsites,rescale=F,add=T)
+
+```
+Look for coordinates under water:
+
+```{r}
+dpm.sf=st_as_sf(datappm,coords=coords,crs=st_crs(seashapefile))
+st_intersects(dpm.sf,seashapefile)
+inter=st_intersects(dpm.sf,seashapefile)
+plot(st_geometry(seashapefile),reset=F)
+plot(dpm.sf[which(sapply(inter,length)==0),],add=T)
+dpm.sf$Site.abreviation[which(sapply(inter,length)==0)]
+#SpatExtent : 113.583500134491, 115.91108912011, 7.407809130548, 8.99587097680309
+weisf=st_as_sf(as.polygons(weird))
+st_crs(weisf)=st_crs(dpm.sf)
+floater=st_intersection(weisf,dpm.sf)
+cat(paste("\n",paste0(floater$LABEL.analytical,collapse="\n\r"),"\n"))
+```
+
+
+Try with communities of regions:
+
+```{r}
+
+onlyreg=datappm[datappm$Region!="",]
+regions=unique(onlyreg$Region)
+
+matdim2=creatSiteAdjMat(onlyreg,regions,ppms.commu,match=simpmatch)
+
+regions.graph=graph.adjacency(exp(matdim2), mode = "undirected", weighted = TRUE, diag = FALSE)
+regioncount=unique(onlyreg[,c("Region","Country")])
+rownames(regioncount)=regioncount[,1]
+V(regions.graph)$color= as.factor(regioncount[V(regions.graph)$name,2])
+V(regions.graph)$label=as.character(regions)
+V(regions.graph)$label.cex=.7
+V(regions.graph)$size=8
+V(regions.graph)$label.color="black"
+E(regions.graph)$width=log(E(regions.graph)$weight)/10
+plot(regions.graph)
+
+```
+
+Compute communities of regions:
+
+```{r,out.width="100%"}
+par(mar=c(0,0,0,0))
+regions.communities=membership(cluster_louvain(regions.graph))
+E(regions.graph)$color=regions.communities[head_of(regions.graph,E(regions.graph))]
+E(regions.graph)$color=regions.communities[head_of(regions.graph,E(regions.graph))]
+V(regions.graph)$color=regions.communities
+plot(regions.graph)
+V(regions.graph)$size=100
+coordregions=t(sapply(V(regions.graph)$label,function(lbl)apply(unique(onlyreg[onlyreg$Region == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
+#seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordregions),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
+plot(seashapefile.cr,lwd=0.6,reset=F)
+plot(regions.graph,layout=coordregions,rescale=F,add=T)
+```
+
+
+
+```{r}
+par(mar=c(0,0,0,0))
+subsetiso=pryce
+
+coords=c("Easting...Longitude","Northing.Latitude")
+bySite= groupGraphIso(pryce,coords,"Site",ratioiso,recomp)
+plot(seashapefile.cr,reset=F)
+plot(bySite,add=T,rescale=F)
+bySiteabb= groupGraphIso(pryce,coords,"Site.abreviation",ratioiso,recomp)
+plot(seashapefile.cr,reset=F)
+plot(bySiteabb,add=T,rescale=F)
+byRegion= groupGraphIso(pryce,coords,"Region",ratioiso,recomp)
+plot(seashapefile.cr,reset=F)
+plot(byRegion,add=T,rescale=F)
+byBasin= groupGraphIso(pryce,coords,"River.basin",ratioiso,recomp)
+plot(seashapefile.cr,reset=F)
+plot(byBasin,add=T,rescale=F)
+
+```
+
+# Mix both dataset
+
+Build network using isotopes signatures
+
+```{r,out.width="50%"}
+
+datappm$Pb>.1
+labelPB=datappm$LABEL.analytical[datappm$Pb>.1]
+labelNOPB=datappm$LABEL.analytical[datappm$Pb<=.1]
+
+pb=pryce[ pryce$LABEL.analytical %in% labelPB,]
+nopb=pryce[ pryce$LABEL.analytical %in% labelNOPB,]
+
+groups=c("Site.abreviation","Region","River.basin")
+rb=st_read("Cartes/riverbasin_sitelimited.shp")
+rb=st_make_valid(rb)
+rb$ID_RB=1:nrow(rb)
+tg=list(leaded=pb,notleaded=nopb)
+for(ns in names(tg) ){
+    s=tg[[ns]]
+    par(mar=c(0,0,2,0))
+    for(g in groups){
+        nsite=table(s[[g]])
+        ss=s[s[[g]] %in% names(nsite[nsite>=3]),]
+        ggraph=groupGraphIso(ss,coords,g,ratioiso,recomp)
+        gcoor=graph_attr(ggraph,"layout")
+        gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+        seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
+        plot(seashapefile.cr,reset=F,main=ns)
+        if(g == "River.basin"){
+            gcoor$ID_N=1:length(V(ggraph))
+            inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+            plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+        }
+        else{
+            V(ggraph)$size=200
+            V(ggraph)$label.size=.8
+            V(ggraph)$cex=.8
+        }
+        plot(ggraph,add=T,rescale=F)
+    }
+    plot.new()
+
+    par(mar=c(4,5,2,2))
+    sitecol=rainbow(length(unique(s$Site.abreviation)),alpha=.8)
+    names(sitecol)=unique(s$Site.abreviation)
+    plot(s[,ratioiso[3:2]],col=sitecol[s$Site.abreviation],pch=as.numeric(as.factor(s$Country)),main=ns)
+    plot(s[,ratioiso[c(3,1)]],col=sitecol[s$Site.abreviation],pch=as.numeric(as.factor(s$Country)))
+    legend("topleft",pch=1:length(unique(s$Country)),legend=levels(as.factor(s$Country)),title="Country",bty="n")
+}
+
+```
+
+
+Build network using elements signatures. 
+```{r,out.width="50%"}
+
+MJ=c("As","Sb","Co","Ni","Ag","Au","Se")
+
+allcases=list(allelements=listelements,notalliage=listelements[!(listelements %in% c("Pb","Sn"))],MJ=MJ)
+coords=c("Easting...Longitude","Northing.Latitude")
+fulltitle=list(allelements="All elements",notalliage="Without Pb and Sn",MJ="Radivojevic & Grujic list")
+for(elts in names(allcases)){
+    for(g in groups){
+    par(mar=c(0,0,2,0))
+        le=allcases[[elts]]
+        ggraph=groupGraphElmt(datappm,coords,g,le)
+        gcoor=graph_attr(ggraph,"layout")
+        gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+        seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
+        plot(seashapefile.cr,reset=F,main=fulltitle[[elts]])
+        if(g == "River.basin"){
+            gcoor$ID_N=1:length(V(ggraph))
+            inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+            plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+        }
+        else{
+            V(ggraph)$size=300
+            V(ggraph)$label.size=.7
+            V(ggraph)$cex=.8
+        }
+        plot(ggraph,add=T,rescale=F)
+    }
+    plot.new()
+}
+
+
+```
+
+Testing Different data transformation:
+* Log transform the ppm (like Miljana/Jelena did)
+* Using threshold to determine presence/absence
+
+```{r,out.width="50%"}
+#This function replace all value above ts by 1 and value below ts by zero
+pa <- function(i,ts=1){
+    i[i<ts]=0
+    i[i>=ts]=1
+    i
+}
+
+logdata=datappm
+logdata[,listelements]=apply(datappm[,listelements],2,log)
+
+
+padata=datappm
+padata[,listelements]=apply(datappm[,listelements],2,pa)
+
+diffsets=list(log=logdata,pa=padata)
+fullexpnames=list(log="Logarithmic Transformation",pa="Presence Absence threshold")
+
+
+for(nst in names(diffsets)){
+    subset=diffsets[[nst]]
+    for(elts in names(allcases)){
+        for(g in groups){
+            par(mar=c(0,0,2,0))
+            le=allcases[[elts]]
+            ggraph=groupGraphElmt(subset,coords,g,le)
+            gcoor=graph_attr(ggraph,"layout")
+            gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+            seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
+            plot(seashapefile.cr,reset=F,main=paste(fulltitle[[elts]],"with",fullexpnames[[nst]]))
+            if(g == "River.basin"){
+                gcoor$ID_N=1:length(V(ggraph))
+                inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+                plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+            }
+            else{
+                V(ggraph)$size=300
+                V(ggraph)$label.size=.7
+                V(ggraph)$cex=.8
+            }
+            plot(ggraph,add=T,rescale=F)
+        }
+        plot.new()
+    }
+}
+```
+
+
+In the following graph instead doing as Miljana and Jelena did to group sample (distance using PCA, then louvian community detection to group samples together) we use hierarchical clustering.
+
+
+```{r,out.width="50%"}
+
+diffsets=list(raw=datappm,log=logdata,pa=padata)
+fullexpnames=list(raw="Raw data",log="Logarithmic Transformation",pa="Presence Absence threshold")
+
+for(nst in names(diffsets)){
+    subset=diffsets[[nst]]
+    for(eltsn in names(allcases)){
+        for(g in groups){
+            par(mar=c(0,0,2,0))
+            le=allcases[[eltsn]]
+            ssubset=subset[!is.na(subset[[coords[1]]]),]
+            ssubset=ssubset[ssubset[[g]]!="",]
+            elts=subset[,le]
+            elts.dist=dist(elts) #compute distance between PCA scores
+            elts.hclust=hclust(elts.dist)
+            h=max(elts.hclust$height)*.6
+            elts.commu=cutree(elts.hclust,h=h)
+            plot(elts.hclust)
+            cls=rainbow(max(elts.commu))
+            rect.hclust(elts.hclust,cluster=elts.commu,h=h,border=cls)
+            abline(h=h*1.1,lwd=3,col="red")
+            ggraph=groupedGraphAndCommunity(ssubset,coords,g,elts.commu)
+            gcoor=graph_attr(ggraph,"layout")
+            gcoor=st_as_sf(as.data.frame(gcoor),coords=1:2,crs=st_crs(seashapefile))
+            seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(gcoor,dist=300000)))
+            plot(seashapefile.cr,reset=F,main=paste(fulltitle[[eltsn]],"with",fullexpnames[[nst]]))
+            if(g == "River.basin"){
+                gcoor$ID_N=1:length(V(ggraph))
+                inter=st_intersection(gcoor,rb[st_is_valid(rb),])
+                plot(st_crop(rb[inter$ID_RB,],st_buffer(gcoor,dist=200000)),col=adjustcolor(categorical_pal(max(V(ggraph)$color))[V(ggraph)$color[inter$ID_N]],.7),add=T)
+            }
+            else{
+                V(ggraph)$size=300
+                V(ggraph)$label.size=.7
+                V(ggraph)$cex=.8
+            }
+            plot(ggraph,add=T,rescale=F)
+        }
+    }
+}
+```
