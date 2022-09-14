@@ -12,6 +12,15 @@ simpmatch  <-  function(i,j){
     length(na.omit(match(i,j)))/(length(c(i,j)))
 }
 
+divmatch  <-  function(i,j,normalize=18){
+    if(length(i)>length(j)){
+        tmp=i
+        i=j
+        j=tmp
+    }
+    length(na.omit(match(i,j)))
+}
+
 # return the ratio betwen the smallest and largest element of a and b 
 ratioSpan  <-  function(a,b=NULL){
     maxr=NULL
@@ -28,7 +37,7 @@ ratioSpan  <-  function(a,b=NULL){
 }
 
 # return tru if the ratio between a an b is beloew a threshold (overlap with ratioSpan)
-same <- function(a,b=NULL,threshold=0.01){
+same <- function(a,b=NULL,threshold=0.01,log=F){
     maxr=minr=NULL
     if(length(a)==2){
         maxr=max(a)
@@ -38,6 +47,10 @@ same <- function(a,b=NULL,threshold=0.01){
         maxr=max(a,b)
         minr=min(a,b)
     }
+    if(log){
+        minr=log(minr)
+        maxr=log(maxr)
+    }
     if(1-(minr/maxr) <= threshold) return(1)
     else return(0)
 }
@@ -45,11 +58,11 @@ same <- function(a,b=NULL,threshold=0.01){
 #cleanlist: dataframe
 # ratioiso the column used to store isotope ratio
 #threshold the threshold for each ratio
-createRatioMatrix <- function(dataset,ratioiso,thresholds){
+createRatioMatrix <- function(dataset,ratioiso,thresholds,log=F){
     adjmat=matrix(0,nrow=nrow(dataset),ncol=nrow(dataset))
     for(i in 1:(nrow(dataset)-1)){
         for(j in (i+1):nrow(dataset)){
-            adjmat[j,i]=adjmat[i,j]=sum(sapply(ratioiso,function(iso)same(dataset[c(i,j),iso],threshold=thresholds[iso])))
+            adjmat[j,i]=adjmat[i,j]=sum(sapply(ratioiso,function(iso)same(dataset[c(i,j),iso],threshold=thresholds[iso],log=log)))
         }
     }
     return(adjmat)
@@ -75,20 +88,21 @@ graphFromAdj <- function(adjmat,mask=NULL,label=NULL){
 }
 
 #' @param dataset all data
-#' @param sites how dataset should be grouped by site
+#' @param area how dataset should be grouped by site
 #' @param match a function that coompute how sites match
-creatSiteAdjMat <- function(dataset,sitesgroup,artgroup,match=NULL){
-    sites=unique(sitesgroup)
-    adjmat=matrix(NA,nrow=length(sites),ncol=length(sites))
-    for(s1 in 1:length(sites)){
-        for(s2 in 1:length(sites)){
-            c1=artgroup[ sitesgroup == sites[s1]]
-            c2=artgroup[ sitesgroup == sites[s2]]
+#' @param compoistion the value used to match the area
+createAreaAdjMat <- function(dataset,area,composition,match=NULL){
+    topLevelArea=unique(area)
+    adjmat=matrix(NA,nrow=length(topLevelArea),ncol=length(topLevelArea))
+    for(s1 in 1:length(topLevelArea)){
+        for(s2 in 1:length(topLevelArea)){
+            c1=composition[ area == topLevelArea[s1]]
+            c2=composition[ area == topLevelArea[s2]]
             adjmat[s1,s2]=match(c1,c2)
         }
     }
-    rownames(adjmat)=sites
-    colnames(adjmat)=sites
+    rownames(adjmat)=topLevelArea
+    colnames(adjmat)=topLevelArea
     adjmat
 }
 
@@ -142,3 +156,41 @@ groupedGraphAndCommunity <- function(dataset,coords,grouping,categories){
     V(groupgraph)$label.color="black"
     groupgraph
 }
+
+
+#'ultimately should be a plot that, on the usual biplot of isotopos ratio, should plot links stored in a consistency matrix (ie network adjacency matrix)
+#' @param dataset a `data.frame` storing all data
+#' @param categories a vector of the size of nrow(datase) that tell  group of each element
+#' @param consistencmatrix wich points need to be linked
+plotConsistensy <- function(dataset,col2plot,consistencmat,ratiolim=NULL,colour){
+    par(mfrow=c(2,1))
+    plot(dataset[,ratioiso[3]],dataset[,ratioiso[2]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[2]]],xlab=ratioiso[3],ylab=ratioiso[2],bg=colour,pch=21)
+    for(a in 1:nrow(dataset)){
+        coorda=dataset[a,ratioiso[c(3,2)]]
+        coordbs=dataset[consistencymat[a,]==1,ratioiso[c(3,2)],drop=F]
+        if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+    }
+    points(dataset[,ratioiso[3]],dataset[,ratioiso[2]],bg=colour,pch=21)
+    text(dataset[,ratioiso[3]],dataset[,ratioiso[2]],dataset$Site.abreviation,cex=.7,pos=1)
+
+    plot(dataset[,ratioiso[3]],dataset[,ratioiso[1]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[1]]],xlab=ratioiso[3],ylab=ratioiso[1],bg=colour,pch=21)
+    for(a in 1:nrow(dataset)){
+        coorda=dataset[a,ratioiso[c(3,1)]]
+        coordbs=dataset[consistencymat[a,]==1,ratioiso[c(3,1)],drop=F]
+        if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+    }
+    text(dataset[,ratioiso[3]],dataset[,ratioiso[1]],dataset$Site.abreviation,cex=.7,pos=1)
+    points(dataset[,ratioiso[3]],dataset[,ratioiso[1]],bg=colour,pch=21)
+    legend("bottomright",legend=levels(as.factor(dataset$Country)),pch=1:11)
+}
+
+
+#' a function to retrun coordinates mathcing grap[h label. If graph labels implies multiples coordinate sa mean will be done
+#' only cthe coordinates are plotted and note a "layouted" graph to allow to play with the igraph graph and sf objet, without haveing to handle the NA (who prevent the creation of sf objects)  
+#' @param categories a vector of the size of nrow(datase) that tell  group of each element
+#' @param dataset a `data.frame` storing all data: need to containt, the coordinates associate to labels  \emph{and} the labels  that should match the graph labels.
+#' @param labelscol: the corresponding colonm in the dataset where label are stored
+#' @param coords: the corresponding colonm in the dataset where coordinates are stored
+coordForGraph <- function(graph,dataset,labelscol,coords=c("Easting...Longitude","Northing.Latitude")){
+    t(sapply(V(graph)$name,function(lbl)apply(unique(dataset[ dataset[[labelcol]] == lbl,coords]),2,mean,na.rm=T)))
+    }
