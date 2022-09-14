@@ -1,3 +1,4 @@
+
 ---
 title: "Recap of network exploration"
 author: "SC"
@@ -9,7 +10,18 @@ output:
         toc: true
         toc_depth: 3
         toc_float: true
+        fig_width: 10
+        fig_height: 8
+
 ---
+
+<style type="text/css">
+body .main-container {
+max-width: 1800px;
+margin-left: auto;
+margin-right: auto;
+}
+</style>
 
 # Intro
 
@@ -19,7 +31,9 @@ I'll try recap what we did and what I think can be the next step. I will use a "
 ##Data processing 
 
 
-```{r loadDataAndPackages }
+
+```{r loadDataAndPackages ,results="asis"}
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide")
 
 #the frozen dataset
 
@@ -59,7 +73,7 @@ pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
 
 Now that data is cleaned, we can have a look at general properties, checking only clean sample from sites with multiples smaples ( 10 and more):
 
-```{r cleanBiplot, out.width="45%"}
+```{r cleanBiplot, out.width="50%"}
 cleanlist=isotopes[isotopes$Corrosion.products %in% c("Low","Ingot","Slag"),]
 persite=table(cleanlist$Site.abreviation) #count number of sample per sites, we just show main side
 cleanlist=isotopes[isotopes$Site.abreviation %in% names(persite)[persite>9] & isotopes$Corrosion.products %in% c("Low","Ingot","Slag"),]
@@ -79,7 +93,7 @@ sitecol=rainbow(length(unique(isotopes$Site.abreviation)),alpha=.8)
 names(sitecol)=unique(isotopes$Site.abreviation)
 plot(isotopes[,ratioiso[3:2]],col=sitecol[isotopes$Site.abreviation],pch=as.numeric(as.factor(isotopes$Country)))
 plot(isotopes[,ratioiso[c(3,1)]],col=sitecol[isotopes$Site.abreviation],pch=as.numeric(as.factor(isotopes$Country)))
-val=legend("bottom",fill=sitecol,legend=names(sitecol),title="Site",bty="n",ncol=10,cex=.6)
+val=legend("bottom",fill=sitecol,legend=names(sitecol),title="Site",bty="n",ncol=10,cex=.4)
 newxleg=val$rect$left+val$rect$w
 newyleg=val$rect$top
 legend(x=newxleg,y=newyleg,pch=1:length(unique(isotopes$Country)),legend=levels(as.factor(isotopes$Country)),title="Country",bty="n",cex=.6)
@@ -119,9 +133,9 @@ allratio= apply(KWPV[,ratioiso],2,range)
 alldist=apply(allratio,2,function(i)i[1]/i[2])
 ```
 3. take 1-ratio : if A/B is the ratio between sample A and B ; then 1-A/B will give use the proportional difference between B and A
-```{r}
+```{r,results='asis'}
 threshold=1-alldist
-print(threshold)
+knitr::kable(t(threshold))
 ```
 
 This is a very conservative approach, which mean that among all the distances observed in our initial group KWPV, we take only the extrem one as a threshold. This methods will be very sensitive to outliers, as if just one  value is out for one isotopes, it will be used against the smalles one to compute the threshold. 
@@ -129,11 +143,13 @@ This is a very conservative approach, which mean that among all the distances ob
 Another approach is to kee the full distribution of distance of all samples together ; and use a interval containing most of our sample as a threshold. 
 As an exmaple let's look at juste one ratio: `r ratioiso[1]` . 
 ```{r}
+
 ex=ratioiso[1]
 v_ex=KWPV[,ex]
 plot(sort(v_ex),xlab="rank",ylab=ex)
 
 ```
+
 for all value of v_ex we want to know how far it is from the bigger values. We  th raito with all others values. When only look at the ratio from A to B 
 When comparing two values, we only look at how many percent of the bigger the smaller is. (1-A/B gives us how many % of B A need to be equal to B. If A>B then this percentage is negativs, meenings we need to reduce A to reach B ; but this isn't need as it will be covered by 1-B/A. Thus we remove all valu <=0 ; 0 being the case when A=B
 
@@ -149,7 +165,7 @@ mtext("oli's initial values",3,0,at=threshold[ex],col="red")
 
 In the previous graph we can see that 75% of the difference measured in our sample are below `r round(quantile(alld,probs=c(.75)),4)[[1]]` ; which is way below the threshold computed with the maximum range:  `r round(threshold[ex],4)`. More over, if we add to `v_ex` that is a bit off, bigger than the other while still "plausible; what happend to the different metrics?:
 
-```{r}
+```{r,results='asis'}
 
 v_ex=c(v_ex,38.21)
 plot(sort(v_ex),xlab="rank",ylab=ex)
@@ -161,7 +177,7 @@ plot(density(alld,from=0),main="distance all sample KWPV")
 abline(v=t,lty=2,col="red")
 abline(v=quantile(alld,probs=c(.75,.85,.95)),lty=3,col="blue")
 mtext(paste0(c(75,85,95),"%"),3,0,at=quantile(alld,probs=c(.75,.85,.95)),col="blue")
-mtext("oli's initial values",3,0,at=threshold[ex],col="red")
+mtext("'à là oli's new estimation",3,0,at=t,col="red")
 knitr::kable(t(round(c("'à là oli'-estimates"=t,quantile(alld,probs=c(.75,.85,.95))),4)))
 ```
 
@@ -183,9 +199,15 @@ for(r in ratioiso){
     mtext(paste0(c(75,85,95),"%"),3,0,at=quantile(alld,probs=c(.75,.85,.95)),col="blue")
     mtext("oli's initial values",3,0,at=threshold[r],col="red")
 }
+
+threshold  <- sapply(ratioiso,function(r){
+                     v_ex=KWPV[,r]
+                     alld=1-sapply(v_ex,function(i)i/v_ex)
+                     quantile(alld[alld>0],probs=.75)[[1]]
+})
 ```
 
-  One needs to notes that in theory (and in practice), Oli's estimations compute the biggest difference within the sample of the group studied. Thus, the red vertical lines should be _always_ at the end of the curve.
+  One needs to notes that in theory (and in practice), Oli's estimations compute the biggest difference within the sample of the group studied. Thus, the red vertical lines should be _always_ at the end of the curve. It is not the case because the kernel estimation "invent" data after the end of the measurment to smooth the curve.
 
 
 
@@ -221,7 +243,7 @@ plot(nomin[,ratioiso[c(3,1)]],col=sitecol[nomin$Site.abreviation],pch=as.numeric
 val=legend("bottomright",col=sitecol,,pch=1:length(unique(nomin$Site.abreviation)),legend=names(sitecol),title="Site",bty="n",ncol=4,cex=1)
 ```
 
-Once we have the subet we want to analyse we create the consistency matrix:
+Once we have the subset we want to analyse, we can create the consistency matrix:
 ```{r}
 nomin.consmat=createRatioMatrix(nomin,ratioiso,threshold) #this function return a scale between 0 and 3: 3 all isotopics ratios matches ; 0 no one matches. For no we want full matches; so we ch
 dimnames(nomin.consmat)=list(nomin$LABELS.shorts,nomin$LABELS.shorts)
@@ -269,10 +291,10 @@ val=legend("bottomright",pt.bg=sitecol,pch=21,legend=paste("Famille",1:nomin.clu
 
 We could spend  more time exploring those families, what is there centroid (mean isotop composition, etc...), but following iniital idea we know went to compare geographical area thoguth the lens of this grouping
 
-#### Myanmar Site  Network
+#### Myanmar Sites  Network
 
-As when creating the consistency matrix, there are plenty of ways of measure the similiarit/distance of composition of each site give the families of artefact it has. For now, and following Radivojevic & Grujic will wi count how many artefact two sites have in common. For exemple, two big sites has HL28 and NGO
-```{r}
+As when creating the consistency matrix, there are plenty of ways to measure the similiarit/distance of composition of each site give the families of artefact it has. For now, and following Radivojevic & Grujic will wi count how many artefact two sites have in common. For exemple, two big sites has HL28 and NGO
+```{r countTypesExample,out.width="50%"}
 HL=which(nomin$Site.abreviation=="HL28")
 NG=which(nomin$Site.abreviation=="NGO")
 
@@ -283,7 +305,7 @@ countBothSites=cbind(HL=table(factor(nomin.clus$membership[HL],levels=1:8)),
 barplot(countBothSites,col=categorical_pal(nomin.clus$nb_clusters),legend=T,args.legend=list(title="Familiy"),ylab="#artefact")
 
 ```
-```{r}
+```{r,results="asis"}
 rownames(countBothSites)=paste("Family",1:8)
 knitr::kable(countBothSites)
 ```
@@ -305,7 +327,7 @@ nomin.sitemat=createAreaAdjMat(nomin,nomin$Site.abreviation,nomin.clus$membershi
 where we can check that:
 
 
-```{r}
+```{r,result='asis'}
 nomin.sitemat["NGO","HL28"]
 ```
 
@@ -355,7 +377,7 @@ plot(nomin.sitegraphNM)
 We can plot these communities of sites on the map, I will use R&G match and mine side by side
 
 
-```{r,width="50%"}
+```{r,out.width="50%"}
 nomin.sitemat=createAreaAdjMat(nomin,nomin$Site.abreviation,nomin.clus$membership,match=RGmatch)
 nomin.sitegraph = graphFromAdj(nomin.sitemat,label=rownames(nomin.sitemat))
 nomin.sitecluster=cluster_leiden(nomin.sitegraph,objective_function = "modularity")
@@ -378,6 +400,21 @@ plot(st_crop(seashapefile,graph.sp),add=T)
 
 ```
 
+Lets look community by comunity
+
+```{r,out.width="50%"}
+for(gp in 1:length(nomin.sitecluster)){
+    sub=subgraph(nomin.sitegraph,nomin.sitecluster[[gp]])
+    sub=set_graph_attr(sub,"layout",nomin.sitegraph.coords[V(sub)$name,])
+    plot(nomin.sitegraph.coords,ann=F,axes=F,type="n")
+    plot(sub,add=T,rescale=F)
+    graph.sp=st_as_sf(as.data.frame(nomin.sitegraph.coords),coords=1:2,crs=st_crs(seashapefile))
+    plot(st_crop(seashapefile,graph.sp),add=T)
+}
+
+```
+
+
 ## Generalisation to full Myanmar and dataset
 
 ```{r}
@@ -389,21 +426,20 @@ mya.consmat[mya.consmat==3]=1
 mya.graph = graphFromAdj(mya.consmat,label=mya$LABELS.shorts)
 mya.clus=cluster_leiden(mya.graph,objective_function="modularity")
 V(mya.graph)$color=mya.clus$membership
-plot(mya.graph)
-val=legend("bottomright",pt.bg=categorical_pal(mya.clus$nb_clusters),pch=21,legend=paste("Famille",1:mya.clus$nb_clusters),title="Families",bty="n",ncol=2,pt.cex=2)
+plot(mya.graph,main="Network of artefact consistency")
 
-sitecol=rep(adjustcolor(categorical_pal(mya.clus$nb_clusters),.6),4)
-plot(mya[,ratioiso[3:2]],bg=sitecol[mya.clus$membership],pch=21,cex=2)
+sitecol=rep(adjustcolor(categorical_pal(mya.clus$nb_clusters),.6),8)
+plot(mya[,ratioiso[3:2]],bg=sitecol[mya.clus$membership],pch=21,cex=2, main="Full by plot for all Myanmar")
 plot(mya[,ratioiso[c(3,1)]],bg=sitecol[mya.clus$membership],pch=21,cex=2)
-val=legend("bottomright",pt.bg=sitecol,pch=21,legend=paste("Famille",1:mya.clus$nb_clusters),title="Families",bty="n",ncol=2,pt.cex=2)
+val=legend("bottomright",pt.bg=sitecol,pch=21,legend=paste("Famille",1:mya.clus$nb_clusters),title="Families",bty="n",ncol=5,pt.cex=1.5,cex=.6)
 
 ratiolim=list(c(17.7,19.3),c(15.45,15.85),c(37.5,40))
 names(ratiolim)=rev(ratioiso)
-plot(mya[,ratioiso[3:2]],bg=sitecol[mya.clus$membership],pch=21,cex=2,xlim=ratiolim[[1]],ylim=ratiolim[[2] ])
+plot(mya[,ratioiso[3:2]],bg=sitecol[mya.clus$membership],pch=21,cex=2,xlim=ratiolim[[1]],ylim=ratiolim[[2] ], main="bi-plot for all Myanmar, limited range")
 text(mya[,ratioiso[c(3,2)]],mya$LABELS.shorts,,cex=.6,pos=1)
 plot(mya[,ratioiso[c(3,1)]],bg=sitecol[mya.clus$membership],pch=21,cex=2,xlim=ratiolim[[1]],ylim=ratiolim[[3] ])
 text(mya[,ratioiso[c(3,1)]],mya$LABELS.shorts,,cex=.6,pos=1)
-val=legend("bottomright",pt.bg=sitecol,pch=21,legend=paste("Famille",1:mya.clus$nb_clusters),title="Families",bty="n",ncol=2,pt.cex=2)
+val=legend("bottomright",pt.bg=sitecol,pch=21,legend=paste("Famille",1:mya.clus$nb_clusters),title="Families",bty="n",ncol=5,pt.cex=1.5,cex=.6)
 
 
 mya.sitemat=createAreaAdjMat(mya,mya$Site.abreviation,mya.clus$membership,match=RGmatch)
@@ -412,7 +448,8 @@ mya.sitecluster=cluster_leiden(mya.sitegraph,objective_function = "modularity")
 V(mya.sitegraph)$color=mya.sitecluster$membership
 E(mya.sitegraph)$width=E(mya.sitegraph)$weight
 mya.sitegraph=colorEdges(mya.sitegraph)
-plot(mya.sitegraph)
+plot(mya.sitegraph,main="Sites network")
+
 mya.sitegraph.coords=coordForGraph(mya.sitegraph,mya,"Site.abreviation")
 plot(mya.sitegraph.coords,ann=F,axes=F,type="n")
 plot(mya.sitegraph,layout=mya.sitegraph.coords,add=T,rescale=F)
@@ -420,7 +457,23 @@ invalidcoords=apply(apply(mya.sitegraph.coords,2,is.na),1,any)
 graph.sp=st_as_sf(as.data.frame(mya.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(seashapefile))
 plot(st_crop(seashapefile,graph.sp),add=T)
 ```
-Version with my match function:
+
+```{r,out.width="50%"}
+for(gp in 1:length(mya.sitecluster)){
+    sub=subgraph(mya.sitegraph,mya.sitecluster[[gp]])
+    sub=set_graph_attr(sub,"layout",mya.sitegraph.coords[V(sub)$name,])
+    try({
+    plot(mya.sitegraph.coords,ann=F,axes=F,type="n")
+    plot(sub,add=T,rescale=F)
+    invalidcoords=apply(apply(mya.sitegraph.coords,2,is.na),1,any)
+    graph.sp=st_as_sf(as.data.frame(mya.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(seashapefile))
+    plot(st_crop(seashapefile,graph.sp),add=T)
+    })
+}
+```
+
+Version with my match function ( _ie_ we use the same groups of consistenc artefacts, we use a different way to link sites given their composition of artefact's families")
+
 ```{r plot-whole-myanmar-mymatch}
 mya.sitemat=createAreaAdjMat(mya,mya$Site.abreviation,mya.clus$membership,match=RGmatchNormalised)
 mya.sitegraph = graphFromAdj(mya.sitemat,label=rownames(mya.sitemat))
@@ -428,8 +481,9 @@ mya.sitecluster=cluster_leiden(mya.sitegraph,objective_function = "modularity")
 V(mya.sitegraph)$color=mya.sitecluster$membership
 E(mya.sitegraph)$width=E(mya.sitegraph)$weight
 mya.sitegraph=colorEdges(mya.sitegraph)
-plot(mya.sitegraph)
+plot(mya.sitegraph,main="Sites Network")
 mya.sitegraph.coords=coordForGraph(mya.sitegraph,mya,"Site.abreviation")
+mya.sitegraph=set_graph_attr(mya.sitegraph,"layout",mya.sitegraph.coords)
 plot(mya.sitegraph.coords,ann=F,axes=F,type="n")
 plot(mya.sitegraph,layout=mya.sitegraph.coords,add=T,rescale=F)
 invalidcoords=apply(apply(mya.sitegraph.coords,2,is.na),1,any)
@@ -437,10 +491,26 @@ graph.sp=st_as_sf(as.data.frame(mya.sitegraph.coords[!invalidcoords,]),coords=1:
 plot(st_crop(seashapefile,graph.sp),add=T)
 ```
 
+Checking  communities separately
+
+```{r,out.width="50%"}
+for(gp in 1:length(mya.sitecluster)){
+    sub=subgraph(mya.sitegraph,mya.sitecluster[[gp]])
+    sub=set_graph_attr(sub,"layout",mya.sitegraph.coords[V(sub)$name,])
+    try({
+    plot(mya.sitegraph.coords,ann=F,axes=F,type="n")
+    plot(sub,add=T,rescale=F)
+    invalidcoords=apply(apply(mya.sitegraph.coords,2,is.na),1,any)
+    graph.sp=st_as_sf(as.data.frame(mya.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(seashapefile))
+    plot(st_crop(seashapefile,graph.sp),add=T)
+    })
+}
+
+```
 
 
 
-### Whole dataset: 
+# Whole dataset: 
 
 ```{r plot-whole-dataset}
 
@@ -451,15 +521,15 @@ isotopes.consmat[isotopes.consmat==3]=1
 isotopes.graph = graphFromAdj(isotopes.consmat,label=isotopes$LABELS.shorts)
 isotopes.clus=cluster_leiden(isotopes.graph,objective_function="modularity")
 V(isotopes.graph)$color=isotopes.clus$membership
-plot(isotopes.graph)
+plot(isotopes.graph,main="Netowrk of consistency between artefacts")
 
-sitecol=rep(adjustcolor(categorical_pal(isotopes.clus$nb_clusters),.6),10)
-plot(isotopes[,ratioiso[3:2]],bg=sitecol[isotopes.clus$membership],pch=21,cex=2)
+sitecol=rep(adjustcolor(categorical_pal(isotopes.clus$nb_clusters),.6),100)
+plot(isotopes[,ratioiso[3:2]],bg=sitecol[isotopes.clus$membership],pch=21,cex=2,main="Full biploe for whole dataset")
 plot(isotopes[,ratioiso[c(3,1)]],bg=sitecol[isotopes.clus$membership],pch=21,cex=2)
 
 ratiolim=list(c(17.7,19.3),c(15.45,15.85),c(37.5,40))
 names(ratiolim)=rev(ratioiso)
-plot(isotopes[,ratioiso[3:2]],bg=sitecol[isotopes.clus$membership],pch=21,cex=2,xlim=ratiolim[[1]],ylim=ratiolim[[2] ])
+plot(isotopes[,ratioiso[3:2]],bg=sitecol[isotopes.clus$membership],pch=21,cex=2,xlim=ratiolim[[1]],ylim=ratiolim[[2] ],main="Limited range biploe for whole dataset")
 plot(isotopes[,ratioiso[c(3,1)]],bg=sitecol[isotopes.clus$membership],pch=21,cex=2,xlim=ratiolim[[1]],ylim=ratiolim[[3] ])
 
 
@@ -469,7 +539,7 @@ isotopes.sitecluster=cluster_leiden(isotopes.sitegraph,objective_function = "mod
 V(isotopes.sitegraph)$color=isotopes.sitecluster$membership
 E(isotopes.sitegraph)$width=E(isotopes.sitegraph)$weight
 isotopes.sitegraph=colorEdges(isotopes.sitegraph)
-plot(isotopes.sitegraph)
+plot(isotopes.sitegraph,main="networkd of sites")
 isotopes.sitegraph.coords=coordForGraph(isotopes.sitegraph,isotopes,"Site.abreviation")
 plot(isotopes.sitegraph.coords,ann=F,axes=F,type="n")
 plot(isotopes.sitegraph,layout=isotopes.sitegraph.coords,add=T,rescale=F)
@@ -477,7 +547,27 @@ invalidcoords=apply(apply(isotopes.sitegraph.coords,2,is.na),1,any)
 graph.sp=st_as_sf(as.data.frame(isotopes.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(seashapefile))
 plot(st_crop(seashapefile,graph.sp),add=T)
 ```
-Version with my match function:
+
+Check community by communities
+
+```{r,out.width="50%"}
+
+for(gp in 1:length(isotopes.sitecluster)){
+    sub=subgraph(isotopes.sitegraph,isotopes.sitecluster[[gp]])
+    sub=set_graph_attr(sub,"layout",isotopes.sitegraph.coords[V(sub)$name,])
+    try({
+    plot(isotopes.sitegraph.coords,ann=F,axes=F,type="n")
+    plot(sub,add=T,rescale=F)
+    invalidcoords=apply(apply(isotopes.sitegraph.coords,2,is.na),1,any)
+    graph.sp=st_as_sf(as.data.frame(isotopes.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(seashapefile))
+    plot(st_crop(seashapefile,graph.sp),add=T)
+    })
+}
+
+```
+
+Version with my match function ( _ie_ we use the same groups of consistenc artefacts, we use a different way to link sites given their composition of artefact's families")
+
 ```{r plot-whole-deateset-mymatch}
 isotopes.sitemat=createAreaAdjMat(isotopes,isotopes$Site.abreviation,isotopes.clus$membership,match=RGmatchNormalised)
 isotopes.sitegraph = graphFromAdj(isotopes.sitemat,label=rownames(isotopes.sitemat))
@@ -485,7 +575,7 @@ isotopes.sitecluster=cluster_leiden(isotopes.sitegraph,objective_function = "mod
 V(isotopes.sitegraph)$color=isotopes.sitecluster$membership
 E(isotopes.sitegraph)$width=E(isotopes.sitegraph)$weight
 isotopes.sitegraph=colorEdges(isotopes.sitegraph)
-plot(isotopes.sitegraph)
+plot(isotopes.sitegraph,main="networkd of sites")
 isotopes.sitegraph.coords=coordForGraph(isotopes.sitegraph,isotopes,"Site.abreviation")
 plot(isotopes.sitegraph.coords,ann=F,axes=F,type="n")
 plot(isotopes.sitegraph,layout=isotopes.sitegraph.coords,add=T,rescale=F)
@@ -494,6 +584,35 @@ graph.sp=st_as_sf(as.data.frame(isotopes.sitegraph.coords[!invalidcoords,]),coor
 plot(st_crop(seashapefile,graph.sp),add=T)
 ```
 
+Check community by communities
+
+```{r,out.width="50%"}
+for(gp in 1:length(isotopes.sitecluster)){
+    sub=subgraph(isotopes.sitegraph,isotopes.sitecluster[[gp]])
+    sub=set_graph_attr(sub,"layout",isotopes.sitegraph.coords[V(sub)$name,])
+    try({
+    plot(isotopes.sitegraph.coords,ann=F,axes=F,type="n")
+    plot(sub,add=T,rescale=F)
+    invalidcoords=apply(apply(isotopes.sitegraph.coords,2,is.na),1,any)
+    graph.sp=st_as_sf(as.data.frame(isotopes.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(seashapefile))
+    plot(st_crop(seashapefile,graph.sp),add=T)
+    })
+}
+
+```
+
+
+
+
+# Next steps:
+
+There are multiples axes we can follow, to check, explore and make things better here and there. There are still _some_ problems with the consistency check: using the method of adding link when the three ratio are consistent, we get some "chains" of consistency the can spread very far on the 206.204 axis ; check the blue family on the bottom of the graph in the section 3 for exemple. 
+
+Some techniques likes DBScan may help to cut using points density, but something still needs to be done. Nonetheless I think there is something else to solve at a higher level and that will help us to solve the problem regarding the next step : how, once we get a satisfactory consistency between isotopes composition, do we group/link the sites - geographical area?
+
+And I think that somethings that could help (and that will help also to know when we are roughly satisfy with the consistency grouping) is to  think about some questions the analysis we do will answers. I guesss that the map you showed Oli is a first start but we need to presices things: do we want to find if the network of road correspond to some specific communities (ie specific set of artefacts famillies that 'travel' together?" do we want to be able to define geographical regions with specificity (more diverse than the other regions, connecting different communities, central to some communities,....). 
+
+Defining such questions (which I guess will also depend on the journal/paper we have in sight) will then greatly help to choose the right methods (do we want to correct for missing sample, for the intensity of the connection of site, for the geographical distance between two sites,...).
 
 
 
@@ -505,7 +624,7 @@ plot(st_crop(seashapefile,graph.sp),add=T)
 
 
 
-## A few notation notes:
+# A few notation notes:
 
 We should decided and stick to certain words ; for now I see at least two terms that are confusiogn:
 Ratio:  used for theisotopic ratio and the distance between these ratio
