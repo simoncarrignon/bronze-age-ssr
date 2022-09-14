@@ -116,7 +116,7 @@ names(sitecol)=unique(KWPV$Site.abreviation)
 plot(KWPV[,ratioiso[3:2]],bg=sitecol[KWPV$Site.abreviation],pch=20+as.numeric(as.factor(KWPV$Site.abreviation)))
 points(KWPV[KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1"),ratioiso[c(3,2)]],col="red",cex=5,lwd=5)
 plot(KWPV[,ratioiso[c(3,1)]],bg=sitecol[KWPV$Site.abreviation],pch=20+as.numeric(as.factor(KWPV$Site.abreviation)))
-points(KWPV[KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1"),ratioiso[c(3,1)]],col="red",cex=4)
+points(KWPV[KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1"),ratioiso[c(3,1)]],col="red",cex=5,lwd=5)
 val=legend("center",fill=sitecol,legend=names(sitecol),title="Site",bty="n",ncol=1,cex=1)
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
 ```
@@ -205,10 +205,16 @@ threshold  <- sapply(ratioiso,function(r){
                      alld=1-sapply(v_ex,function(i)i/v_ex)
                      quantile(alld[alld>0],probs=.75)[[1]]
 })
+knitr::kable(t(threshold))
 ```
 
-  One needs to notes that in theory (and in practice), Oli's estimations compute the biggest difference within the sample of the group studied. Thus, the red vertical lines should be _always_ at the end of the curve. It is not the case because the kernel estimation "invent" data after the end of the measurment to smooth the curve.
+  One needs to notes that in theory (and in practice), Oli's estimations compute the biggest difference within the sample of the group studied. Thus, the red vertical lines should be _always_ at the end of the curve. It is not the case because the kernel estimation "invent" data after the end of the measurment to smooth the curve. In this version we will still use the old version of the threshold, though I have a problem with it it doesn't give me exactly the same result than before.  Maybe because i miss some data?
 
+
+```{r}
+
+threshold=1-alldist
+```
 
 
 ## Group toghether consistent samples
@@ -274,14 +280,14 @@ On problem I noticesd with this methods is that it get in troublies when lot of 
 nomin.clus=cluster_leiden(nomin.graph,objective_function="modularity")
 V(nomin.graph)$color=nomin.clus$membership
 plot(nomin.graph)
-val=legend("bottomright",pt.bg=categorical_pal(nomin.clus$nb_clusters),pch=21,legend=paste("Famille",1:nomin.clus$nb_clusters),title="Families",bty="n",ncol=2,pt.cex=2)
+#val=legend("bottomright",pt.bg=categorical_pal(nomin.clus$nb_clusters),pch=21,legend=paste("Famille",1:nomin.clus$nb_clusters),title="Families",bty="n",ncol=2,pt.cex=2)
 ```
 
 Let's visualise the families on the initial Bi-lpots:
 
 ```{r families-biplot,out.width="50%"}
 
-sitecol=adjustcolor(categorical_pal(nomin.clus$nb_clusters),.6)
+sitecol=rep(adjustcolor(categorical_pal(nomin.clus$nb_clusters),.6),4)
 plot(nomin[,ratioiso[3:2]],bg=sitecol[nomin.clus$membership],pch=21,cex=2)
 text(nomin[,ratioiso[c(3,2)]],nomin$LABELS.shorts,,cex=.6,pos=1)
 plot(nomin[,ratioiso[c(3,1)]],bg=sitecol[nomin.clus$membership],pch=21,cex=2)
@@ -403,13 +409,16 @@ plot(st_crop(seashapefile,graph.sp),add=T)
 Lets look community by comunity
 
 ```{r,out.width="50%"}
+
 for(gp in 1:length(nomin.sitecluster)){
     sub=subgraph(nomin.sitegraph,nomin.sitecluster[[gp]])
     sub=set_graph_attr(sub,"layout",nomin.sitegraph.coords[V(sub)$name,])
-    plot(nomin.sitegraph.coords,ann=F,axes=F,type="n")
-    plot(sub,add=T,rescale=F)
-    graph.sp=st_as_sf(as.data.frame(nomin.sitegraph.coords),coords=1:2,crs=st_crs(seashapefile))
-    plot(st_crop(seashapefile,graph.sp),add=T)
+    try({
+        plot(nomin.sitegraph.coords,ann=F,axes=F,type="n")
+        plot(sub,add=T,rescale=F)
+        graph.sp=st_as_sf(as.data.frame(nomin.sitegraph.coords),coords=1:2,crs=st_crs(seashapefile))
+        plot(st_crop(seashapefile,graph.sp),add=T)
+    })
 }
 
 ```
@@ -606,7 +615,7 @@ for(gp in 1:length(isotopes.sitecluster)){
 
 # Next steps:
 
-There are multiples axes we can follow, to check, explore and make things better here and there. There are still _some_ problems with the consistency check: using the method of adding link when the three ratio are consistent, we get some "chains" of consistency the can spread very far on the 206.204 axis ; check the blue family on the bottom of the graph in the section 3 for exemple. 
+There are multiples axes we can follow, to check, explore and make things better here and there. There are still _some_ problems with the consistency check: using the method of adding link when the three ratio are consistent, we get some "chains" of consistency the can spread very far on the 206.204 axis ; check the grey family on the bottom of the graph in the section 3 for exemple. 
 
 Some techniques likes DBScan may help to cut using points density, but something still needs to be done. Nonetheless I think there is something else to solve at a higher level and that will help us to solve the problem regarding the next step : how, once we get a satisfactory consistency between isotopes composition, do we group/link the sites - geographical area?
 
