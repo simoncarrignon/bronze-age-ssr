@@ -12,26 +12,140 @@ output:
 ---
 # Intro
 
+
 I'll try recap what we did and what I think can be the next step. I will use a "frozen" version of the dataset, this way it will be possible to understand any difference in future analysis.
+
+##Data processing 
+
 
 ```{r loadDataAndPackages }
 
 #the frozen dataset
 
 isotopes=read.csv("data/DATA isotopie_Pryce_V13092022.csv")
+knitr::kable(head(isotopes))
 
+## useful tools, packages and shapefiles
+source("tools.R")
+library(sf)
+seashapefile=st_read("Cartes/allseaborder_lowq.shp")
+seashapefile=st_geometry(seashapefile)
+ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
+```
 
+Note that a couple of operation have been applied on the original dataset to get rid of some minor problem such as the french ","  as decimal marker and thus the number seen as character etc... here a list of the command to do so ; usefull to redo the analysis from an updated dataset:
 
+```{r cleaningData,eval=F}
+#remove coma
+pryce[,ratioiso]=apply(pryce[,ratioiso],2,gsub,pattern=",",replace=".")
+pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
+#add lead level, need the elements dataset
+    teneurs=datappm$Pb
+    names(teneurs)=datappm$LABEL.analytical
+    pryce$teneur=teneurs[pryce$LABEL.analytical]
+    pryce$leaded=0
+    pryce$leaded[pryce$teneur>.1]=1
 ```
 
 
-The first level of reflection we had on Monday afternoon was: how to automatically asses the "consistency" of two sample ; _ie_ how can we confidently say there isotopic composition is the same
 
 
+## General graph:
+
+Now that data is cleaned, we can have a look at general properties, checking only clean sample from sites with multiples smaples ( 10 and more):
+
+```{r cleanBiplot, fig.width=45%}
+cleanlist=isotopes[isotopes$Corrosion.products %in% c("Low","Ingot","Slag"),]
+persite=table(cleanlist$Site.abreviation) #count number of sample per sites, we just show main side
+cleanlist=isotopes[isotopes$Site.abreviation %in% names(persite)[persite>9] & isotopes$Corrosion.products %in% c("Low","Ingot","Slag"),]
+sitecol=rainbow(length(unique(cleanlist$Site.abreviation)),alpha=.8)
+names(sitecol)=unique(cleanlist$Site.abreviation)
+plot(cleanlist[,ratioiso[3:2]],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+plot(cleanlist[,ratioiso[c(3,1)]],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
+val=legend("topleft",fill=sitecol,legend=names(sitecol),title="Site",bty="n")
+newxleg=val$rect$left+val$rect$w
+newyleg=val$rect$top
+legend(x=newxleg,y=newyleg,pch=20+1:length(unique(cleanlist$Country)),legend=levels(as.factor(cleanlist$Country)),title="Country",bty="n")
+```
+
+If we look at the whole dataset, just for fun, it becomes... a bit messy
+```{r cleanBiplot, fig.width=45%}
+sitecol=rainbow(length(unique(isotopes$Site.abreviation)),alpha=.8)
+names(sitecol)=unique(isotopes$Site.abreviation)
+plot(isotopes[,ratioiso[3:2]],col=sitecol[isotopes$Site.abreviation],pch=as.numeric(as.factor(isotopes$Country)))
+plot(isotopes[,ratioiso[c(3,1)]],col=sitecol[isotopes$Site.abreviation],pch=as.numeric(as.factor(isotopes$Country)))
+val=legend("bottom",fill=sitecol,legend=names(sitecol),title="Site",bty="n",ncol=10,cex=.6)
+newxleg=val$rect$left+val$rect$w
+newyleg=val$rect$top
+legend(x=newxleg,y=newyleg,pch=1:length(unique(isotopes$Country)),legend=levels(as.factor(isotopes$Country)),title="Country",bty="n",cex=.6)
+```
 
 
 # Consistency check
 
-KWPV=do.call("rbind",disratio[c("NKH","NPW")])
-allratio= apply(KWPV,2,function(v){ y=1-sapply(v,function(i)i/max(v)); y[y!=0]; })
+The first level of reflection we had on Monday afternoon was: how to automatically asses the "consistency" of two sample ; _ie_ how can we confidently say the isotopic composition of a two samples from the dataset are the same?
+
+Oli's intuition is the follow:
+
+If we look at the isotopoic composition of a well defined group of samples (_ie_ samples very likely to come from the same source), the largest difference between the sample of this group should be the upper limit that should not be passed. In other world, if we take the difference between the lowest and the largest value for each isotopic value, its gives us an expected limit within two different sample can be said as consistent. The group Oli is confident about its consistency is the KWPV, with smaple from sites NKH and NPW, from which we remove a few 'weird' sample (circled on the graph below)
+
+
+```{r KWPV complex,fig.width="45%"}
+KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
+sitecol=rainbow(length(unique(KWPV$Site.abreviation)),alpha=.8)
+names(sitecol)=unique(KWPV$Site.abreviation)
+plot(KWPV[,ratioiso[3:2]],bg=sitecol[KWPV$Site.abreviation],pch=20+as.numeric(as.factor(KWPV$Site.abreviation)))
+points(KWPV[KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1"),ratioiso[c(3,2)]],col="red",cex=5,lwd=5)
+plot(KWPV[,ratioiso[c(3,1)]],bg=sitecol[KWPV$Site.abreviation],pch=20+as.numeric(as.factor(KWPV$Site.abreviation)))
+points(KWPV[KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1"),ratioiso[c(3,1)]],col="red",cex=4)
+val=legend("center",fill=sitecol,legend=names(sitecol),title="Site",bty="n",ncol=1,cex=1)
+KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
+```
+
+From this, Oli's approach, translated in R term, goes as follows:
+
+
+1. We the minimal and maximal value for each ratio
+```{r}
+allratio= apply(KWPV[,ratioiso],2,range)
+```
+2. we divid the minimal value by the maximum
+```{r}
+alldist=apply(allratio,2,function(i)i[1]/i[2])
+```
+3. take 1-ratio : if A/B is the ratio between sample A and B ; then 1-A/B will give use the proportional difference between B and A
+```{r}
+threshold=1-alldist
+```
+
+This is a very conservative approach, which mean that among all the distances observed in our initial group KWPV, we take only the extrem one as a threshold. This methods will be very sensitive to outliers, as if just one  value is out for one isotopes, it will be used against the smalles one to compute the threshold. 
+
+Another approach is to kee the full distribution of distance of all samples together ; and use a interval containing most of our sample as a threshold. 
+As an exmaple let's look at juste one ratio: `ratioiso[1]` 
+
+```{r}
+ex=ratioiso[1]
+v_ex=KWPV[,ex]
+plot(sort(v_ex),xlab="rank",ylab=ex)
+
+```
+for all value of v_ex we want to know how far it is from the bigger values. We  th raito with all others values. When only look at the ratio from A to B 
+```{r}
+alld=1-sapply(v_ex,function(i)i/v_ex)
+alld=alld[alld>0]
+plot(density(alld,from=0))
+abline(v=threshold[ex],lty=2,col="red")
+abline(v=quantile(alld,probs=c(.75,.85,.96)),lty=3,col="blue")
+```
+
+
+
+
+
+
+## A few notation notes:
+
+We should decided and stick to certain words ; for now I see at least two terms that are confusiogn:
+Ratio:  used for theisotopic ratio and the distance between these ratio
+Sample: used to speak about the lab sample, that have been tested, which is equivalent to "artefact";  but which, in statistic, also mean 
 
