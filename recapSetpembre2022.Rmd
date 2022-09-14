@@ -1,0 +1,37 @@
+---
+title: "Recap of network exploration"
+author: "SC"
+date: "`r Sys.time()`"
+output: 
+    bookdown::html_document2:
+        code_folding: show
+        section_numbers: true
+        toc: true
+        toc_depth: 3
+        toc_float: true
+---
+# Intro
+
+I'll try recap what we did and what I think can be the next step. I will use a "frozen" version of the dataset, this way it will be possible to understand any difference in future analysis.
+
+```{r loadDataAndPackages }
+
+#the frozen dataset
+
+isotopes=read.csv("data/DATA isotopie_Pryce_V13092022.csv")
+
+
+
+```
+
+
+The first level of reflection we had on Monday afternoon was: how to automatically asses the "consistency" of two sample ; _ie_ how can we confidently say there isotopic composition is the same
+
+
+
+
+# Consistency check
+
+KWPV=do.call("rbind",disratio[c("NKH","NPW")])
+allratio= apply(KWPV,2,function(v){ y=1-sapply(v,function(i)i/max(v)); y[y!=0]; })
+
