@@ -52,18 +52,18 @@ lbls=sapply(lapply(strsplit(isotopes$LABEL.analytical,"/"),"[",3:4),paste0,colla
 isotopes$LABELS.shorts=lbls
 ```
 
-Note that a couple of operation have been applied on the original dataset to get rid of some minor problem such as the french ","  as decimal marker and thus the number seen as character etc... here a list of the command to do so ; usefull to redo the analysis from an updated dataset:
+Note that a couple of operation have been applied on the original dataset to get rid of some minor problem such as the french ","  as decimal marker and thus the number seen as character etc... here a list of the command to do so ; useful to redo the analysis from an updated dataset:
 
-```{r cleaningData,eval=F}
+```{r cleaningData,eval=T}
 #remove coma
-pryce[,ratioiso]=apply(pryce[,ratioiso],2,gsub,pattern=",",replace=".")
-pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
+isotopes[,ratioiso]=apply(isotopes[,ratioiso],2,gsub,pattern=",",replace=".")
+isotopes[,ratioiso]=apply(isotopes[,ratioiso],2,as.numeric)
 #add lead level, need the elements dataset
-    teneurs=datappm$Pb
-    names(teneurs)=datappm$LABEL.analytical
-    pryce$teneur=teneurs[pryce$LABEL.analytical]
-    pryce$leaded=0
-    pryce$leaded[pryce$teneur>.1]=1
+    #teneurs=datappm$Pb
+    #names(teneurs)=datappm$LABEL.analytical
+    #isotopes$teneur=teneurs[isotopes$LABEL.analytical]
+    #isotopes$leaded=0
+    #isotopes$leaded[isotopes$teneur>.1]=1
 ```
 
 
@@ -71,7 +71,7 @@ pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
 
 ## General graph:
 
-Now that data is cleaned, we can have a look at general properties, checking only clean sample from sites with multiples smaples ( 10 and more):
+Now that data is cleaned, we can have a look at general properties, checking only clean sample from sites with multiples samples ( 10 and more):
 
 ```{r cleanBiplot, out.width="50%"}
 cleanlist=isotopes[isotopes$Corrosion.products %in% c("Low","Ingot","Slag"),]
@@ -104,9 +104,9 @@ legend(x=newxleg,y=newyleg,pch=1:length(unique(isotopes$Country)),legend=levels(
 
 The first level of reflection we had on Monday afternoon was: how to automatically asses the "consistency" of two sample ; _ie_ how can we confidently say the isotopic composition of a two samples from the dataset are the same?
 
-Oli's intuition is the follow:
+Oli's intuition is the following:
 
-If we look at the isotopoic composition of a well defined group of samples (_ie_ samples very likely to come from the same source), the largest difference between the sample of this group should be the upper limit that should not be passed. In other world, if we take the difference between the lowest and the largest value for each isotopic value, its gives us an expected limit within two different sample can be said as consistent. The group Oli is confident about its consistency is the KWPV, with smaple from sites NKH and NPW, from which we remove a few 'weird' sample (circled on the graph below)
+If we look at isotopoic composition of a well defined group of samples (_ie_ samples very likely to come from the same source), the largest difference between the sample of this group should be the upper limit that should not be passed. In other world, if we take the difference between the lowest and the largest value for each isotopic value, its gives us an expected limit within two different sample can be said as consistent. The group Oli is confident about its consistency is the KWPV, with smaple from sites NKH and NPW, from which we remove a few 'weird' sample (circled on the graph below)
 
 
 ```{r KWPV complex,out.width="45%"}
@@ -138,10 +138,10 @@ threshold=1-alldist
 knitr::kable(t(threshold))
 ```
 
-This is a very conservative approach, which mean that among all the distances observed in our initial group KWPV, we take only the extrem one as a threshold. This methods will be very sensitive to outliers, as if just one  value is out for one isotopes, it will be used against the smalles one to compute the threshold. 
+This is a very conservative approach, which mean that among all the distances observed in our initial group KWPV, we take only the extrem one as a threshold. This methods will be very sensitive to outliers, as if just one  value is out for one isotopes, it will be used against the smallest one to compute the threshold. 
 
-Another approach is to kee the full distribution of distance of all samples together ; and use a interval containing most of our sample as a threshold. 
-As an exmaple let's look at juste one ratio: `r ratioiso[1]` . 
+Another approach is to keep the full distribution of distance of all samples together ; and use a interval containing most of our sample as a threshold. 
+As an example let's look at just one ratio: `r ratioiso[1]` . 
 ```{r}
 
 ex=ratioiso[1]
@@ -150,8 +150,7 @@ plot(sort(v_ex),xlab="rank",ylab=ex)
 
 ```
 
-for all value of v_ex we want to know how far it is from the bigger values. We  th raito with all others values. When only look at the ratio from A to B 
-When comparing two values, we only look at how many percent of the bigger the smaller is. (1-A/B gives us how many % of B A need to be equal to B. If A>B then this percentage is negativs, meenings we need to reduce A to reach B ; but this isn't need as it will be covered by 1-B/A. Thus we remove all valu <=0 ; 0 being the case when A=B
+for all value of `v_ex` we want to know how far it is from the bigger values. When comparing two values A and B, we only look at how many percent of the bigger the smaller is. (1-A/B gives us how many % of B A need to be equal to B. If A>B then this percentage is negative, meaning we need to reduce A to reach B ; but this isn't needed as it will be covered by 1-B/A. Thus we remove all values <=0 ; 0 being the case when A=B
 
 ```{r}
 alld=1-sapply(v_ex,function(i)i/v_ex)
@@ -163,7 +162,7 @@ mtext(paste0(c(75,85,95),"%"),3,0,at=quantile(alld,probs=c(.75,.85,.95)),col="bl
 mtext("oli's initial values",3,0,at=threshold[ex],col="red")
 ```
 
-In the previous graph we can see that 75% of the difference measured in our sample are below `r round(quantile(alld,probs=c(.75)),4)[[1]]` ; which is way below the threshold computed with the maximum range:  `r round(threshold[ex],4)`. More over, if we add to `v_ex` that is a bit off, bigger than the other while still "plausible; what happend to the different metrics?:
+In the previous graph we can see that 75% of the difference measured in our sample are below `r round(quantile(alld,probs=c(.75)),4)[[1]]` ; which is way below the threshold computed with the maximum range:  `r round(threshold[ex],4)`. More over, if we add to `v_ex` that is a bit off, bigger than the other while still "plausible; what happend to the different metrics?
 
 ```{r,results='asis'}
 
@@ -208,7 +207,7 @@ threshold  <- sapply(ratioiso,function(r){
 knitr::kable(t(threshold))
 ```
 
-  One needs to notes that in theory (and in practice), Oli's estimations compute the biggest difference within the sample of the group studied. Thus, the red vertical lines should be _always_ at the end of the curve. It is not the case because the kernel estimation "invent" data after the end of the measurment to smooth the curve. In this version we will still use the old version of the threshold, though I have a problem with it it doesn't give me exactly the same result than before.  Maybe because i miss some data?
+  One needs to notes that in theory (and in practice), Oli's estimations compute the biggest difference within the sample of the group studied. Thus, the red vertical lines should be _always_ at the end of the curve. It is not the case because the kernel estimation "invent" data after the end of the measurement to smooth the curve. In this version we will still use the old version of the threshold, though I have a problem with it it doesn't give me exactly the same result than before.  Maybe because i miss some data?
 
 
 ```{r}
@@ -258,14 +257,14 @@ nomin.consmat[nomin.consmat==3]=1
 
 ```
 
-This can be directly adapted as a grpah:
+This can be directly adapted as a graph:
 ```{r}
 
 nomin.graph = graphFromAdj(nomin.consmat,label=nomin$LABELS.shorts)
 plot(nomin.graph)
 ```
 
-Following Radivojevic & Grujic we use community detection to create 'famillies' of consistent artefact. The original paper used Louvain clustering algorithm:
+Following Radivojevic & Grujic we use community detection to create 'families' of consistent artefact. The original paper used Louvain clustering algorithm:
 
 ```{r}
 library(igraph)
@@ -274,7 +273,7 @@ V(nomin.graph)$color=nomin.clus$membership
 plot(nomin.graph)
 ```
 
-On problem I noticesd with this methods is that it get in troublies when lot of component are not connected. It groups together groups that should not. It is not shown in the previous exemple as we select the best data to cluster but it appeared sometime during my analysis, thus I decied ot use leiden clustering algorithm:
+On problem I noticed with this methods is that it get in troubles when lot of component are not connected. It groups together groups that should not. It is not shown in the previous example as we select the best data to cluster but it appeared sometime during my analysis, thus I decided to use Leiden clustering algorithm:
 
 ```{r}
 nomin.clus=cluster_leiden(nomin.graph,objective_function="modularity")
@@ -295,11 +294,12 @@ text(nomin[,ratioiso[c(3,1)]],nomin$LABELS.shorts,,cex=.6,pos=1)
 val=legend("bottomright",pt.bg=sitecol,pch=21,legend=paste("Famille",1:nomin.clus$nb_clusters),title="Families",bty="n",ncol=2,pt.cex=2)
 ```
 
-We could spend  more time exploring those families, what is there centroid (mean isotop composition, etc...), but following iniital idea we know went to compare geographical area thoguth the lens of this grouping
+We could spend  more time exploring those families, what is there centroid (mean isotope composition, etc...), but following the initial idea, we know went to compare geographical area through the lens of this grouping.
 
 #### Myanmar Sites  Network
 
-As when creating the consistency matrix, there are plenty of ways to measure the similiarit/distance of composition of each site give the families of artefact it has. For now, and following Radivojevic & Grujic will wi count how many artefact two sites have in common. For exemple, two big sites has HL28 and NGO
+As when creating the consistency matrix, there are plenty of ways to measure the similarity/distance of composition of each site give the families of artefact it has. For now, and following Radivojevic & Grujic, we will count how many artefact two sites have in common. Let's do that and see the result for two big sites : HL28 and NGO
+
 ```{r countTypesExample,out.width="50%"}
 HL=which(nomin$Site.abreviation=="HL28")
 NG=which(nomin$Site.abreviation=="NGO")
@@ -324,13 +324,13 @@ RGmatch(nomin.clus$membership[HL],nomin.clus$membership[NG])
 ```
 
 
-Applying this to the current dataset (myanmar without mineral)  gives the following sites matrice:
+Applying this to the current dataset (myanmar without mineral)  gives the following sites matrix:
 
 ```{r}
 nomin.sitemat=createAreaAdjMat(nomin,nomin$Site.abreviation,nomin.clus$membership,match=RGmatch)
 ```
 
-where we can check that:
+Where we can check that:
 
 
 ```{r,result='asis'}
@@ -359,7 +359,8 @@ E(nomin.sitegraph)$width=E(nomin.sitegraph)$weight
 plot(nomin.sitegraph)
 ```
 
-We can normalise by the number of artefact per site ; to render for the number of artefact per site . This connect together the site that are exactlyt the same.
+We can normalise by the number of artefact per site ; to render for the number of artefact per site . This connect together the site that are exactly the same.
+
 ```{r}
 sampsize=table(nomin$Site.abreviation)
 nomin.sitematnormalized=apply(nomin.sitemat,2,function(i)(i/sampsize[names(i)]))
@@ -370,7 +371,8 @@ E(nomin.sitegraph)$width=E(nomin.sitegraph)$weight
 plot(nomin.sitegraph)
 ```
 
-Anover metric, my feeling (the match normalized by the total multiplied by the log of the total)
+Another metric, my feeling (the match normalized by the total multiplied by the log of the total)
+
 ```{r}
 nomin.sitematNM=createAreaAdjMat(nomin,nomin$Site.abreviation,nomin.clus$membership,match=RGmatchNormalised)
 nomin.sitegraphNM= graphFromAdj(nomin.sitematNM,label=rownames(nomin.sitematNM))
@@ -615,11 +617,13 @@ for(gp in 1:length(isotopes.sitecluster)){
 
 # Next steps:
 
-There are multiples axes we can follow, to check, explore and make things better here and there. There are still _some_ problems with the consistency check: using the method of adding link when the three ratio are consistent, we get some "chains" of consistency the can spread very far on the 206.204 axis ; check the grey family on the bottom of the graph in the section 3 for exemple. 
+There are multiples axes we can follow, to check, explore and make things better here and there. There are still _some_ problems with the consistency check. By using the method of adding link when the three ratios are consistent, we get some "chains" of consistency the can spread very far on the 206.204 axis when we have lot of data point. Check the grey family on the bottom of the graph in the section 3 for example. 
 
-Some techniques likes DBScan may help to cut using points density, but something still needs to be done. Nonetheless I think there is something else to solve at a higher level and that will help us to solve the problem regarding the next step : how, once we get a satisfactory consistency between isotopes composition, do we group/link the sites - geographical area?
+Clustering techniques likes DBScan  may help to cut using points density (cf notes about it down), but something still needs to be done on this side as it may be the source of multiple 'inconsistent consistencies'.  
 
-And I think that somethings that could help (and that will help also to know when we are roughly satisfy with the consistency grouping) is to  think about some questions the analysis we do will answers. I guesss that the map you showed Oli is a first start but we need to presices things: do we want to find if the network of road correspond to some specific communities (ie specific set of artefacts famillies that 'travel' together?" do we want to be able to define geographical regions with specificity (more diverse than the other regions, connecting different communities, central to some communities,....). 
+Regardless this problem, and moving to the next stage (the network of sites),  the next question would be : how, once we get a satisfactory consistency between isotopes composition, do we group/link the sites - geographical area?
+
+To answer that ; something that could facilitate our task (and that also help to know when we are roughly satisfied with the consistency grouping) is to think about what higher level questions the analysis we ultimately answer. The map you showed Oli could be a first start, but we need to precise things: do we want to find if the network of road correspond to specific communities (ie specific set of artefacts families that 'travel' together?), do we want to be able to define 'remarkable' geographical regions  (where remarkable could be: more diverse than the other regions, with connection to more, that only contain specific communities,....). 
 
 Defining such questions (which I guess will also depend on the journal/paper we have in sight) will then greatly help to choose the right methods (do we want to correct for missing sample, for the intensity of the connection of site, for the geographical distance between two sites,...).
 
@@ -633,11 +637,16 @@ Defining such questions (which I guess will also depend on the journal/paper we 
 
 
 
-# A few notation notes:
+# A few notes:
 
-We should decided and stick to certain words ; for now I see at least two terms that are confusiogn:
-Ratio:  used for theisotopic ratio and the distance between these ratio
-Sample: used to speak about the lab sample, that have been tested, which is equivalent to "artefact";  but which, in statistic, also mean "a random selection of element within a set". I use "element" here and used it, in the sense "element within a set" but as you both reightly remarked element is used for elemental data, so we can't used. I don't really like `artefact`, but so far it's the option i started to use.
+### On notation:
+
+We should decided and stick to certain words ; for now I see at least two terms that are confusion:
+Ratio:  used for the isotopic ratio and the distance between these ratio
+Sample: used to speak about the lab sample, that have been tested, which is equivalent to "artefact";  but which, in statistic, also mean "a random selection of element within a set". I use "element" here and used it, in the sense "element within a set" but as you both rightly remarked element is used for elemental data, so we can't used. I don't really like `artefact`, but so far it's the option i started to use.
 
 
+### On DBScan: 
+
+DBSCAN is based on density of point in a space to cluster. The "only" think that prevented me to use it is to define a distance metric that I can use to cut. This distance need to be logarithmic (distance on big value should be conted the same that distance on the lower side). Is a logarithm of the euclidian distance between the point on the 3 axes good? that what's I should check
 
