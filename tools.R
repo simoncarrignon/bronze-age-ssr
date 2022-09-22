@@ -12,6 +12,20 @@ simpmatch  <-  function(i,j){
     length(na.omit(match(i,j)))/(length(c(i,j)))
 }
 
+# Radivojevic & Grujic match
+RGmatch  <-  function(x,y){
+    lvls=unique(c(x,y))
+    counts=cbind(table(factor(x,levels=lvls)),table(factor(y,levels=lvls)))
+    sum(apply(counts,1,sum)-apply(counts,1,max))
+}
+
+RGmatchNormalised  <-  function(x,y){
+    lvls=unique(c(x,y))
+    counts=cbind(table(factor(x,levels=lvls)),table(factor(y,levels=lvls)))
+    match=sum(apply(counts,1,sum)-apply(counts,1,max))
+    (match/length(c(x,y)))*log(length(c(y,x)))
+}
+
 divmatch  <-  function(i,j,normalize=18){
     if(length(i)>length(j)){
         tmp=i
@@ -192,5 +206,18 @@ plotConsistensy <- function(dataset,col2plot,consistencmat,ratiolim=NULL,colour)
 #' @param labelscol: the corresponding colonm in the dataset where label are stored
 #' @param coords: the corresponding colonm in the dataset where coordinates are stored
 coordForGraph <- function(graph,dataset,labelscol,coords=c("Easting...Longitude","Northing.Latitude")){
-    t(sapply(V(graph)$name,function(lbl)apply(unique(dataset[ dataset[[labelcol]] == lbl,coords]),2,mean,na.rm=T)))
+    t(sapply(V(graph)$name,function(lbl)apply(unique(dataset[ dataset[[labelscol]] == lbl,coords]),2,mean,na.rm=T)))
     }
+
+#a function to color edges if both head and tail are from same group
+colorEdges <- function(graph){
+    if(any(V(graph)$name == "")){
+    V(graph)[V(graph)$name == ""]$name=" "
+    warning("graph has empty labels")
+    }
+    allends=ends(graph,E(graph))
+    left=V(graph)[allends[,1]]$color
+    right=V(graph)[allends[,2]]$color
+    E(graph)$color[left==right]=left[left==right]
+    return(graph)
+}
