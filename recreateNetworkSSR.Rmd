@@ -1,0 +1,27 @@
+
+```{r}
+
+library(sf)
+SSR=do.call("rbind",lapply(list.files("SSRgeoloc/",full.names = T),st_read))
+plot(st_geometry(SSR))
+sealip=st_read("Cartes/allseaborder_lowq.shp")
+plot(st_geometry(st_crop(sealip,st_buffer(SSR,800000))),reset=F)
+plot(st_geometry(SSR),add=T,pch=21,bg="red")
+
+edgemat=matrix(0,nrow=nrow(SSR),ncol = nrow(SSR))
+colnames(edgemat)=SSR$Name
+rownames(edgemat)=SSR$Name
+write.csv(file="edgematrix.csv",edgemat)
+edgelist=cbind(expand.grid(SSR$Name,SSR$Name),0)
+write.csv(file="edgelist.csv",edgelist)
+
+netSSR=read.csv("~/Downloads/SSR network - Matrix.csv")
+rownames(netSSR)=netSSR[,1]
+netSSR=netSSR[,2:ncol(netSSR)]
+netSSR=as.matrix(netSSR)
+netssr=igraph::graph_from_adjacency_matrix(netSSR)
+V(netssr)$label.cex=.8
+V(netssr)$label.color="black"
+V(netssr)$size=.8
+plot(netssr)
+```
