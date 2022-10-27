@@ -27,7 +27,7 @@ source("tools.R")
 library(sf)
 seashapefile=st_read("Cartes/allseaborder_lowq.shp")
 seashapefile=st_geometry(seashapefile)
-datappm=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V4.csv",stringsAsFactor=F)
+datappm=read.csv("data/DATA isotopie_Pryce_V4.csv",stringsAsFactor=F)
 
 # set an arbitrary epsilon value and replace "tr"s and "0"s with it
 epsilon=0.0001
