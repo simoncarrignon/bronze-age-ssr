@@ -2,6 +2,7 @@
 ```{r}
 
 library(sf)
+library(igraph)
 SSR=do.call("rbind",lapply(list.files("SSRgeoloc/",full.names = T),st_read))
 plot(st_geometry(SSR))
 sealip=st_read("Cartes/allseaborder_lowq.shp")
@@ -15,13 +16,62 @@ write.csv(file="edgematrix.csv",edgemat)
 edgelist=cbind(expand.grid(SSR$Name,SSR$Name),0)
 write.csv(file="edgelist.csv",edgelist)
 
-netSSR=read.csv("~/Downloads/SSR network - Matrix.csv")
+netSSR=read.csv("data/SSR network - Matrix.csv",header=F)
 rownames(netSSR)=netSSR[,1]
 netSSR=netSSR[,2:ncol(netSSR)]
+colnames(netSSR)=netSSR[1,]
+netSSR=netSSR[2:nrow(netSSR),]
 netSSR=as.matrix(netSSR)
+
+#There is a rpoblem of names that have been swithced so:
+
+dim(netSSR)
+sum(!sapply(rownames(netSSR),function(i)i %in% colnames(netSSR)))
+sum(!sapply(colnames(netSSR),function(i)i %in% rownames(netSSR)))
+netSSR=netSSR[colnames(netSSR),]
+
+
 netssr=igraph::graph_from_adjacency_matrix(netSSR)
 V(netssr)$label.cex=.8
 V(netssr)$label.color="black"
 V(netssr)$size=.8
 plot(netssr)
+plot(netssr,layout=st_coordinates(SSR)[,1:2],add=F,rescale=F)
+
+
+```
+
+
+Detect missing things locations:
+
+```{r}
+missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
+missing[!missing]
+missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
+coords=t(sapply(rownames(netSSR),function(i)st_coordinates(SSR[i == SSR$Name,])[1:2]))
+
+plot(netssr)
+```
+
+
+We need to remobe the non coordinates things:
+
+
+```{r}
+
+
+par(mar=c(0,0,0,0))
+netSSR=netSSR[!is.na(coords[,1]),!is.na(coords[,1])]
+netssr=igraph::graph_from_adjacency_matrix(netSSR,mode = "undirected")
+plot(st_geometry(st_crop(sealip,st_buffer(SSR,200000))),reset=F)
+V(netssr)$size=5
+V(netssr)$name=sapply(strsplit(V(netssr)$name,""),function(i)paste0(i[1:min(length(i),7)],collapse=""))
+V(netssr)$color=adjustcolor("black",.4)
+E(netssr)$color=adjustcolor("black",.4)
+V(netssr)$color=adjustcolor("black",.4)
+V(netssr)$label.color="black"
+V(netssr)$label.cex=.85
+V(netssr)$label.las=2
+plot(netssr,layout=coords[!is.na(coords[,1]),],add=T,rescale=F)
+
 ```
