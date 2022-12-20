@@ -53,10 +53,14 @@ pryce[,c("Easting...Longitude","Northing.Latitude")]=apply(pryce[,c("Easting...L
 spat=pryce
 spat=spat[!is.na(spat[,"Easting...Longitude"]),]
 p.sf=st_as_sf(spat,coords=c("Easting...Longitude","Northing.Latitude"),crs=st_crs(seashapefile))
+
+##Limite shapefile to available dataset
 seashapefile.cr=st_geometry(st_crop(seashapefile,st_buffer(p.sf,dist=100)))
+
 #pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")]=apply(pryce[,c("River.basin.coordinates.E","River.basin.coordinates.N")],2,as.numeric)
 #pryce=pryce[!is.na(pryce$River.basin.coordinates.E),]
 ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
+pryce[,ratioiso]=apply(pryce[,ratioiso],2,gsub,pattern=",",replace=".")
 pryce[,ratioiso]=apply(pryce[,ratioiso],2,as.numeric)
 ```
 Ratios en fonction teneur en plombs
@@ -67,7 +71,7 @@ Ratios en fonction teneur en plombs
     pryce$leaded=0
     pryce$leaded[pryce$teneur>.1]=1
     for(i in ratioiso){
-        plot(1/pryce$teneur,pryce[[i]],col=pryce$leaded+1,ylab=i,xlab="1/Pb ppm",log="x")
+        plot(1/pryce$teneur,pryce[[i]],col=pryce$leaded+1,ylab=i,xlab="1/Pb ppm",log="xy")
     }
 ```
 
@@ -105,7 +109,13 @@ Using tsnea to separate artefacts
 library(Rtsne)
 isotopes.tsne=Rtsne(as.matrix(cleanlist[,ratioiso]),pca=F)
 plot(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],bg=sitecol[cleanlist$Site.abreviation],pch=20+as.numeric(as.factor(cleanlist$Country)))
-#text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),"Site.abreviation"],cex=.6)
+text(isotopes.tsne$Y[,1],isotopes.tsne$Y[,2],pryce[pryce$Corrosion.products %in% c("Low","Ingot","Slag"),"Site.abreviation"],cex=.6)
+legend("topright",pch=20+1:length(unique(cleanlist$Country)),legend=levels(as.factor(cleanlist$Country)),title="Country",bty="n")
+```
+
+```{r}
+
+plot(
 ```
 
 
@@ -118,21 +128,25 @@ D'abord recalculer les difference maximum entre les ratio ingot/slag d'un même 
 samegroups=pryce[pryce$Artefact.type %in% c("Slag","Ingot"),]
 #remove weirdos
 samegroups=samegroups[samegroups$LABEL.analytical != "SEALIP/TH/NPW/1",]
+samegroups=samegroups[samegroups$LABEL.analytical != "SEALIP/TH/NPW/11",]
+samegroups=samegroups[samegroups$Site.abreviation %in%  c("NPW","NKH"),]
 
-minim=sapply(unique(samegroups$Site.abreviation),function(site){
-    sitesratio=samegroups[samegroups$Site.abreviation == site,ratioiso]
-    apply(sitesratio,2,ratioSpan)
-}
-)
+
+
+1-apply(samegroups[,ratioiso],2,ratioSpan)
 
 knitr::kable((1-apply(minim,1,min))*100 )
 knitr::kable(t(minim))
 
-oliselection=minim[,c("PBL","NKH")]
+oliselection=minim[,c("NPW","NKH")]
+#oliselection=minim
 knitr::kable(t(oliselection))
 recomp=(1-apply(oliselection,1,min))*100
 knitr::kable(recomp)
 recomp=1-apply(oliselection,1,min)
+#manual thresholds
+recomp=c(0.005,0.00348,0.005)
+names(recomp)=ratioiso
 ```
 
 Which correspond to oli's computation:
@@ -146,6 +160,7 @@ On va donc ensuite comparer chaque element deux a deux et voir quel ratios sont 
 Using this as a graph
 
 ```{r}
+#install.packages("igraph")
 library(igraph)
 adjmat=createRatioMatrix(cleanlist,ratioiso,recomp)
 
@@ -164,7 +179,7 @@ par(mar=c(0,0,0,0))
 allgraphs=lapply(0:3,function(m)graphFromAdj(limited,mask=m,label=cleanlist$Site.abreviation))
 allcomus=lapply(allgraphs,cluster_louvain)
 allgroups=sapply(allcomus,membership)
-for(i in 1:4){
+for(i in 2:4){
     graph=allgraphs[[i]]
     V(graph)$color=allgroups[,i]
     plot(graph)
@@ -176,10 +191,163 @@ knitr::kable(allgroups)
 Play with full dataset:
 ```{r}
 allsites=createRatioMatrix(pryce,ratioiso,recomp)
-allgraphs=lapply(0:3,function(i)graphFromAdj(allsites,mask=i,label=pryce$Site.abreviation))
-alcomu=sapply(allgraphs,cluster_louvain)
+allgraphs=lapply(1:3,function(i)graphFromAdj(allsites,mask=i,label=pryce$Site.abreviation))
+alcomu=lapply(allgraphs,cluster_louvain)
 allgroups=sapply(alcomu,membership)
 ```
+
+```{r}
+
+pdf("alldata.pdf",width=8,height=13)
+par(mfrow=c(2,1))
+cls=rainbow(length(unique(pryce$Site.abreviation)))
+plot(pryce[,ratioiso[3]],pryce[,ratioiso[2]],xlab=ratioiso[3],ylab=ratioiso[2],col=cls[as.factor(pryce$Site)],pch=as.numeric(as.factor(pryce$Country)))
+plot(pryce[,ratioiso[3]],pryce[,ratioiso[2]],xlab=ratioiso[3],ylab=ratioiso[1],col=cls[as.factor(pryce$Site)],pch=as.numeric(as.factor(pryce$Country)))
+legend("bottomright",legend=levels(as.factor(pryce$Country)),pch=1:11)
+dev.off()
+
+pdf("myanmarOnly.pdf",width=8,height=13)
+mya=pryce[pryce$Country=="Myanmar",]
+cls=rainbow(length(unique(mya$Site.abreviation)))
+par(mfrow=c(2,1))
+plot(mya[,ratioiso[3]],mya[,ratioiso[2]],xlab=ratioiso[3],ylab=ratioiso[2],bg=cls[as.factor(mya$Site)],pch=21)
+plot(mya[,ratioiso[3]],mya[,ratioiso[1]],xlab=ratioiso[3],ylab=ratioiso[1],bg=cls[as.factor(mya$Site)],pch=21)
+legend("bottomright",legend=levels(as.factor(mya$Country)),pch=1:11)
+dev.off()
+
+pdf("myanmarOnlyGroups.pdf",width=10,height=15)
+mya=pryce[pryce$Country=="Myanmar",]
+cls=rainbow(length(unique(mya$Site.abreviation)))
+par(mfrow=c(2,1))
+plot(mya[,ratioiso[3]],mya[,ratioiso[2]],xlab=ratioiso[3],ylab=ratioiso[2],bg=allgroups[pryce$Country=="Myanmar",3],pch=21)
+plot(mya[,ratioiso[3]],mya[,ratioiso[1]],xlab=ratioiso[3],ylab=ratioiso[1],bg=allgroups[pryce$Country=="Myanmar",3],pch=21)
+text(mya[,ratioiso[3]],mya[,ratioiso[1]],mya$Site.abreviation,xlab=ratioiso[3],ylab=ratioiso[1],bg=allgroups[pryce$Country=="Myanmar",3],pch=21)
+legend("bottomright",legend=levels(as.factor(mya$Country)),pch=1:11)
+
+
+ratiolim=list(c(17.7,19.3),c(15.45,15.85),c(37.5,40))
+names(ratiolim)=rev(ratioiso)
+pdf("myanmarOnlyGroups.pdf",width=11,height=15)
+mya=pryce[pryce$Country=="Myanmar",]
+cls=rainbow(length(unique(mya$Site.abreviation)))
+par(mfrow=c(2,1))
+plot(mya[,ratioiso[3]],mya[,ratioiso[2]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[2]]],xlab=ratioiso[3],ylab=ratioiso[2],bg=allgroups[pryce$Country=="Myanmar",3],pch=21)
+text(mya[,ratioiso[3]],mya[,ratioiso[2]],mya$Site.abreviation,xlab=ratioiso[3],ylab=ratioiso[1],bg=allgroups[pryce$Country=="Myanmar",3],pch=21)
+plot(mya[,ratioiso[3]],mya[,ratioiso[1]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[1]]],xlab=ratioiso[3],ylab=ratioiso[1],bg=allgroups[pryce$Country=="Myanmar",3],pch=21)
+text(mya[,ratioiso[3]],mya[,ratioiso[1]],mya$Site.abreviation,xlab=ratioiso[3],ylab=ratioiso[1],bg=allgroups[pryce$Country=="Myanmar",3],pch=21)
+legend("bottomright",legend=levels(as.factor(mya$Country)),pch=1:11)
+dev.off()
+
+consistencmyanmar=allsites[pryce$Country=="Myanmar",pryce$Country=="Myanmar"]
+consistencmyanmar[consistencmyanmar<3]=0
+consistencmyanmar[consistencmyanmar==3]=1
+mya=pryce[pryce$Country=="Myanmar",]
+cls=rainbow(length(unique(mya$Site.abreviation)))
+
+
+png("consitencycheck.png",width=2000,height=2400,pointsize=20)
+par(mfrow=c(2,1))
+colour=allgroups[pryce$Country=="Myanmar",3]
+consistencymat=consistencmyanmar
+plot(mya[,ratioiso[3]],mya[,ratioiso[2]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[2]]],xlab=ratioiso[3],ylab=ratioiso[2],bg=colour,pch=21)
+for(a in 1:nrow(mya)){
+    coorda=mya[a,ratioiso[c(3,2)]]
+    coordbs=mya[consistencymat[a,]==1,ratioiso[c(3,2)],drop=F]
+    if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+}
+points(mya[,ratioiso[3]],mya[,ratioiso[2]],bg=colour,pch=21)
+text(mya[,ratioiso[3]],mya[,ratioiso[2]],mya$Site.abreviation,cex=.7,pos=1)
+
+plot(mya[,ratioiso[3]],mya[,ratioiso[1]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[1]]],xlab=ratioiso[3],ylab=ratioiso[1],bg=colour,pch=21)
+for(a in 1:nrow(mya)){
+    coorda=mya[a,ratioiso[c(3,1)]]
+    coordbs=mya[consistencymat[a,]==1,ratioiso[c(3,1)],drop=F]
+    if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+}
+text(mya[,ratioiso[3]],mya[,ratioiso[1]],mya$Site.abreviation,cex=.7,pos=1)
+points(mya[,ratioiso[3]],mya[,ratioiso[1]],bg=colour,pch=21)
+legend("bottomright",legend=levels(as.factor(mya$Country)),pch=1:11)
+dev.off()
+
+myanmarIsoCompGraph=graphFromAdj(consistencmyanmar,mask=1,label=mya$Site.abreviation)
+louvain=cluster_louvain(myanmarIsoCompGraph,resolution=1)
+V(myanmarIsoCompGraph)$color=louvain$membership
+plot(myanmarIsoCompGraph)
+
+myanmarSiteAdjMat=createAreaAdjMat(mya,mya$Site.abreviation,louvain$membership,match=simpmatch)
+myanmarSiteAdjMat=1/(myanmarSiteAdjMat^2)
+myanmarSiteAdjMat[!is.finite(myanmarSiteAdjMat)]=0
+myanmarSiteLinkGraph=graphFromAdj(myanmarSiteAdjMat,label=colnames(myanmarSiteAdjMat))
+E(myanmarSiteLinkGraph)$width=E(myanmarSiteLinkGraph)$weight*2
+allcomu=cluster_louvain(myanmarSiteLinkGraph,resolution=1)
+V(myanmarSiteLinkGraph)$color=allcomu$membership
+V(myanmarSiteLinkGraph)$color=allcomu$memberships[1,]
+
+plot(myanmarSiteLinkGraph)
+
+library(mclust)
+clustmya=Mclust(mya[,ratioiso])
+consistencmyanmar.mclust[,]=0
+for(i in 1:nrow(consistencmyanmar.mclust)) consistencmyanmar.mclust[i,which(clustmya$classification==clustmya$classification[i])]=1
+consistencymat=consistencmyanmar.mclust
+colour=clustmya$classification
+plot(mya[,ratioiso[3]],mya[,ratioiso[2]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[2]]],xlab=ratioiso[3],ylab=ratioiso[2],bg=colour,pch=21)
+for(a in 1:nrow(mya)){
+    coorda=mya[a,ratioiso[c(3,2)]]
+    coordbs=mya[consistencymat[a,]==1,ratioiso[c(3,2)],drop=F]
+    if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+}
+points(mya[,ratioiso[3]],mya[,ratioiso[2]],bg=colour,pch=21)
+text(mya[,ratioiso[3]],mya[,ratioiso[2]],mya$Site.abreviation,cex=.7,pos=1)
+
+plot(mya[,ratioiso[3]],mya[,ratioiso[1]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[1]]],xlab=ratioiso[3],ylab=ratioiso[1],bg=colour,pch=21)
+for(a in 1:nrow(mya)){
+    coorda=mya[a,ratioiso[c(3,1)]]
+    coordbs=mya[consistencymat[a,]==1,ratioiso[c(3,1)],drop=F]
+    if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+}
+text(mya[,ratioiso[3]],mya[,ratioiso[1]],mya$Site.abreviation,cex=.7,pos=1)
+points(mya[,ratioiso[3]],mya[,ratioiso[1]],bg=colour,pch=21)
+legend("bottomright",legend=levels(as.factor(mya$Country)),pch=1:11)
+
+plot(clustmya)
+
+rownames(consistencmyanmar)=mya$LABEL.analytical
+colnames(consistencmyanmar)=mya$LABEL.analytical
+write.csv(file="consistencymatrix.csv",consistencmyanmar)
+
+```
+
+
+Network Representation of it:
+```{r}
+graphmyanmar=graphFromAdj(consistencmyanmar,mask=1,label=mya$Site.abreviation)
+sitecol=rainbow(length(unique(mya$Site.abreviation)),alpha=.8)
+V(graphmyanmar)$color=sitecol[as.factor(mya$Site.abreviation)]
+plot(graphmyanmar)
+
+sitecol=rainbow(length(unique(allgroups[pryce$Country=="Myanmar",3])),alpha=.8)
+V(graphmyanmar)$color=sitecol[as.factor(allgroups[pryce$Country=="Myanmar",3] )]
+plot(graphmyanmar)
+
+```
+For allsites
+ 
+```{r}
+
+graphmyanmar=graphFromAdj(allsites,mask=3,label=pryce$Site.abreviation)
+sitecol=rainbow(length(unique(mya$Site.abreviation)),alpha=.8)
+V(graphmyanmar)$color=sitecol[as.factor(mya$Site.abreviation)]
+plot(graphmyanmar)
+
+sitecol=rainbow(length(unique(allgroups[pryce$Country=="Myanmar",3])),alpha=.8)
+V(graphmyanmar)$color=sitecol[as.factor(allgroups[pryce$Country=="Myanmar",3] )]
+plot(graphmyanmar)
+```
+
+
+
+Same but with all:
 
 Create inter basin connections
 
@@ -187,8 +355,8 @@ Create inter basin connections
 par(mar=c(0,0,0,0))
 pryce=cbind(pryce,allgroups)
 for(i in 1:4){
-    matdim2=creatSiteAdjMat(pryce,pryce$River.basin,allgroups[,i],match=simpmatch)
-    sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
+    matdim2=createAreaAdjMat(pryce,pryce$River.basin,allgroups[,i],match=simpmatch)
+    sites.graph=graph.adjacency(matdim3, mode = "undirected", weighted = TRUE, diag = FALSE)
     allcomu=cluster_louvain(sites.graph)
     V(sites.graph)$label=unique(pryce$River.basin)
     V(sites.graph)$color=allcomu$membership
@@ -203,6 +371,7 @@ for(i in 1:4){
     #plot(sites.graph,layout=unique(cbind(pryce$River.basin.coordinates.E,pryce$River.basin.coordinates.N)),add=F)
 }
 ```
+
 Same with geoloc
 
 ```{r,out.width="50%",eval=F}
@@ -215,7 +384,7 @@ par(mar=c(0,0,0,0))
 coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(basinriv[basinriv$River.basin == lbl,c("River.basin.coordinates.E","River.basin.coordinates.N")]),2,mean)))
 seashapefile.cr=st_crop(seashapefile,st_buffer(st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile)),dist=200000))
 for(i in 1:4){
-    matdim2=creatSiteAdjMat(basinriv,basinriv$River.basin,allgroups[,i],match=simpmatch)
+    matdim2=createAreaAdjMat(basinriv,basinriv$River.basin,allgroups[,i],match=simpmatch)
     sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
     allcomu=membership(cluster_louvain(sites.graph))
     sites.graph=allgraphs[[i]]
@@ -250,7 +419,7 @@ bigsite=bigsite[bigsite$Site.abreviation %in% bignames ,]
 
 ```{r,out.width="50%"}
 par(mar=c(0,0,0,0))
-allmatdim=lapply(1:4,function(i)creatSiteAdjMat(bigsite,bigsite$Site.abreviation,allgroups[,i],match=simpmatch))
+allmatdim=lapply(1:4,function(i)createAreaAdjMat(bigsite,bigsite$Site.abreviation,allgroups[,i],match=simpmatch))
 allgraphs=lapply(allmatdim,graph.adjacency, mode = "undirected", weighted = TRUE, diag = FALSE)
 allclus=lapply(allgraphs,cluster_louvain)
 allcommus=sapply(allclus,membership)
@@ -355,7 +524,7 @@ plot(ppms.graph,vertex.color=ppms.commu)
 
 ```{r}
 
-matdim2=creatSiteAdjMat(datappm,datappm$Site,ppms.commu,match=simpmatch)
+matdim2=createAreaAdjMat(datappm,datappm$Site,ppms.commu,match=simpmatch)
 
 sites.graph=graph.adjacency(matdim2, mode = "undirected", weighted = TRUE, diag = FALSE)
 V(sites.graph)$label.cex=.7
@@ -417,7 +586,7 @@ Try with communities of regions:
 onlyreg=datappm[datappm$Region!="",]
 regions=unique(onlyreg$Region)
 
-matdim2=creatSiteAdjMat(onlyreg,regions,ppms.commu,match=simpmatch)
+matdim2=createAreaAdjMat(onlyreg,regions,ppms.commu,match=simpmatch)
 
 regions.graph=graph.adjacency(exp(matdim2), mode = "undirected", weighted = TRUE, diag = FALSE)
 regioncount=unique(onlyreg[,c("Region","Country")])
@@ -656,3 +825,299 @@ for(nst in names(diffsets)){
     }
 }
 ```
+
+
+```{r}
+sites=unique(samegroups$Site.abreviation)
+names(sites)=unique(samegroups$Site.abreviation)
+disratio=lapply(sites,function(site){
+    samegroups[samegroups$Site.abreviation == site,ratioiso]
+}
+)
+disratio=disratio[sapply(disratio,nrow)>1]
+allranges=lapply(disratio,function(i)apply(i,2,range))
+lapply(allranges,function(i)apply(i,2,function(e)abs(e[1]-e[2])))
+
+allratio=do.call("rbind", lapply(disratio[c("NKH","NPW")],function(sites){
+                                 apply(sites,2,function(v){
+                                       y=1-sapply(v,function(i)i/max(v))
+                                       y[y!=0]
+})
+})
+)
+
+KWPV=do.call("rbind",disratio[c("NKH","NPW")])
+allratio= apply(KWPV,2,function(v){ y=1-sapply(v,function(i)i/max(v)); y[y!=0]; })
+
+##plot where the threshold will cut for acceptance:
+par(mfrow=c(1,3))
+lapply(colnames(allratio),function(i){
+       plot(density(allratio[,i]),xlab="max ratio",ylab="density",main=i)
+       abline(v=recomp[i],lty=2,col="red",lwd=2)
+       abline(v=quantile(allratio[,i],probs=.60),lty=3,col="blue",lwd=2)
+})
+
+recomp=sapply(colnames(allratio),function(i) quantile(allratio[,i],probs=.75)[1] )
+names(recomp)=ratioiso
+allsites=createRatioMatrix(pryce,ratioiso,recomp)
+
+
+```
+
+Creat a distance version of ratio's ratio
+
+
+
+```{r}
+mya=pryce[pryce$Country=="Myanmar",]
+allratioLog=apply(KWPV,2,function(v){ y=1-sapply(v,function(i)log(i)/log(max(v))); y[y!=0]; })
+recompLog=sapply(colnames(allratioLog),function(i) quantile(allratioLog[,i],probs=.65)[1] )
+names(recompLog)=ratioiso
+allsitesLog=createRatioMatrix(pryce,ratioiso,recompLog,log=T)
+consistencmyanmarLog=allsitesLog[pryce$Country=="Myanmar",pryce$Country=="Myanmar"]
+consistencmyanmarLog[consistencmyanmarLog<3]=0
+consistencmyanmarLog[consistencmyanmarLog==3]=1
+myanmarIsoCompGraphLog=graphFromAdj(consistencmyanmarLog,mask=1,label=mya$LABEL.analytical)
+leidenLog=cluster_leiden(myanmarIsoCompGraphLog,objective_function = "modularity")
+V(myanmarIsoCompGraphLog)$color=leidenLog$membership
+png("networksSamples.png",width=1500,height=1500,pointsize=12)
+plot(myanmarIsoCompGraphLog)
+dev.off()
+myanmarSiteAdjMatLog=createAreaAdjMat(mya,mya$Site.abreviation,leidenLog$membership,match=simpmatch)
+#myanmarSiteAdjMatLog=1/(myanmarSiteAdjMatLog^2)
+myanmarSiteAdjMatLog=exp(myanmarSiteAdjMatLog+1)-exp(1)
+#myanmarSiteAdjMatLog[!is.finite(myanmarSiteAdjMatLog)]=0
+myanmarSiteLinkGraphLog=graphFromAdj(myanmarSiteAdjMatLog,label=colnames(myanmarSiteAdjMatLog))
+E(myanmarSiteLinkGraphLog)$width=E(myanmarSiteLinkGraphLog)$weight*5
+allcomuLog=cluster_leiden(myanmarSiteLinkGraphLog,objective_function = "modularity")
+V(myanmarSiteLinkGraphLog)$color=allcomuLog$membership
+png("networksSites.png",width=1200,height=1200,pointsize=12)
+plot(myanmarSiteLinkGraphLog)
+dev.off()
+
+
+
+allratio=apply(KWPV,2,function(v){ y=1-sapply(v,function(i)i/max(v)); y[y!=0]; })
+recomp=sapply(colnames(allratio),function(i) quantile(allratio[,i],probs=.80)[1] )
+names(recomp)=ratioiso
+allsites=createRatioMatrix(pryce,ratioiso,recomp)
+consistencmyanmar=allsites[pryce$Country=="Myanmar",pryce$Country=="Myanmar"]
+consistencmyanmar[consistencmyanmar<3]=0
+consistencmyanmar[consistencmyanmar==3]=1
+lbls=mya$LABEL.analytical
+lbls=sapply(lapply(strsplit(lbls,"/"),"[",3:4),paste0,collapse="/")
+
+myanmarIsoCompGraph=graphFromAdj(consistencmyanmar,mask=1,label=lbls)
+leidenArtefac=cluster_leiden(myanmarIsoCompGraph,objective_function = "modularity")
+V(myanmarIsoCompGraph)$color=leidenArtefac$membership
+pdf("networksSamples.pdf",width=12,height=12,pointsize=12)
+plot(myanmarIsoCompGraph)
+dev.off()
+
+#png("consitencycheck55.png",width=2000,height=2400,pointsize=20)
+#par(mfrow=c(2,1))
+#colour=allgroups[pryce$Country=="Myanmar",3]
+#consistencymat=consistencmyanmar
+#plot(mya[,ratioiso[3]],mya[,ratioiso[2]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[2]]],xlab=ratioiso[3],ylab=ratioiso[2],bg=colour,pch=21)
+#for(a in 1:nrow(mya)){
+#    coorda=mya[a,ratioiso[c(3,2)]]
+#    coordbs=mya[consistencymat[a,]==1,ratioiso[c(3,2)],drop=F]
+#    if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+#}
+#points(mya[,ratioiso[3]],mya[,ratioiso[2]],bg=colour,pch=21)
+#text(mya[,ratioiso[3]],mya[,ratioiso[2]],mya$Site.abreviation,cex=.7,pos=1)
+#
+#plot(mya[,ratioiso[3]],mya[,ratioiso[1]],xlim=ratiolim[[ratioiso[3]]],ylim=ratiolim[[ratioiso[1]]],xlab=ratioiso[3],ylab=ratioiso[1],bg=colour,pch=21)
+#for(a in 1:nrow(mya)){
+#    coorda=mya[a,ratioiso[c(3,1)]]
+#    coordbs=mya[consistencymat[a,]==1,ratioiso[c(3,1)],drop=F]
+#    if(nrow(coordbs)>1) apply(coordbs,1,function(b)segments(x0=coorda[[1]],y0=coorda[[2]],x1=b[[1]],y1=b[[2]],lwd=.1))
+#}
+#text(mya[,ratioiso[3]],mya[,ratioiso[1]],mya$Site.abreviation,cex=.7,pos=1)
+#points(mya[,ratioiso[3]],mya[,ratioiso[1]],bg=colour,pch=21)
+#legend("bottomright",legend=levels(as.factor(mya$Country)),pch=1:11)
+#dev.off()
+
+
+subset=mya[!(mya$Site.abreviation %in% c("KAW","YTCM","BAW","PDHT")),]
+subind=!(mya$LABEL.analytical %in% remove)
+subset=mya[subind,]
+subcons=consistencmyanmar[subind,subind]
+
+lbls=subset$LABEL.analytical
+lbls=sapply(lapply(strsplit(lbls,"/"),"[",3:4),paste0,collapse="/")
+myanmarIsoCompGraph=graphFromAdj(subcons,mask=1,label=lbls)
+leidenArtefacMyanmar=cluster_leiden(myanmarIsoCompGraph,objective_function = "modularity",resolution_parameter = 1.2)
+V(myanmarIsoCompGraph)$color=leidenArtefacMyanmar$membership
+pdf("networksSamples.pdf",width=15,height=15)
+plot(myanmarIsoCompGraph)
+dev.off()
+
+nm=max(table(subset$Site.abreviation))
+myanmarSiteAdjMat=createAreaAdjMat(subset,subset$Site.abreviation,leidenArtefac$membership,match=divmatch)
+#myanmarSiteAdjMat=exp(myanmarSiteAdjMat+1)-exp(1)
+#myanmarSiteAdjMat=log(myanmarSiteAdjMat+1)
+
+myanmarSiteLinkGraph=graphFromAdj(log10(myanmarSiteAdjMat+1),label=colnames(myanmarSiteAdjMat))
+myanmarSiteLinkGraph=graphFromAdj(myanmarSiteAdjMat/leidenArtefacMyanmar$nb_cluster,label=colnames(myanmarSiteAdjMat))
+E(myanmarSiteLinkGraph)$width=E(myanmarSiteLinkGraph)$weight
+allcomuSitesMyamar=cluster_leiden(myanmarSiteLinkGraph,,objective_function = "modularity")
+V(myanmarSiteLinkGraph)$color=allcomuSitesMyamar$membership
+
+png("networksSites.png",width=1200,height=1200,pointsize=12)
+plot(myanmarSiteLinkGraph)
+dev.off()
+
+
+allIsoCompGraphLog=graphFromAdj(allsitesLog,mask=3,label=pryce$Site.abreviation)
+leidenLog=cluster_leiden(allIsoCompGraphLog,objective_function = "modularity")
+V(allIsoCompGraphLog)$color=leidenLog$membership
+plot(allIsoCompGraphLog)
+allSiteAdjMatLog=createAreaAdjMat(pryce,pryce$Site.abreviation,leidenLog$membership,match=simpmatch)
+#allSiteAdjMatLog=1/(allSiteAdjMatLog^2)
+allSiteAdjMatLog=exp(allSiteAdjMatLog+1)-exp(1)
+#allSiteAdjMatLog[!is.finite(allSiteAdjMatLog)]=0
+allSiteLinkGraphLog=graphFromAdj(allSiteAdjMatLog,label=colnames(allSiteAdjMatLog))
+E(allSiteLinkGraphLog)$width=E(allSiteLinkGraphLog)$weight
+allcomuLog=cluster_leiden(allSiteLinkGraphLog,objective_function = "modularity")
+V(allSiteLinkGraphLog)$color=allcomuLog$membership
+plot(allSiteLinkGraphLog)
+
+
+
+allIsoCompGraph=graphFromAdj(allsites,mask=3,label=pryce$Site.abreviation)
+allDSleidenArtefact=cluster_leiden(allIsoCompGraph,objective_function = "modularity")
+V(allIsoCompGraph)$color=leidenArtefact$membership
+V(allIsoCompGraph)$size=1.5
+E(allIsoCompGraph)$width=.1
+
+plot(allIsoCompGraphLog)
+cairo_pdf("wholeDataWnetworksSites.pdf",width=30,height=30)
+plot(allIsoCompGraph)
+dev.off()
+plot(myanmarSiteLinkGraph)
+
+allSiteAdjMat=createAreaAdjMat(pryce,pryce$Site.abreviation,leidenArtefact$membership,match=divmatch)
+#allSiteAdjMat=exp(allSiteAdjMat+1)-exp(1)
+allSiteAdjMat=log(allSiteAdjMat+1)
+allSiteLinkGraph=graphFromAdj(allSiteAdjMat,label=colnames(allSiteAdjMat))
+E(allSiteLinkGraph)$width=E(allSiteLinkGraph)$weight
+allcomuSites=cluster_leiden(allSiteLinkGraph,,objective_function = "modularity")
+V(allSiteLinkGraph)$color=allcomuSites$membership
+par(mfrow=c(1,2))
+plot(allSiteLinkGraphLog)
+plot(allSiteLinkGraph)
+
+cols=V(allSiteLinkGraph)$color
+names(cols)=V(allSiteLinkGraph)$label
+pryce$col=V(allSiteLinkGraph)$L
+spat=pryce[!is.na(pryce[,"Easting...Longitude"]),]
+
+p.sf=st_as_sf(spat,coords=c("Easting...Longitude","Northing.Latitude"),crs=st_crs(seashapefile))
+plot(st_geometry(p.sf),pch=21,bg=categorical_pal(8)[cols[spat$Site.abreviation]])
+plot(seashapefile.cr,add=T)
+
+coordsites=t(sapply(V(allSiteLinkGraph)$label,function(lbl)apply(unique(bigsite[bigsite$Site.abreviation == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean)))
+
+myaspat=mya[!is.na(mya[,"Easting...Longitude"]),]
+myap.sf=st_as_sf(myaspat,coords=c("Easting...Longitude","Northing.Latitude"),crs=st_crs(seashapefile))
+plot(st_geometry(myap.sf),pch=21,bg=leiden$membership[!is.na(mya[,"Easting...Longitude"])])
+plot(seashapefile.cr,add=T)
+
+
+coordsites=t(sapply(V(myanmarSiteLinkGraph)$name,function(lbl)apply(unique(pryce[ pryce$Site.abreviation == lbl,c("Easting...Longitude","Northing.Latitude")]),2,mean,na.rm=T)))
+
+####print ces battard avec le bon layout
+E(myanmarSiteLinkGraph)$color=V(myanmarSiteLinkGraph)[head_of(myanmarSiteLinkGraph,E(myanmarSiteLinkGraph))]$color
+E(myanmarSiteLinkGraph)$color=adjustcolor(1,.8)
+V(myanmarSiteLinkGraph)$label.cex=.8
+myanmarSiteLinkGraph=colorEdges(myanmarSiteLinkGraph)
+coordMyanmar=coordForGraph(myanmarSiteLinkGraph,mya,"Site.abreviation")
+pdf("groupSitesMyanmarNoMineral.pdf")
+plot(coordMyanmar,ann=F,axes=F,type="n")
+plot(myanmarSiteLinkGraph,layout=coordsites,add=T,rescale=F)
+graph.sp=st_as_sf(as.data.frame(coordsites),coords=1:2,crs=st_crs(seashapefile.cr))
+plot(st_crop(seashapefile.cr,graph.sp),add=T)
+dev.off()
+
+
+E(allSiteLinkGraph)$color=V(allSiteLinkGraph)[head_of(allSiteLinkGraph,E(allSiteLinkGraph))]$color
+E(allSiteLinkGraph)$color=adjustcolor("black",.1)
+V(allSiteLinkGraph)$width=.01
+V(allSiteLinkGraph)$size=50
+V(allSiteLinkGraph)$label.cex=4
+allSiteLinkGraph=colorEdges(allSiteLinkGraph)
+coordsGraphAllsites=coordForGraph(allSiteLinkGraph,pryce,"Site.abreviation" )
+cairo_pdf("wholeDataWnetworksSitesGeoloc.pdf",width=140,height=70)
+plot(coordsGraphAllsites,ann=F,axes=F,type="n")
+plot(allSiteLinkGraph,layout=coordsGraphAllsites,add=T,rescale=F)
+graph.sp=st_as_sf(as.data.frame(coordsGraphAllsites[!is.na(coordsGraphAllsites[,1]),]),coords=1:2,crs=st_crs(seashapefile.cr))
+plot(st_crop(seashapefile.cr,graph.sp),add=T,col=adjustcolor("grey",.3))
+dev.off()
+
+
+
+```
+
+Testing UMAP visualisation:
+
+```{r}
+
+umappryce=umap(pryce[,ratioiso]) 
+umappryce=umap(mya[,ratioiso]) 
+plot(umappryce$layout,col=rainbow(length(unique(mya$Site)))[as.factor(mya$Site)],pch=20,cex=3)  
+
+plot(umappryce$knn$indexes)
+
+remove <- c( "SEALIP/MY/BAW/1", "SEALIP/MY/BAW/2", "SEALIP/MY/BAW/3", "SEALIP/MY/BWD/1", "SEALIP/MY/BWD/2", "SEALIP/MY/KAW/1", "SEALIP/MY/KAW/2", "SEALIP/MY/KAW/3", "SEALIP/MY/MIN/1", "SEALIP/MY/MIN/2", "SEALIP/MY/MIN/3", "SEALIP/MY/NTL/1", "SEALIP/MY/NTL/2", "SEALIP/MY/NTL/3", "SEALIP/MY/PDHT/1", "SEALIP/MY/PDHT/2", "SEALIP/MY/PDHT/3", "SEALIP/MY/ST/1", "SEALIP/MY/ST/2", "SEALIP/MY/ST/3", "SEALIP/MY/TKM/1", "SEALIP/MY/TKM/2", "SEALIP/MY/TKM/3", "SEALIP/MY/LPDT/1", "SEALIP/MY/YTCM/1")
+```
+
+Notes avant abandon de poste:
+
+=> faire le "recomp2" en utilisant oli's threshold ; et/ou les miens.
+
+=> extraire reseau de "consistency"
+
+remove elements qui 'on qu'un sample" 
+
+=> faire matrix d'addjacence (des sites)  en utilisant divmatch (c'est a dire total number of match). Trouver une façon de calculer les probabilités.
+
+positionner les sites sur la cartes (en utilisant les coordonnées ; cad extraire les coordonnées unique pour chaque label
+
+```{r}
+coordsites=t(sapply(V(sites.graph)$label,function(lbl)apply(unique(basinriv[basinriv$River.basin == lbl,c("River.basin.coordinates.E","River.basin.coordinates.N")]),2,mean)))
+```
+
+## rubish de derreire les fagots:
+
+
+
+```{r}
+mya.consmat=createRatioMatrix(mya,ratioiso,threshold)
+dimnames(mya.consmat)=list(mya$LABELS.shorts,mya$LABELS.shorts)
+mya.consmat[mya.consmat<3]=0
+mya.consmat[mya.consmat==3]=1
+mya.graph=graphFromAdj(mya.consmat,label=mya$LABELS.shorts,mask=1)
+mya.cluster=cluster_louvain(mya.graph)
+V(mya.graph)$color=mya.cluster$membership
+plot(mya.graph)
+singletons=which(apply(mya.consmat,2,sum)==0)
+groupssingletons=mya.cluster$membership[singletons]
+table(mya.cluster[groupssingletons])
+
+isotopes.consmat=createRatioMatrix(isotopes,ratioiso,threshold)
+dimnames(isotopes.consmat)=list(isotopes$LABELS.shorts,isotopes$LABELS.shorts)
+isotopes.consmat[isotopes.consmat<3]=0
+isotopes.consmat[isotopes.consmat==3]=1
+isotopes.graph=graphFromAdj(isotopes.consmat,label=isotopes$LABELS.shorts,mask=1)
+isotopes.cluster=cluster_louvain(isotopes.graph)
+V(isotopes.graph)$color=isotopes.cluster$membership
+plot(isotopes.graph)
+singletons=apply(isotopes.consmat,2,sum)
+singletons=which(apply(isotopes.consmat,2,sum)==0)
+groupssingletons=isotopes.cluster$membership[singletons]
+isotopes.cluster[groupssingletons]
+```
+
+here for exemple 
+
