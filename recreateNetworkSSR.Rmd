@@ -1,5 +1,36 @@
 
+---
+title: "Recap of network exploration combinated with proto SSR"
+author: "SC"
+date: "`r Sys.time()`"
+output: 
+    bookdown::html_document2:
+        code_folding: hide
+        section_numbers: true
+        toc: true
+        toc_depth: 3
+        toc_float: true
+        fig_width: 10
+        fig_height: 8
+
+---
+
+
+<style type="text/css">
+body .main-container {
+max-width: 1800px;
+margin-left: auto;
+margin-right: auto;
+}
+p.caption {
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+</style>
+
 ```{r}
+knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide",fig.align="center")
 
 library(sf)
 library(igraph)
@@ -36,8 +67,6 @@ V(netssr)$label.cex=.8
 V(netssr)$label.color="black"
 V(netssr)$size=.8
 plot(netssr)
-plot(netssr,layout=st_coordinates(SSR)[,1:2],add=F,rescale=F)
-
 
 ```
 
@@ -50,6 +79,7 @@ missing[!missing]
 missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
 coords=t(sapply(rownames(netSSR),function(i)st_coordinates(SSR[i == SSR$Name,])[1:2]))
 
+SSR$geometry
 plot(netssr)
 ```
 
@@ -64,14 +94,143 @@ par(mar=c(0,0,0,0))
 netSSR=netSSR[!is.na(coords[,1]),!is.na(coords[,1])]
 netssr=igraph::graph_from_adjacency_matrix(netSSR,mode = "undirected")
 plot(st_geometry(st_crop(sealip,st_buffer(SSR,200000))),reset=F)
-V(netssr)$size=5
-V(netssr)$name=sapply(strsplit(V(netssr)$name,""),function(i)paste0(i[1:min(length(i),7)],collapse=""))
+V(netssr)$size=25
+
+V(netssr)$label=sapply(strsplit(V(netssr)$name,""),function(i)paste0(i[1:min(length(i),7)],collapse=""))
+V(netssr)$label=gsub("\\W","",V(netssr)$label)
+V(netssr)$label.dist=5
 V(netssr)$color=adjustcolor("black",.4)
 E(netssr)$color=adjustcolor("black",.4)
 V(netssr)$color=adjustcolor("black",.4)
 V(netssr)$label.color="black"
 V(netssr)$label.cex=.85
 V(netssr)$label.las=2
-plot(netssr,layout=coords[!is.na(coords[,1]),],add=T,rescale=F)
+plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
+plot(netssr,layout=coords[V(netssr)$name,])
 
 ```
+
+
+Then create network using the metal:
+
+```{r}
+
+source("tools.R")
+KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
+KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
+threshold  <- sapply(ratioiso,function(r){
+                     v_ex=KWPV[,r]
+                     alld=1-sapply(v_ex,function(i)i/v_ex)
+                     quantile(alld[alld>0],probs=.75)[[1]]
+})
+ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
+isotopes=read.csv("data/DATA isotopie_Pryce_V13092022.csv")
+
+isotopes$LABELS.shorts=sapply(lapply(strsplit(isotopes$LABEL.analytical,"/"),"[",3:4),paste0,collapse="/")
+
+isotopes.consmat=createRatioMatrix(isotopes,ratioiso,threshold) 
+dimnames(isotopes.consmat)=list(isotopes$LABELS.shorts,isotopes$LABELS.shorts)
+isotopes.consmat[isotopes.consmat<3]=0
+isotopes.consmat[isotopes.consmat==3]=1
+isotopes.graph = graphFromAdj(isotopes.consmat,label=isotopes$LABELS.shorts)
+isotopes.clus=cluster_leiden(isotopes.graph,objective_function="modularity")
+
+isotopes.sitemat=createAreaAdjMat(isotopes,isotopes$Site.abreviation,isotopes.clus$membership,match=RGmatchNormalised)
+isotopes.sitegraph = graphFromAdj(isotopes.sitemat,label=rownames(isotopes.sitemat))
+alledges=E(isotopes.sitegraph)
+tdl=alledges[ alledges$weight < .4]
+isotopes.sitegraph=delete.edges(isotopes.sitegraph,tdl)
+isotopes.sitecluster=cluster_leiden(isotopes.sitegraph,objective_function = "modularity")
+V(isotopes.sitegraph)$color=isotopes.sitecluster$membership
+E(isotopes.sitegraph)$width=E(isotopes.sitegraph)$weight
+isotopes.sitegraph=colorEdges(isotopes.sitegraph)
+plot(isotopes.sitegraph,main="networkd of sites")
+isotopes.sitegraph.coords=coordForGraph(isotopes.sitegraph,isotopes,"Site.abreviation")
+plot(isotopes.sitegraph.coords,ann=F,axes=F,type="n")
+invalidcoords=apply(apply(isotopes.sitegraph.coords,2,is.na),1,any)
+
+graph.sp=st_as_sf(as.data.frame(isotopes.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
+plot(st_geometry(st_crop(sealip,graph.sp)),add=T)
+plot(isotopes.sitegraph,layout=isotopes.sitegraph.coords,add=T,rescale=F)
+plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
+```
+
+Check community by communities
+
+```{r,out.width="50%",fig.cap="communities detected for the whole dataset using normalized metric"}
+
+for(gp in which(lengths(isotopes.sitecluster,use.names=F)>1)){
+    sub=subgraph(isotopes.sitegraph,isotopes.sitecluster[[gp]])
+    sub=set_graph_attr(sub,"layout",isotopes.sitegraph.coords[V(sub)$name,])
+    try({
+    plot(isotopes.sitegraph.coords,ann=F,axes=F,type="n")
+    plot(sub,add=T,rescale=F)
+    invalidcoords=apply(apply(isotopes.sitegraph.coords,2,is.na),1,any)
+    graph.sp=st_as_sf(as.data.frame(isotopes.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
+    plot(st_geometry(st_crop(sealip,graph.sp)),add=T)
+    E(netssr)$width=5
+    E(netssr)$color="red"
+    plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
+    })
+}
+
+```
+
+Using only  Bronze age artefact and removing links that are below a certain threshold
+
+```{r,out.width="100%",fig.cap="Networks of sites with bronze age artefacts"}
+tmpiso=isotopes[grep("Bronze",isotopes$Large.period),]
+
+tmpiso.consmat=createRatioMatrix(tmpiso,ratioiso,threshold) 
+dimnames(tmpiso.consmat)=list(tmpiso$LABELS.shorts,tmpiso$LABELS.shorts)
+tmpiso.consmat[tmpiso.consmat<3]=0
+tmpiso.consmat[tmpiso.consmat==3]=1
+tmpiso.graph = graphFromAdj(tmpiso.consmat,label=tmpiso$LABELS.shorts)
+tmpiso.clus=cluster_leiden(tmpiso.graph,objective_function="modularity")
+tmpiso.sitemat=createAreaAdjMat(tmpiso,tmpiso$Site.abreviation,tmpiso.clus$membership,match=RGmatchNormalised)
+tmpiso.sitegraph = graphFromAdj(tmpiso.sitemat,label=rownames(tmpiso.sitemat))
+
+alledges=E(tmpiso.sitegraph)
+tdl=alledges[ alledges$weight < .3]
+tmpiso.sitegraph=delete.edges(tmpiso.sitegraph,tdl)
+
+tmpiso.sitecluster=cluster_leiden(tmpiso.sitegraph,objective_function = "modularity")
+V(tmpiso.sitegraph)$color="dark green"
+V(tmpiso.sitegraph)$size=20
+V(tmpiso.sitegraph)$label.dist=5
+E(tmpiso.sitegraph)$width=E(tmpiso.sitegraph)$weight
+tmpiso.sitegraph=colorEdges(tmpiso.sitegraph)
+plot(tmpiso.sitegraph,main="networkd of sites")
+tmpiso.sitegraph.coords=coordForGraph(tmpiso.sitegraph,tmpiso,"Site.abreviation")
+plot(st_geometryst_buffer(netssr.sf,50000),ann=F,axes=F,type="n")
+invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
+graph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
+netssr.sf=st_as_sf(as.data.frame(coords[!is.na(coords[,1]),]),coords=c(1,2))
+plot(st_geometry(st_crop(sealip,st_buffer(netssr.sf,50000))),add=T)
+plot(tmpiso.sitegraph,layout=tmpiso.sitegraph.coords,add=T,rescale=F)
+plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
+
+```
+
+Separate communities
+
+```{r,out.width="50%",fig.cap="communities detected for the whole dataset using normalized metric"}
+
+for(gp in which(lengths(tmpiso.sitecluster,use.names=F)>1)){
+    sub=subgraph(tmpiso.sitegraph,tmpiso.sitecluster[[gp]])
+    sub=set_graph_attr(sub,"layout",tmpiso.sitegraph.coords[V(sub)$name,])
+    try({
+        plot(tmpiso.sitegraph.coords,ann=F,axes=F,type="n")
+        plot(sub,add=T,rescale=F)
+        invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
+        graph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
+        plot(st_geometry(st_crop(sealip,graph.sp)),add=T)
+        E(netssr)$width=5
+        E(netssr)$color="red"
+        plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
+    })
+}
+
+
+```
+
