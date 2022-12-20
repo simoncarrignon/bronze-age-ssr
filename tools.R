@@ -106,6 +106,7 @@ graphFromAdj <- function(adjmat,mask=NULL,label=NULL){
 #' @param match a function that coompute how sites match
 #' @param compoistion the value used to match the area
 createAreaAdjMat <- function(dataset,area,composition,match=NULL){
+    stopifnot(!is.null(area))
     topLevelArea=unique(area)
     adjmat=matrix(NA,nrow=length(topLevelArea),ncol=length(topLevelArea))
     for(s1 in 1:length(topLevelArea)){
@@ -221,3 +222,10 @@ colorEdges <- function(graph){
     E(graph)$color[left==right]=left[left==right]
     return(graph)
 }
+
+#think that here I wanted to have something i can easily adapt with different groups
+threshold <- function(r,group){
+                     v_ex=KWPV[,r]
+                     alld=1-sapply(v_ex,function(i)i/v_ex)
+                     quantile(alld[alld>0],probs=.75)[[1]]
+}WPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
