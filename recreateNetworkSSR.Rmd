@@ -43,9 +43,9 @@ plot(st_geometry(SSR),add=T,pch=21,bg="red")
 edgemat=matrix(0,nrow=nrow(SSR),ncol = nrow(SSR))
 colnames(edgemat)=SSR$Name
 rownames(edgemat)=SSR$Name
-write.csv(file="edgematrix.csv",edgemat)
+#write.csv(file="edgematrix.csv",edgemat)
 edgelist=cbind(expand.grid(SSR$Name,SSR$Name),0)
-write.csv(file="edgelist.csv",edgelist)
+#write.csv(file="edgelist.csv",edgelist)
 
 netSSR=read.csv("data/SSR network - Matrix.csv",header=F)
 rownames(netSSR)=netSSR[,1]
@@ -54,9 +54,9 @@ colnames(netSSR)=netSSR[1,]
 netSSR=netSSR[2:nrow(netSSR),]
 netSSR=as.matrix(netSSR)
 
-#There is a rpoblem of names that have been swithced so:
+#There is a rpoblem of names that have been switched so:
 
-dim(netSSR)
+#dim(netSSR)
 sum(!sapply(rownames(netSSR),function(i)i %in% colnames(netSSR)))
 sum(!sapply(colnames(netSSR),function(i)i %in% rownames(netSSR)))
 netSSR=netSSR[colnames(netSSR),]
@@ -79,7 +79,6 @@ missing[!missing]
 missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
 coords=t(sapply(rownames(netSSR),function(i)st_coordinates(SSR[i == SSR$Name,])[1:2]))
 
-SSR$geometry
 plot(netssr)
 ```
 
@@ -106,12 +105,11 @@ V(netssr)$label.color="black"
 V(netssr)$label.cex=.85
 V(netssr)$label.las=2
 plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
-plot(netssr,layout=coords[V(netssr)$name,])
 
 ```
 
 
-Then create network using the metal:
+Then create network using metal isotpots similarities.:
 
 ```{r}
 
@@ -138,13 +136,14 @@ isotopes.clus=cluster_leiden(isotopes.graph,objective_function="modularity")
 isotopes.sitemat=createAreaAdjMat(isotopes,isotopes$Site.abreviation,isotopes.clus$membership,match=RGmatchNormalised)
 isotopes.sitegraph = graphFromAdj(isotopes.sitemat,label=rownames(isotopes.sitemat))
 alledges=E(isotopes.sitegraph)
-tdl=alledges[ alledges$weight < .4]
+plot(density(alledges$weight))
+tdl=alledges[ alledges$weight < .16]
 isotopes.sitegraph=delete.edges(isotopes.sitegraph,tdl)
 isotopes.sitecluster=cluster_leiden(isotopes.sitegraph,objective_function = "modularity")
 V(isotopes.sitegraph)$color=isotopes.sitecluster$membership
 E(isotopes.sitegraph)$width=E(isotopes.sitegraph)$weight
 isotopes.sitegraph=colorEdges(isotopes.sitegraph)
-plot(isotopes.sitegraph,main="networkd of sites")
+plot(isotopes.sitegraph,main="Network of sites based on shared artefacts from same family")
 isotopes.sitegraph.coords=coordForGraph(isotopes.sitegraph,isotopes,"Site.abreviation")
 plot(isotopes.sitegraph.coords,ann=F,axes=F,type="n")
 invalidcoords=apply(apply(isotopes.sitegraph.coords,2,is.na),1,any)
@@ -175,8 +174,9 @@ for(gp in which(lengths(isotopes.sitecluster,use.names=F)>1)){
 }
 
 ```
+# Bronze period only
 
-Using only  Bronze age artefact and removing links that are below a certain threshold
+We use only Bronze age artefacts;  and removing links that are below a certain threshold.
 
 ```{r,out.width="100%",fig.cap="Networks of sites with bronze age artefacts"}
 tmpiso=isotopes[grep("Bronze",isotopes$Large.period),]
@@ -191,28 +191,29 @@ tmpiso.sitemat=createAreaAdjMat(tmpiso,tmpiso$Site.abreviation,tmpiso.clus$membe
 tmpiso.sitegraph = graphFromAdj(tmpiso.sitemat,label=rownames(tmpiso.sitemat))
 
 alledges=E(tmpiso.sitegraph)
-tdl=alledges[ alledges$weight < .3]
-tmpiso.sitegraph=delete.edges(tmpiso.sitegraph,tdl)
+#tdl=alledges[ alledges$weight < .3]
+#tmpiso.sitegraph=delete.edges(tmpiso.sitegraph,tdl)
 
 tmpiso.sitecluster=cluster_leiden(tmpiso.sitegraph,objective_function = "modularity")
-V(tmpiso.sitegraph)$color="dark green"
+V(tmpiso.sitegraph)$color=tmpiso.sitecluster$membership
 V(tmpiso.sitegraph)$size=20
-V(tmpiso.sitegraph)$label.dist=5
 E(tmpiso.sitegraph)$width=E(tmpiso.sitegraph)$weight
 tmpiso.sitegraph=colorEdges(tmpiso.sitegraph)
-plot(tmpiso.sitegraph,main="networkd of sites")
+plot(tmpiso.sitegraph,main="Network of sites based on shared artefacts from same family")
+V(tmpiso.sitegraph)$label.dist=5
 tmpiso.sitegraph.coords=coordForGraph(tmpiso.sitegraph,tmpiso,"Site.abreviation")
-plot(st_geometryst_buffer(netssr.sf,50000),ann=F,axes=F,type="n")
 invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
 graph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
 netssr.sf=st_as_sf(as.data.frame(coords[!is.na(coords[,1]),]),coords=c(1,2))
-plot(st_geometry(st_crop(sealip,st_buffer(netssr.sf,50000))),add=T)
+plot(graph.sp,type="n")
+plot(st_geometry(st_crop(sealip,st_buffer(netssr.sf,50000))),add=T,col=adjustcolor("pink",.2))
 plot(tmpiso.sitegraph,layout=tmpiso.sitegraph.coords,add=T,rescale=F)
+E(netssr)$width=1
 plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
 
 ```
 
-Separate communities
+We separate and show only network fo same communities
 
 ```{r,out.width="50%",fig.cap="communities detected for the whole dataset using normalized metric"}
 
@@ -221,16 +222,45 @@ for(gp in which(lengths(tmpiso.sitecluster,use.names=F)>1)){
     sub=set_graph_attr(sub,"layout",tmpiso.sitegraph.coords[V(sub)$name,])
     try({
         plot(tmpiso.sitegraph.coords,ann=F,axes=F,type="n")
+        E(sub)$width=3
         plot(sub,add=T,rescale=F)
         invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
         graph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
-        plot(st_geometry(st_crop(sealip,graph.sp)),add=T)
-        E(netssr)$width=5
+        plot(st_geometry(sealip),col=adjustcolor("pink",.2),add=T)
+        box()
+        E(netssr)$width=1
         E(netssr)$color="red"
         plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
     })
 }
 
+
+```
+
+
+Let's explore this Bronze age network link by link.
+So let check how the 156 bronze age samples have been classify, and how this classification is distributed within sites:
+
+```{r,results="asis"}
+cat("## Classification of evry samples in each groups\n")
+famcompo=tapply(tmpiso$LABEL.analytical,paste0("gpe",tmpiso.clus$membership),unique)
+na=lapply(names(famcompo),function(g) cat(paste(g,":\n<br>\t",paste0(famcompo[[g]],collapse = " - "),"<br>\n")))
+sitecompo=tapply(paste0("gpe",tmpiso.clus$membership),tmpiso$Site.abreviation,table)
+cat("## Distribution of group for each sites\n")
+for(g in names(sitecompo)){cat(paste("site",g,"is made of:\n<br>"));sapply(names(sitecompo[[g]]),function(n)cat(paste(sitecompo[[g]][n],"samples from ",n ,",")));cat("<br>\n============<br>\n ")}
+
+par(mfrow=c(1,2))
+gpe=paste0("gpe",tmpiso.clus$membership)
+cnt=table(gpe)
+ncol=length(cnt[cnt>1])
+sitecol=adjustcolor(rainbow(ncol),.6)
+names(sitecol)=names(cnt[cnt>1])
+plot(tmpiso[,ratioiso[3:2]],bg=sitecol[gpe],pch=21,cex=2)
+text(tmpiso[,ratioiso[c(3,2)]],tmpiso$LABELS.shorts,,cex=.6,pos=1)
+legend("bottom",legend=names(sitecol),pt.bg=sitecol,pch=21,pt.cex=2,ncol=4)
+plot(tmpiso[,ratioiso[c(3,1)]],bg=sitecol[gpe],pch=21,cex=2)
+text(tmpiso[,ratioiso[c(3,1)]],tmpiso$LABELS.shorts,,cex=.6,pos=1)
+legend("topleft",legend=names(sitecol),pt.bg=sitecol,pch=21,pt.cex=2,ncol=4)
 
 ```
 
