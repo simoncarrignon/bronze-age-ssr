@@ -29,16 +29,20 @@ p.caption {
 
 </style>
 
+# Community detection using the whole dataset
+
 ```{r}
 knitr::opts_chunk$set(warning=FALSE,message=FALSE,cache=FALSE,collapse=TRUE,fig.show="hold",results="hide",fig.align="center")
+```
+```{r}
 
 library(sf)
 library(igraph)
 SSR=do.call("rbind",lapply(list.files("SSRgeoloc/",full.names = T),st_read))
-plot(st_geometry(SSR))
+#plot(st_geometry(SSR))
 sealip=st_read("Cartes/allseaborder_lowq.shp")
-plot(st_geometry(st_crop(sealip,st_buffer(SSR,800000))),reset=F)
-plot(st_geometry(SSR),add=T,pch=21,bg="red")
+#plot(st_geometry(st_crop(sealip,st_buffer(SSR,800000))),reset=F)
+#plot(st_geometry(SSR),add=T,pch=21,bg="red")
 
 edgemat=matrix(0,nrow=nrow(SSR),ncol = nrow(SSR))
 colnames(edgemat)=SSR$Name
@@ -57,29 +61,29 @@ netSSR=as.matrix(netSSR)
 #There is a rpoblem of names that have been switched so:
 
 #dim(netSSR)
-sum(!sapply(rownames(netSSR),function(i)i %in% colnames(netSSR)))
-sum(!sapply(colnames(netSSR),function(i)i %in% rownames(netSSR)))
-netSSR=netSSR[colnames(netSSR),]
+#sum(!sapply(rownames(netSSR),function(i)i %in% colnames(netSSR)))
+#sum(!sapply(colnames(netSSR),function(i)i %in% rownames(netSSR)))
+#netSSR=netSSR[colnames(netSSR),]
 
 
 netssr=igraph::graph_from_adjacency_matrix(netSSR)
 V(netssr)$label.cex=.8
 V(netssr)$label.color="black"
 V(netssr)$size=.8
-plot(netssr)
+#plot(netssr)
 
 ```
 
 
 Detect missing things locations:
 
-```{r}
+```{r,eval=F}
 missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
 missing[!missing]
 missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
 coords=t(sapply(rownames(netSSR),function(i)st_coordinates(SSR[i == SSR$Name,])[1:2]))
 
-plot(netssr)
+#plot(netssr)
 ```
 
 
@@ -94,6 +98,7 @@ netSSR=netSSR[!is.na(coords[,1]),!is.na(coords[,1])]
 netssr=igraph::graph_from_adjacency_matrix(netSSR,mode = "undirected")
 plot(st_geometry(st_crop(sealip,st_buffer(SSR,200000))),reset=F)
 V(netssr)$size=25
+#V(netssr)$size=betweenness(netssr)/20
 
 V(netssr)$label=sapply(strsplit(V(netssr)$name,""),function(i)paste0(i[1:min(length(i),7)],collapse=""))
 V(netssr)$label=gsub("\\W","",V(netssr)$label)
@@ -114,15 +119,16 @@ Then create network using metal isotpots similarities.:
 ```{r}
 
 source("tools.R")
+isotopes=read.csv("data/DATA isotopie_Pryce_V13092022.csv")
 KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
+ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
 threshold  <- sapply(ratioiso,function(r){
                      v_ex=KWPV[,r]
                      alld=1-sapply(v_ex,function(i)i/v_ex)
-                     quantile(alld[alld>0],probs=.75)[[1]]
+                     quantile(alld[alld>0],probs=.90)[[1]]
 })
-ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
-isotopes=read.csv("data/DATA isotopie_Pryce_V13092022.csv")
+isotopes=isotopes[isotopes$Site.abreviation != "TLS",]
 
 isotopes$LABELS.shorts=sapply(lapply(strsplit(isotopes$LABEL.analytical,"/"),"[",3:4),paste0,collapse="/")
 
@@ -135,13 +141,13 @@ isotopes.clus=cluster_leiden(isotopes.graph,objective_function="modularity")
 
 isotopes.sitemat=createAreaAdjMat(isotopes,isotopes$Site.abreviation,isotopes.clus$membership,match=RGmatchNormalised)
 isotopes.sitegraph = graphFromAdj(isotopes.sitemat,label=rownames(isotopes.sitemat))
-alledges=E(isotopes.sitegraph)
-plot(density(alledges$weight))
-tdl=alledges[ alledges$weight < .16]
-isotopes.sitegraph=delete.edges(isotopes.sitegraph,tdl)
+#alledges=E(isotopes.sitegraph)
+#plot(density(alledges$weight))
+#tdl=alledges[ alledges$weight < .16]
+#isotopes.sitegraph=delete.edges(isotopes.sitegraph,tdl)
 isotopes.sitecluster=cluster_leiden(isotopes.sitegraph,objective_function = "modularity")
 V(isotopes.sitegraph)$color=isotopes.sitecluster$membership
-E(isotopes.sitegraph)$width=E(isotopes.sitegraph)$weight
+E(isotopes.sitegraph)$width=exp(E(isotopes.sitegraph)$weight)-1
 isotopes.sitegraph=colorEdges(isotopes.sitegraph)
 plot(isotopes.sitegraph,main="Network of sites based on shared artefacts from same family")
 isotopes.sitegraph.coords=coordForGraph(isotopes.sitegraph,isotopes,"Site.abreviation")
@@ -190,22 +196,23 @@ tmpiso.clus=cluster_leiden(tmpiso.graph,objective_function="modularity")
 tmpiso.sitemat=createAreaAdjMat(tmpiso,tmpiso$Site.abreviation,tmpiso.clus$membership,match=RGmatchNormalised)
 tmpiso.sitegraph = graphFromAdj(tmpiso.sitemat,label=rownames(tmpiso.sitemat))
 
-alledges=E(tmpiso.sitegraph)
+#alledges=E(tmpiso.sitegraph)
 #tdl=alledges[ alledges$weight < .3]
 #tmpiso.sitegraph=delete.edges(tmpiso.sitegraph,tdl)
 
 tmpiso.sitecluster=cluster_leiden(tmpiso.sitegraph,objective_function = "modularity")
 V(tmpiso.sitegraph)$color=tmpiso.sitecluster$membership
 V(tmpiso.sitegraph)$size=20
-E(tmpiso.sitegraph)$width=E(tmpiso.sitegraph)$weight
+#V(tmpiso.sitegraph)$size=betweenness(tmpiso.sitegraph)
+E(tmpiso.sitegraph)$width=2*(exp(E(tmpiso.sitegraph)$weight)-1)
 tmpiso.sitegraph=colorEdges(tmpiso.sitegraph)
 plot(tmpiso.sitegraph,main="Network of sites based on shared artefacts from same family")
 V(tmpiso.sitegraph)$label.dist=5
 tmpiso.sitegraph.coords=coordForGraph(tmpiso.sitegraph,tmpiso,"Site.abreviation")
 invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
-graph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
+fullgraph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
 netssr.sf=st_as_sf(as.data.frame(coords[!is.na(coords[,1]),]),coords=c(1,2))
-plot(graph.sp,type="n")
+plot(st_buffer(fullgraph.sp,100000),lwd=0.0001)
 plot(st_geometry(st_crop(sealip,st_buffer(netssr.sf,50000))),add=T,col=adjustcolor("pink",.2))
 plot(tmpiso.sitegraph,layout=tmpiso.sitegraph.coords,add=T,rescale=F)
 E(netssr)$width=1
@@ -221,13 +228,12 @@ for(gp in which(lengths(tmpiso.sitecluster,use.names=F)>1)){
     sub=subgraph(tmpiso.sitegraph,tmpiso.sitecluster[[gp]])
     sub=set_graph_attr(sub,"layout",tmpiso.sitegraph.coords[V(sub)$name,])
     try({
-        plot(tmpiso.sitegraph.coords,ann=F,axes=F,type="n")
+        plot(st_buffer(fullgraph.sp,100000),lwd=0.00001)
         E(sub)$width=3
-        plot(sub,add=T,rescale=F)
         invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
         graph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
         plot(st_geometry(sealip),col=adjustcolor("pink",.2),add=T)
-        box()
+        plot(sub,add=T,rescale=F)
         E(netssr)$width=1
         E(netssr)$color="red"
         plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
@@ -248,6 +254,11 @@ na=lapply(names(famcompo),function(g) cat(paste(g,":\n<br>\t",paste0(famcompo[[g
 sitecompo=tapply(paste0("gpe",tmpiso.clus$membership),tmpiso$Site.abreviation,table)
 cat("## Distribution of group for each sites\n")
 for(g in names(sitecompo)){cat(paste("site",g,"is made of:\n<br>"));sapply(names(sitecompo[[g]]),function(n)cat(paste(sitecompo[[g]][n],"samples from ",n ,",")));cat("<br>\n============<br>\n ")}
+```
+
+We can thus compare that to the 
+
+```{r,fig.cap="bilplot with colouring using family detected via the threshold computing",fig.width=40,fig.height=20}
 
 par(mfrow=c(1,2))
 gpe=paste0("gpe",tmpiso.clus$membership)
