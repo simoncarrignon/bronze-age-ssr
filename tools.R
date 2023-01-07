@@ -228,4 +228,4 @@ threshold <- function(r,group){
                      v_ex=KWPV[,r]
                      alld=1-sapply(v_ex,function(i)i/v_ex)
                      quantile(alld[alld>0],probs=.75)[[1]]
-}WPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
+}
