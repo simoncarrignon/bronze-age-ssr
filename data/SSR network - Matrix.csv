@@ -1,4 +1,4 @@
-,Annam/Jiaozhi (Hanoi),Anning,Ava (Xilicheng),Bago (Michenguo?),Bakahe (Liruncheng?) ROUGH,Bonan (Bonanzhen),Chengdu,Chengguanzhen (Huiwu),Dali/Yeyu,Dayinkong (Chiang Mai/Lanna),Dazhai (Tongdengchuan?),Deqen,Doushazhen (Shimen),Fengyicheng (Xishuanbanna/Sipsongpanna),Hengshanzhai,Huanzhou (Vinh),Jiangcheng (Hepuchuan?) ROUGH,Jinpingzhen (Yinshengcheng?),Kamarupa,Krung Thep (Bangkok),Kunlunguo/Pegu (Mawlamyine),Kunming/Yizhou,Lao Cai (Guyongbu),Leshan,Lhasa,Lijiang,Lincang (Songjianchuan?),Luodianguo,Luzhenla (Vientiane),Mangshi (Zhugeliangcheng?),Moguang (Jinhaosheng?),Muong Lay (Jianglangchuan?) ROUGH,Nanchangguan/Fengu (Mengzi),Nongdong,Prome,Puer (Jinning),Putao (Dadan?),Qinglongchang (Butuo?),Qiongdu,Qujing (Weixan),Sinanjiangxiang (Kaiyuancheng?),Tagaung,Temadao,Tengcheng (Tengyue/Dianyue),Tonghai,Wendianshan (Weiyuancheng?),Xinjiangcun (Michen?),Yandaozhen (Yandao),Yibin (Bodao),Yongchang (Baoshan),Yunnanyi,Yuxi (Mangnaidao?),Zhaotong (Zhuti),Zhongdian,Zhutangxiang (Qiongechuan?) ROUGH,Ziqi
+,Annam/Jiaozhi (Hanoi),Anning,Ava (Xilicheng),Bago (Michenguo?),Bakahe (Liruncheng?) ROUGH,Bonan (Bonanzhen),Chengdu,Chengguanzhen (Huiwu),Dali/Yeyu,Dayinkong (Chiang Mai/Lanna),Dazhai (Tongdengchuan?),Deqen,Doushazhen (Shimen),Fengyicheng (Xishuanbanna/Sipsongpanna),Hengshanzhai,Huanzhou (Vinh),Jiangcheng (Hepuchuan?) ROUGH,Jinpingzhen (Yinshengcheng?),Kamarupa,Krung Thep (Bangkok),Kunlunguo/Pegu (Mawlamyine),Kunming/Yizhou,Lao Cai (Guyongbu),Leshan,Lhasa,Lijiang,Lincang (Songjianchuan?),Luodianguo,Luzhenla (Vientiane),Mangshi (Zhugeliangcheng?),Moguang (Jinhaosheng?),Muong Lay (Jiangliangchuan) ROUGH,Nanchangguan/Fengu (Mengzi),Nongdong,Prome,Puer (Jinning),Putao (Dadan?),Qinglongchang (Butuo?),Qiongdu,Qujing (Weixan),Sinanjiangxiang (Kaiyuancheng?),Tagaung,Temodao,Tengcheng (Tengyue/Dianyue),Tonghai,Wendianshan (Weiyuancheng?),Xinjiangcun (Michen?),Yandaozhen (Yandao),Yibin (Bodao),Yongchang (Baoshan),Yunnanyi,Yuxi (Mangnaidao?),Zhaotong (Zhuti),Zhongdian,Zhutangxiang (Qiongechuan?) ROUGH,Ziqi
 Annam/Jiaozhi (Hanoi),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Anning,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
 Ava (Xilicheng),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -30,7 +30,7 @@ Luodianguo,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
 Luzhenla (Vientiane),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Mangshi (Zhugeliangcheng?),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,1,0,0,0,0,0,0
 Moguang (Jinhaosheng?),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
-Muong Lay (Jianglangchuan?) ROUGH,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Muong Lay (Jiangliangchuan) ROUGH,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Nanchangguan/Fengu (Mengzi),1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0
 Nongdong,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
 Prome,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -41,7 +41,7 @@ Qiongdu,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 Qujing (Weixan),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Sinanjiangxiang (Kaiyuancheng?),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
 Tagaung,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-Temadao,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Temodao,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Tengcheng (Tengyue/Dianyue),0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0
 Tonghai,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 Wendianshan (Weiyuancheng?),0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
