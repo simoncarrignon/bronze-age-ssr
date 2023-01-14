@@ -81,7 +81,6 @@ Detect missing things locations:
 missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
 missing[!missing]
 missing=sapply(rownames(netSSR),function(i)i %in% SSR$Name)
-coords=t(sapply(rownames(netSSR),function(i)st_coordinates(SSR[i == SSR$Name,])[1:2]))
 
 #plot(netssr)
 ```
@@ -91,6 +90,7 @@ We need to remobe the non coordinates things:
 
 
 ```{r}
+coords=t(sapply(rownames(netSSR),function(i)st_coordinates(SSR[i == SSR$Name,])[1:2]))
 
 
 par(mar=c(0,0,0,0))
@@ -119,7 +119,7 @@ Then create network using metal isotpots similarities.:
 ```{r}
 
 source("tools.R")
-isotopes=read.csv("data/DATA isotopie_Pryce_V13092022.csv")
+isotopes=read.csv("data/DATA isotopie_Pryce_V4.1.csv")
 KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
 ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
@@ -129,6 +129,7 @@ threshold  <- sapply(ratioiso,function(r){
                      quantile(alld[alld>0],probs=.95)[[1]]
 })
 isotopes=isotopes[isotopes$Site.abreviation != "TLS",]
+isotopes=isotopes[isotopes$Site.abreviation != "",]
 
 isotopes$LABELS.shorts=sapply(lapply(strsplit(isotopes$LABEL.analytical,"/"),"[",3:4),paste0,collapse="/")
 
