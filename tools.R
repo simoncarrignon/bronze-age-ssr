@@ -229,3 +229,9 @@ threshold <- function(r,group){
                      alld=1-sapply(v_ex,function(i)i/v_ex)
                      quantile(alld[alld>0],probs=.75)[[1]]
 }
+
+getAllDist <- function(v){
+                     alld=1-sapply(v,function(i)i/v)
+                     alld[alld>0]
+}
+ratioed <- function(r)gsub("\\.","/",gsub("X","",r))
