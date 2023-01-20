@@ -122,12 +122,33 @@ source("tools.R")
 isotopes=read.csv("data/DATA isotopie_Pryce_V4.1.csv")
 KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
+IDVC=c( "SEALIP/LA/PBL/1", "SEALIP/LA/PBL/42", "SEALIP/LA/PBL/2", "SEALIP/LA/PBL/6", "SEALIP/LA/PBL/5", "SEALIP/LA/PBL/4", "SEALIP/LA/PBL/7", "SEALIP/LA/PBL/34", "SEALIP/LA/PBL/32", "SEALIP/LA/PBL/12", "SEALIP/LA/PBL/35", "SEALIP/LA/PBL/13", "SEALIP/LA/PBL/40", "SEALIP/LA/PBL/11", "SEALIP/LA/PBL/39", "SEALIP/LA/PBL/36", "SEALIP/LA/PBL/18", "SEALIP/LA/PBL/14", "SEALIP/LA/PBL/37", "SEALIP/LA/PBL/33", "SEALIP/LA/PBL/3", "SEALIP/LA/PBL/16", "SEALIP/LA/PBL/15", "SEALIP/LA/PBL/20", "SEALIP/LA/PBL/19", "SEALIP/LA/PBL/21", "SEALIP/LA/PBL/10", "SEALIP/LA/PBL/47")
+VC=isotopes[ isotopes$LABEL.analytical %in% IDVC,]
 ratioiso=c("X208Pb.204Pb","X207Pb.204Pb","X206Pb.204Pb")
-threshold  <- sapply(ratioiso,function(r){
-                     v_ex=KWPV[,r]
-                     alld=1-sapply(v_ex,function(i)i/v_ex)
-                     quantile(alld[alld>0],probs=.95)[[1]]
+
+thresholdMix  <- sapply(ratioiso,function(r){
+                     kpwd=getAllDist(KWPV[,r])
+                     VC=getAllDist(VC[,r])
+                     allconsistent=c(VC,kpwd)
+                     quantile(allconsistent,probs=.95)[[1]]
 })
+
+thresholdKPWDonly  <- sapply(ratioiso,function(r){
+                     kpwd=getAllDist(KWPV[,r])
+                     VC=getAllDist(VC[,r])
+                     #allconsistent=kpwd
+                     allconsistent=c(kpwd)
+                     quantile(allconsistent,probs=.95)[[1]]
+})
+threshold  <- sapply(ratioiso,function(r){
+                     kpwd=getAllDist(KWPV[,r])
+                     VC=getAllDist(VC[,r])
+                     allconsistent=c(kpwd,VC)
+                     quantile(allconsistent,probs=.95)[[1]]
+})
+
+
+
 isotopes=isotopes[isotopes$Site.abreviation != "TLS",]
 isotopes=isotopes[isotopes$Site.abreviation != "",]
 
@@ -238,6 +259,7 @@ for(gp in which(lengths(tmpiso.sitecluster,use.names=F)>1)){
         E(netssr)$width=1
         E(netssr)$color="red"
         plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
+        box(which="outer")
     })
 }
 
@@ -275,4 +297,3 @@ text(tmpiso[,ratioiso[c(3,1)]],tmpiso$LABELS.shorts,,cex=.6,pos=1)
 legend("topleft",legend=names(sitecol),pt.bg=sitecol,pch=21,pt.cex=2,ncol=4)
 
 ```
-
