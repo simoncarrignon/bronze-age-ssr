@@ -40,7 +40,7 @@ library(sf)
 library(igraph)
 SSR=do.call("rbind",lapply(list.files("SSRgeoloc/",full.names = T),st_read))
 #plot(st_geometry(SSR))
-sealip=st_read("Cartes/allseaborder_lowq.shp")
+sealip=st_read("maps/allseaborder_lowq.shp")
 #plot(st_geometry(st_crop(sealip,st_buffer(SSR,800000))),reset=F)
 #plot(st_geometry(SSR),add=T,pch=21,bg="red")
 
@@ -118,7 +118,7 @@ Then create network using metal isotpots similarities.:
 
 ```{r}
 
-source("../R/tools.R")
+source("R/tools.R")
 isotopes=read.csv("data/DATA isotopie_Pryce_V4.1.csv")
 KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]

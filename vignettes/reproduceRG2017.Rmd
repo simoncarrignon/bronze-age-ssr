@@ -1,5 +1,6 @@
 ---
-title: "Network Analysis for Ancient Metallurgy and Beyond: Statistical synthesis of contextual, typological, technological and geochemical data"
+title: " R-version of Community structure of copper supply networks in the prehistoric Balkans: An independent evaluation of the archaeological record from the 7th to the 4th millennium BC"
+
 author: "SC"
 date: "`r Sys.time()`"
 output: 
@@ -10,12 +11,10 @@ output:
 
 ---
 
-# R-version of Community structure of copper supply networks in the prehistoric Balkans: An independent evaluation of the archaeological record from the 7th to the 4th millennium BC
 
+# Artefact Network
 
-## Artefact Network
-
-### Get Data
+## Get Data
 
 
 ```{r,initialisation}
@@ -42,7 +41,7 @@ Check the correaltion between the elements' ppm
 knitr::kable(cor(ppms)) #this is to show correlation between elements
 ```
 
-### Log transform
+## Log transform
 
 ```{r}
 ppms=as.data.frame(apply(ppms,2,log)) #take the log of the elements trace
@@ -55,7 +54,7 @@ Check the correlations between ppms when log transformed
 knitr::kable(cor(ppms))
 ```
 
-### PCA -dimenstion reduction
+## PCA -dimenstion reduction
 
 Compute PCA scores:
 
@@ -76,7 +75,7 @@ We now transform the result of the PCA as a graph, we compute edge weights as
 $$ \sqrt{\sum\frac{1}{d^2}} $$
 
 
-### Network reconstruction
+## Network reconstruction
 
 ```{r}
 
@@ -85,7 +84,7 @@ ppms.ew=1/(as.matrix(ppms.dist)^2) #Generate edges given the distance computed v
 ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE) #generate a graph
 
 
-## the lines below are used to set graphical option
+# the lines below are used to set graphical option
 V(ppms.graph)$label=as.character(datappm$Site)
 V(ppms.graph)$label.cex=.4
 V(ppms.graph)$size=8
@@ -93,7 +92,7 @@ V(ppms.graph)$frame.color="black"
 V(ppms.graph)$frame.width=.5
 V(ppms.graph)$label.color="black"
 E(ppms.graph)$color=NA
-####################################
+##################
 
 ppms.graph=set_graph_attr(ppms.graph,"layout",layout_nicely(ppms.graph)) #generate a layout to position the node 
 plot(ppms.graph) #plot the graph
@@ -188,7 +187,7 @@ plot(longitude ,latitude,bg=rainbow(10,alpha=.6)[datappm$Chemical.cluster],pch=2
 text(longitude ,latitude,datappm$Site,cex=.7)
 ```
 
-## Sites Network
+# Sites Network
 
 Count how many artefacts from each community sites share. We will use a simple match function (total number of similar communities):
 
@@ -246,7 +245,7 @@ plot(longitude ,latitude,bg=rainbow(length(sites.communities),alpha=.6)[sites.co
 text(longitude ,latitude,joined$siteperiod,cex=.7)
 ```
 
-### Site-period
+## Site-period
 
 ```{r}
 par(mar=c(0,0,0,0))
@@ -265,7 +264,8 @@ V(sites.graph)$size=8
 V(sites.graph)$frame.color="black"
 V(sites.graph)$frame.width=.5
 V(sites.graph)$label.color="black"
-sites.communities=cluster_louvain(sites.graph)$memberships[2,]
+louvclus=cluster_louvain(sites.graph)
+sites.communities=louvclus$memberships[nrow(louvclus$memberships),]
 V(sites.graph)$color=sites.communities
 sites.graph=set_graph_attr(sites.graph,"layout",as.matrix(getSitesCoordiates[,2:3]))
 E(sites.graph)$color=sites.communities[head_of(sites.graph,E(sites.graph))]
@@ -278,16 +278,17 @@ plot(sites.graph)
 Plot for each time period:
 
 ```{r}
-par(mar=c(0,0,0,0))
+par(mar=c(0,0,2,0),oma=c(0,0,0,0),xpd=NA)
 for(period in unique(datappm$absolute.period)){
     subperiod=induced_subgraph(sites.graph,V(sites.graph)[grep(period,label)])
     subperiod=induced_subgraph(subperiod,degree(subperiod)>0)
-    plot(subperiod)
+    plot(subperiod,main=period)
+    box(which="outer")
 }
 ```
 
 
-Compare the communities found with original results:
+Compare the communities found with original results ; any differences between the group computed here and the results from the papaer are outlined in red.
 
 ```{r,results="asis"}
 orig=read.csv("data/RG_table_s2.csv")

@@ -1,5 +1,5 @@
 
-Get range of ou data:
+Get the range of our data:
 
 ```{r}
 library(sf)
@@ -19,11 +19,11 @@ rivb=cbind(alldata1$River.basin.coordinates.E,alldata1$River.basin.coordinates.N
 
 ```{r}
 alldata=st_as_sf(alldata,coords=1:2,crs=st_crs(allryver))
-allryver=st_read("Cartes/as_bas_30s_beta/as_bas_30s_beta.shp")
+allryver=st_read("maps/as_bas_30s_beta/as_bas_30s_beta.shp")
 allryver=st_make_valid(allryver)
 allryver=st_crop(allryver,st_buffer(alldata.sf,dist=1000))
 plot(allryver)
-allryver=st_read("Cartes/river_basin_20s_cropped.shp")
+allryver=st_read("maps/river_basin_20s_cropped.shp")
 allryver=rmapshaper::ms_simplify(allryver)
 allryver=allryver[st_is_valid(st_geometry(allryver)),]
 allryver=st_simplify(allryver,dTolerance = 1000)
@@ -49,25 +49,25 @@ alldata=as.data.frame(alldata[!is.na(alldata[,1]),])
 alldata.sf=st_as_sf(alldata,coords=1:2,crs=st_crs(allryver))
 contain=st_contains(allryver,alldata.sf)
 contain=unique(unlist(t(contain)))
-SEA=st_read("Cartes/allseaborder_lowq.shp")
+SEA=st_read("maps/allseaborder_lowq.shp")
 SEA=st_transform(SEA,crs=st_crs(allryver))
 subsetriver= allryver[contain,]
 subsetriver= rmapshaper::ms_simplify(subsetriver)
 plot(SEA,col="white",bgc=adjustcolor("grey",.4),reset=F)
 plot(subsetriver,add=T)
 plot(alldata.sf,add=T,pch=21,col="red",bg="green")
-st_write(subsetriver,"Cartes/riverbasin_sitelimited.shp")
-st_write(allryver,"Cartes/river_basin_lowq.shp")
+st_write(subsetriver,"maps/riverbasin_sitelimited.shp")
+st_write(allryver,"maps/river_basin_lowq.shp")
 
 allryver=rmapshaper::ms <- simplify(allryver,keep=0.000001)
 
-ma=st_read("Cartes/MALAYSIA_adm/MYS_adm0.shp")
-lk=st_read("Cartes/SRILANKA_adm/LKA_adm0.shp")
+ma=st_read("maps/MALAYSIA_adm/MYS_adm0.shp")
+lk=st_read("maps/SRILANKA_adm/LKA_adm0.shp")
 ma=rmapshaper::ms_simplify(st_geometry(ma))
 lk=rmapshaper::ms_simplify(st_geometry(lk))
 
 SEA=st_union(st_union(ma,SEA),lk)
-st_write(SEA,"Cartes/allseaborder_lowq.shp")
+st_write(SEA,"maps/allseaborder_lowq.shp")
 plot(st_union(st_combine(SEA)))
 ```
 

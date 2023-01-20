@@ -7,6 +7,7 @@
 
 
 ```{r}
+source("R/tools.R")
 datappm=read.csv("data/SEALIP_BROGLASEA data_compo_Pryce_V4.csv")
 
 # set an arbitrary epsilon value and replace "tr"s and "0"s with it
@@ -89,9 +90,9 @@ text(ppms.tsne$Y[,1],ppms.tsne$Y[,2],datappm$Region,cex=.5)
 
 ```{r geoTsne,fig.cap="show cluster geographically"}
 par(mar=rep(0,4))
-library(rgdal)
-seashapefile=readOGR(dsn = "Cartes/", layer=,"allsea") 
-plot(seashapefile,lwd=0.1)
+library(sf)
+seashapefile=st_read("maps/allseaborder_lowq.shp")
+plot(seashapefile,lwd=0.1,reset=F)
 
 datappm$Easting...Longitude= as.numeric(gsub("°","",datappm$Easting...Longitude))
 datappm$Northing.Latitude= as.numeric(gsub("°","",datappm$Northing.Latitude))
@@ -103,6 +104,7 @@ We now transform the result of the PCA as a graph, we compute edge weights as
 $$ \sqrt{\sum\frac{1}{d^2}} $$
 
 ```{r}
+library(igraph)
 
 ppms.ew=1/(exp(as.matrix(ppms.dist)))
 ppms.graph=graph.adjacency(ppms.ew, mode = "undirected", weighted = TRUE, diag = FALSE)
@@ -146,8 +148,8 @@ Avec les shapefiles:
 
 ```{r out.width="100%",fig.cap="latlon"}
 par(mar=c(0,0,0,0))
-plot(seashapefile,lwd=0.1)
-points(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],pch=21,ann=F,axes=F)
+plot(seashapefile,lwd=0.1,reset=F)
+points(datappm$Easting...Longitude,datappm$Northing.Latitude,bg=rainbow(ncommu,alpha=.6)[ppms.louvain$membership],pch=21)
 ```
 
 ## Site Network
