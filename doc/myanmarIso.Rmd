@@ -27,7 +27,7 @@ simpmatch  <-  function(i,j){
     }
     length(na.omit(match(i,j)))
 }
-source("R/tools.R")
+source("../R/tools.R")
 library(sf)
 ```
 Get all shapefiles
