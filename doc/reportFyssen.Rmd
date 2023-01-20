@@ -46,7 +46,7 @@ isotopes=read.csv("data/DATA isotopie_Pryce_V13092022.csv")
 knitr::kable(head(isotopes))
 
 ## useful tools, packages and shapefiles
-source("tools.R")
+source("R/tools.R")
 library(sf)
 seashapefile=st_read("Cartes/allseaborder_lowq.shp")
 seashapefile=st_geometry(seashapefile)

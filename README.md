@@ -10,5 +10,6 @@ List of files and folders:
   + `maps/allsea.shp` big shapefile.
   + `maps/allseaborder_lowq.shp` lower quality general shapefile.
   + `maps/riverbasin_sitelimited.shp` river basin where sites falls in.
-
+- `doc/` R vignettes and other documentation
+- `R/` set of R methods used for analysis
 
