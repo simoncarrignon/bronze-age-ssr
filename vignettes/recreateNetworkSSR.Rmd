@@ -119,7 +119,7 @@ Then create network using metal isotpots similarities.:
 ```{r}
 
 source("R/tools.R")
-isotopes=read.csv("data/DATA isotopie_Pryce_V4.1.csv")
+isotopes=read.csv("data/DATA isotopie_Pryce_V4.2.csv")
 KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
 IDVC=c( "SEALIP/LA/PBL/1", "SEALIP/LA/PBL/42", "SEALIP/LA/PBL/2", "SEALIP/LA/PBL/6", "SEALIP/LA/PBL/5", "SEALIP/LA/PBL/4", "SEALIP/LA/PBL/7", "SEALIP/LA/PBL/34", "SEALIP/LA/PBL/32", "SEALIP/LA/PBL/12", "SEALIP/LA/PBL/35", "SEALIP/LA/PBL/13", "SEALIP/LA/PBL/40", "SEALIP/LA/PBL/11", "SEALIP/LA/PBL/39", "SEALIP/LA/PBL/36", "SEALIP/LA/PBL/18", "SEALIP/LA/PBL/14", "SEALIP/LA/PBL/37", "SEALIP/LA/PBL/33", "SEALIP/LA/PBL/3", "SEALIP/LA/PBL/16", "SEALIP/LA/PBL/15", "SEALIP/LA/PBL/20", "SEALIP/LA/PBL/19", "SEALIP/LA/PBL/21", "SEALIP/LA/PBL/10", "SEALIP/LA/PBL/47")
