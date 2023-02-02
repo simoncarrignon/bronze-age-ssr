@@ -116,11 +116,36 @@ plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
 
 Then create network using metal isotpots similarities.:
 
+
 ```{r}
 
 source("R/tools.R")
 isotopes=read.csv("data/DATA isotopie_Pryce_V4.2.csv")
+nolabel=isotopes$LABEL.analytical==""
+isotopes$Site.abreviation[isotopes$Site.abreviation==""]="UNK"
+isotopes$LABEL.analytical[nolabel]=
+    paste("DIV",
+          sapply(strsplit(toupper(isotopes$Country[nolabel]),""),function(i)paste0( i[1:2],collapse=""))
+                                         ,isotopes$Site.abreviation[nolabel],sep="/")
+for(i in unique(isotopes$LABEL.analytical[nolabel])){
+    new=isotopes$LABEL.analytical==i
+    isotopes$LABEL.analytical[new]=paste0(isotopes$LABEL.analytical[new],"/",1:sum(new))
+}
+
+wrongLabels=lengths(strsplit(isotopes$LABEL.analytical,"/"))==1
+isotopes$LABEL.analytical[wrongLabels]=
+    paste("DIV",
+          sapply(strsplit(toupper(isotopes$Country[wrongLabels]),""),function(i)paste0(i[1:2],collapse=""))
+                                         ,isotopes$Site.abreviation[wrongLabels],sep="/")
+for(i in unique(isotopes$LABEL.analytical[wrongLabels])){
+    new=isotopes$LABEL.analytical==i
+    isotopes$LABEL.analytical[new]=paste0(isotopes$LABEL.analytical[new],"/",1:sum(new))
+}
+
+isotopes$LABELS.shorts=sapply(lapply(strsplit(isotopes$LABEL.analytical,"/"),"[",3:4),paste0,collapse="/")
+
 KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
+
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
 IDVC=c( "SEALIP/LA/PBL/1", "SEALIP/LA/PBL/42", "SEALIP/LA/PBL/2", "SEALIP/LA/PBL/6", "SEALIP/LA/PBL/5", "SEALIP/LA/PBL/4", "SEALIP/LA/PBL/7", "SEALIP/LA/PBL/34", "SEALIP/LA/PBL/32", "SEALIP/LA/PBL/12", "SEALIP/LA/PBL/35", "SEALIP/LA/PBL/13", "SEALIP/LA/PBL/40", "SEALIP/LA/PBL/11", "SEALIP/LA/PBL/39", "SEALIP/LA/PBL/36", "SEALIP/LA/PBL/18", "SEALIP/LA/PBL/14", "SEALIP/LA/PBL/37", "SEALIP/LA/PBL/33", "SEALIP/LA/PBL/3", "SEALIP/LA/PBL/16", "SEALIP/LA/PBL/15", "SEALIP/LA/PBL/20", "SEALIP/LA/PBL/19", "SEALIP/LA/PBL/21", "SEALIP/LA/PBL/10", "SEALIP/LA/PBL/47")
 VC=isotopes[ isotopes$LABEL.analytical %in% IDVC,]
@@ -151,8 +176,6 @@ threshold  <- sapply(ratioiso,function(r){
 
 isotopes=isotopes[isotopes$Site.abreviation != "TLS",]
 isotopes=isotopes[isotopes$Site.abreviation != "",]
-
-isotopes$LABELS.shorts=sapply(lapply(strsplit(isotopes$LABEL.analytical,"/"),"[",3:4),paste0,collapse="/")
 
 isotopes.consmat=createRatioMatrix(isotopes,ratioiso,threshold) 
 dimnames(isotopes.consmat)=list(isotopes$LABELS.shorts,isotopes$LABELS.shorts)
@@ -207,7 +230,7 @@ for(gp in which(lengths(isotopes.sitecluster,use.names=F)>1)){
 We use only Bronze age artefacts;  and removing links that are below a certain threshold.
 
 ```{r,out.width="100%",fig.cap="Networks of sites with bronze age artefacts"}
-tmpiso=isotopes[grep("Bronze",isotopes$Large.period),]
+tmpiso=isotopes[grep("Bronze",isotopes$Large.period..SEA.equivalent.),]
 
 tmpiso.consmat=createRatioMatrix(tmpiso,ratioiso,threshold) 
 dimnames(tmpiso.consmat)=list(tmpiso$LABELS.shorts,tmpiso$LABELS.shorts)
@@ -271,7 +294,7 @@ Let's explore this Bronze age network link by link.
 So let check how the 156 bronze age samples have been classify, and how this classification is distributed within sites:
 
 ```{r,results="asis"}
-cat("## Classification of evry samples in each groups\n")
+cat("## Classification of every samples in each groups\n")
 famcompo=tapply(tmpiso$LABEL.analytical,paste0("gpe",tmpiso.clus$membership),unique)
 na=lapply(names(famcompo),function(g) cat(paste(g,":\n<br>\t",paste0(famcompo[[g]],collapse = " - "),"<br>\n")))
 sitecompo=tapply(paste0("gpe",tmpiso.clus$membership),tmpiso$Site.abreviation,table)
