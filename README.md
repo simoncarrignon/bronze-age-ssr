@@ -4,7 +4,8 @@ List of files and folders:
 
 - `data/`
   + `data/DATA isotopie_Pryce_V13092022.csv` Frozen verison used in `scriptMeetingWednesday16.Rmd`
-  + `data/DATA isotopie_Pryce_V4.1.csv` Last version of the dataset
+  + `data/DATA isotopie_Pryce_V4.2.1.csv` Last version of the dataset
+  + `data/*.RDS` RDS of the object as used for final publication
   + `data/RG_table_s1.csv` table with elemental compition from [Radivojević & Grujić (2017)](https://academic.oup.com/comnet/article/6/1/106/4030792)
   + `data/RG_table_s2.csv` table with communities found in [Radivojević & Grujić (2017)](https://academic.oup.com/comnet/article/6/1/106/4030792)
 - `SSRgeoloc/` `kmz` file with single coordinates collected by OP
@@ -17,8 +18,9 @@ List of files and folders:
   + `vignettes/exploreSEALIPelementalNetwork.Rmd` a vignette reproduce the analysis of [Radivojević & Grujić (2017)](https://academic.oup.com/comnet/article/6/1/106/4030792) using SEALIP data
   + `vignettes/recreateNetworkSSR.Rmd` this is the main vignette used throughout the paper 
 - `scripts/` small script that concatenate various R functions to quickly generate useful tools/outputs
-  + `scripts/shapefileope.Rmd` a scripts that was used to create the shapefiles avalable in `maps/`
-  + `scripts/paperFigure.R` a scripts  to generate high quality figures used for the paper
+  + `scripts/shapefileope.Rmd` a script that was used to create the shapefiles avalable in `maps/`
+  + `scripts/paperFigure.R` a script  to generate high quality figures used for the paper
+  + `scripts/cleanDataset.R` a script to clean the csv and generate labels automatically 
 - `R/` set of R-methods and functions used to run the analysis
 
 
