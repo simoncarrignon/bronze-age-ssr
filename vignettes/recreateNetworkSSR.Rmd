@@ -120,30 +120,7 @@ Then create network using metal isotpots similarities.:
 ```{r}
 
 source("R/tools.R")
-isotopes=read.csv("data/DATA isotopie_Pryce_V4.2.csv")
-nolabel=isotopes$LABEL.analytical==""
-isotopes$Site.abreviation[isotopes$Site.abreviation==""]="UNK"
-isotopes$LABEL.analytical[nolabel]=
-    paste("DIV",
-          sapply(strsplit(toupper(isotopes$Country[nolabel]),""),function(i)paste0( i[1:2],collapse=""))
-                                         ,isotopes$Site.abreviation[nolabel],sep="/")
-for(i in unique(isotopes$LABEL.analytical[nolabel])){
-    new=isotopes$LABEL.analytical==i
-    isotopes$LABEL.analytical[new]=paste0(isotopes$LABEL.analytical[new],"/",1:sum(new))
-}
-
-wrongLabels=lengths(strsplit(isotopes$LABEL.analytical,"/"))==1
-isotopes$LABEL.analytical[wrongLabels]=
-    paste("DIV",
-          sapply(strsplit(toupper(isotopes$Country[wrongLabels]),""),function(i)paste0(i[1:2],collapse=""))
-                                         ,isotopes$Site.abreviation[wrongLabels],sep="/")
-for(i in unique(isotopes$LABEL.analytical[wrongLabels])){
-    new=isotopes$LABEL.analytical==i
-    isotopes$LABEL.analytical[new]=paste0(isotopes$LABEL.analytical[new],"/",1:sum(new))
-}
-
-isotopes$LABELS.shorts=sapply(lapply(strsplit(isotopes$LABEL.analytical,"/"),"[",3:4),paste0,collapse="/")
-
+isotopes=read.csv("data/DATA isotopie_Pryce_V4.2.1.csv")
 KWPV=isotopes[ isotopes$Site.abreviation %in% c("NKH","NPW"),]
 
 KWPV=KWPV[!(KWPV$LABEL.analytical %in%  c("SEALIP/TH/NPW/11","SEALIP/TH/NPW/1")),]
@@ -173,9 +150,8 @@ threshold  <- sapply(ratioiso,function(r){
 })
 
 
+saveRDS(threshold,file="data/thresholds.RDS")
 
-isotopes=isotopes[isotopes$Site.abreviation != "TLS",]
-isotopes=isotopes[isotopes$Site.abreviation != "",]
 
 isotopes.consmat=createRatioMatrix(isotopes,ratioiso,threshold) 
 dimnames(isotopes.consmat)=list(isotopes$LABELS.shorts,isotopes$LABELS.shorts)
@@ -237,31 +213,40 @@ dimnames(tmpiso.consmat)=list(tmpiso$LABELS.shorts,tmpiso$LABELS.shorts)
 tmpiso.consmat[tmpiso.consmat<3]=0
 tmpiso.consmat[tmpiso.consmat==3]=1
 tmpiso.graph = graphFromAdj(tmpiso.consmat,label=tmpiso$LABELS.shorts)
-tmpiso.clus=cluster_leiden(tmpiso.graph,objective_function="modularity")
+tmpiso.clus=  cluster_leiden(tmpiso.graph,objective_function="modularity")
 tmpiso.sitemat=createAreaAdjMat(tmpiso,tmpiso$Site.abreviation,tmpiso.clus$membership,match=RGmatchNormalised)
 tmpiso.sitegraph = graphFromAdj(tmpiso.sitemat,label=rownames(tmpiso.sitemat))
-
-#alledges=E(tmpiso.sitegraph)
-#tdl=alledges[ alledges$weight < .3]
-#tmpiso.sitegraph=delete.edges(tmpiso.sitegraph,tdl)
-
 tmpiso.sitecluster=cluster_leiden(tmpiso.sitegraph,objective_function = "modularity")
 V(tmpiso.sitegraph)$color=tmpiso.sitecluster$membership
 V(tmpiso.sitegraph)$size=20
 #V(tmpiso.sitegraph)$size=betweenness(tmpiso.sitegraph)
 E(tmpiso.sitegraph)$width=2*(exp(E(tmpiso.sitegraph)$weight)-1)
 tmpiso.sitegraph=colorEdges(tmpiso.sitegraph)
+
+saveRDS(tmpiso.sitegraph,file="data/tmpiso.sitegraph.RDS")
+saveRDS(tmpiso.graph,file="data/tmpiso.graph.RDS")
+saveRDS(tmpiso.clus,file="data/tmpiso.clus.RDS")
+saveRDS(tmpiso.clus,file="data/tmpiso.clus.RDS")
+saveRDS(netssr,file="data/netssr.RD")
+
+#alledges=E(tmpiso.sitegraph)
+#tdl=alledges[ alledges$weight < .3]
+#tmpiso.sitegraph=delete.edges(tmpiso.sitegraph,tdl)
+
 plot(tmpiso.sitegraph,main="Network of sites based on shared artefacts from same family")
+
 V(tmpiso.sitegraph)$label.dist=5
 tmpiso.sitegraph.coords=coordForGraph(tmpiso.sitegraph,tmpiso,"Site.abreviation")
 invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
 fullgraph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
+saveRDS(file="data/coordnetssr.RDS",coords)
 netssr.sf=st_as_sf(as.data.frame(coords[!is.na(coords[,1]),]),coords=c(1,2))
 plot(st_buffer(fullgraph.sp,100000),lwd=0.0001)
 plot(st_geometry(st_crop(sealip,st_buffer(netssr.sf,50000))),add=T,col=adjustcolor("pink",.2))
 plot(tmpiso.sitegraph,layout=tmpiso.sitegraph.coords,add=T,rescale=F)
 E(netssr)$width=1
 plot(netssr,layout=coords[V(netssr)$name,],add=T,rescale=F)
+
 
 ```
 
