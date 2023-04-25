@@ -150,7 +150,8 @@ threshold  <- sapply(ratioiso,function(r){
 })
 
 
-saveRDS(threshold,file="data/thresholds.RDS")
+#saveRDS(threshold,file="data/thresholds.RDS")
+threshold=readRDS(file="data/thresholds.RDS")
 
 
 isotopes.consmat=createRatioMatrix(isotopes,ratioiso,threshold) 
@@ -205,7 +206,7 @@ for(gp in which(lengths(isotopes.sitecluster,use.names=F)>1)){
 
 We use only Bronze age artefacts;  and removing links that are below a certain threshold.
 
-```{r,out.width="100%",fig.cap="Networks of sites with bronze age artefacts"}
+```{r,out.width="100%",fig.cap="Networks of sites with bronze age artefacts",fig.height=20,fig.width=20}
 tmpiso=isotopes[grep("Bronze",isotopes$Large.period..SEA.equivalent.),]
 
 tmpiso.consmat=createRatioMatrix(tmpiso,ratioiso,threshold) 
@@ -216,18 +217,24 @@ tmpiso.graph = graphFromAdj(tmpiso.consmat,label=tmpiso$LABELS.shorts)
 tmpiso.clus=  cluster_leiden(tmpiso.graph,objective_function="modularity")
 tmpiso.sitemat=createAreaAdjMat(tmpiso,tmpiso$Site.abreviation,tmpiso.clus$membership,match=RGmatchNormalised)
 tmpiso.sitegraph = graphFromAdj(tmpiso.sitemat,label=rownames(tmpiso.sitemat))
+
+
+#saveRDS(tmpiso.sitegraph,file="data/tmpiso.sitegraph.RDS")
+#saveRDS(tmpiso.graph,file="data/tmpiso.graph.RDS")
+#saveRDS(tmpiso.clus,file="data/tmpiso.clus.RDS")
+#saveRDS(netssr,file="data/netssr.RD")
+
+tmpiso.sitegraph=readRDS(file="data/tmpiso.sitegraph.RDS")
+tmpiso.graph=readRDS(file="data/tmpiso.graph.RDS")
+tmpiso.clus=readRDS(file="data/tmpiso.clus.RDS")
+netssr=readRDS(file="data/netssr.RD")
+
 tmpiso.sitecluster=cluster_leiden(tmpiso.sitegraph,objective_function = "modularity")
 V(tmpiso.sitegraph)$color=tmpiso.sitecluster$membership
 V(tmpiso.sitegraph)$size=20
 #V(tmpiso.sitegraph)$size=betweenness(tmpiso.sitegraph)
 E(tmpiso.sitegraph)$width=2*(exp(E(tmpiso.sitegraph)$weight)-1)
 tmpiso.sitegraph=colorEdges(tmpiso.sitegraph)
-
-saveRDS(tmpiso.sitegraph,file="data/tmpiso.sitegraph.RDS")
-saveRDS(tmpiso.graph,file="data/tmpiso.graph.RDS")
-saveRDS(tmpiso.clus,file="data/tmpiso.clus.RDS")
-saveRDS(tmpiso.clus,file="data/tmpiso.clus.RDS")
-saveRDS(netssr,file="data/netssr.RD")
 
 #alledges=E(tmpiso.sitegraph)
 #tdl=alledges[ alledges$weight < .3]
@@ -239,7 +246,8 @@ V(tmpiso.sitegraph)$label.dist=5
 tmpiso.sitegraph.coords=coordForGraph(tmpiso.sitegraph,tmpiso,"Site.abreviation")
 invalidcoords=apply(apply(tmpiso.sitegraph.coords,2,is.na),1,any)
 fullgraph.sp=st_as_sf(as.data.frame(tmpiso.sitegraph.coords[!invalidcoords,]),coords=1:2,crs=st_crs(sealip))
-saveRDS(file="data/coordnetssr.RDS",coords)
+#saveRDS(file="data/coordnetssr.RDS",coords)
+coords=readRDS(file="data/coordnetssr.RDS")
 netssr.sf=st_as_sf(as.data.frame(coords[!is.na(coords[,1]),]),coords=c(1,2))
 plot(st_buffer(fullgraph.sp,100000),lwd=0.0001)
 plot(st_geometry(st_crop(sealip,st_buffer(netssr.sf,50000))),add=T,col=adjustcolor("pink",.2))
@@ -289,7 +297,7 @@ for(g in names(sitecompo)){cat(paste("site",g,"is made of:\n<br>"));sapply(names
 
 We can thus compare that to the 
 
-```{r,fig.cap="bilplot with colouring using family detected via the threshold computing",fig.width=40,fig.height=20}
+```{r,fig.cap="biplot with colouring using family detected via the threshold computing",fig.width=40,fig.height=20}
 
 par(mfrow=c(1,2))
 gpe=paste0("gpe",tmpiso.clus$membership)
