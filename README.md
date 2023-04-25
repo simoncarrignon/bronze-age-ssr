@@ -38,3 +38,5 @@ do
     Rscript  -e  "rmarkdown::render('$v',knit_root_dir='..')"
 done
 ```
+
+![high quality verison of the image from the paper](vignettes/HQnetwork.png)
